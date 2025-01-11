@@ -17,18 +17,20 @@ h1,h2,h3,h4,h5,h6{
     font-weight: 400;
 }
 .site-wrapper {
-  max-width: 1400px;
-  min-width: 1280px;
+  max-width: 1280px;
+  min-width: 720px;
   margin: 0 auto;
   padding: 0px 15px;
 }
 .responsive{
   max-width: 100%;
+
 }
 /*header*/
 .custom-header {
   background-color: #ffffff;
   border-radius: 0px 0px 10px 10px;
+
 }
 .header-top {
   padding: 7px 16px 10px;
@@ -151,24 +153,28 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .header-menu-wrapper {
-  background: #bfe6ff;
-  background: -moz-linear-gradient(top, #bfe6ff 0%, #497dc1 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bfe6ff), color-stop(100%, #497dc1));
-  background: -webkit-linear-gradient(top, #bfe6ff 0%, #497dc1 100%);
-  background: -o-linear-gradient(top, #bfe6ff 0%, #497dc1 100%);
-  background: -ms-linear-gradient(top, #bfe6ff 0%, #497dc1 100%);
-  background: linear-gradient(to bottom, #bfe6ff 0%, #497dc1 100%);
-  border-radius: 10px;
-  margin-bottom: 5px;
-  margin-left: 15px;
-  margin-right: 11px;
+    background: #bfe6ff;
+    background: -moz-linear-gradient(top, #bfe6ff 0%, #497dc1 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bfe6ff), color-stop(100%, #497dc1));
+    background: -webkit-linear-gradient(top, #bfe6ff 0%, #497dc1 100%);
+    background: -o-linear-gradient(top, #bfe6ff 0%, #497dc1 100%);
+    background: -ms-linear-gradient(top, #bfe6ff 0%, #497dc1 100%);
+    background: linear-gradient(to bottom, #bfe6ff 0%, #497dc1 100%);
+    border-radius: 10px;
+    margin-bottom: 5px;
+    margin-left: 15px;
+    margin-right: 11px;
+    max-width: 1400px;
+    min-width: 1280px;
 }
 
 .header-menu {
-  margin: 0px;
-  padding: 5px 5px;
-  list-style-type: none;
-  display: flex;
+    margin: 0px;
+    padding: 5px 5px;
+    list-style-type: none;
+    display: flex;
+    max-width: 1400px;
+    min-width: 1280px;
 }
 
 .custom-notic-icon {
@@ -274,7 +280,9 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .custom-marque {
-  margin-bottom: 4px;
+    margin-bottom: 4px;
+    max-width: 760px;
+    min-width: 187px;
 }
 
 .marqueticker {
