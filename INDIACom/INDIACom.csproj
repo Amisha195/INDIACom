@@ -127,11 +127,20 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DropdownController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DropdownModel.cs" />
+    <Compile Include="Models\FeedbackModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Views\Home\Events.cshtml" />
+    <Content Include="Views\Home\Sessions.cshtml" />
+    <None Include="Views\Home\SpecialSession.cshtml" />
+    <Content Include="Views\Home\Track.cshtml" />
+    <Content Include="Views\Home\SubmitPapers.cshtml" />
+    <Content Include="Views\Feedback\SubmitFeedback.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -153,9 +162,26 @@
     <Content Include="Content\css\all.min.css" />
     <Content Include="Content\css\slick.css" />
     <Content Include="Content\css\style.css" />
+    <Content Include="Content\images\1.jpg" />
+    <Content Include="Content\images\2.jpg" />
+    <Content Include="Content\images\3.jpg" />
+    <Content Include="Content\images\4.jpg" />
+    <Content Include="Content\images\5.jpg" />
+    <Content Include="Content\images\6.jpg" />
+    <Content Include="Content\images\7.jpg" />
     <Content Include="Content\images\background-shap.svg" />
+    <Content Include="Content\images\barINDIA.jpg" />
+    <Content Include="Content\images\BVICAM-Logo.png" />
     <Content Include="Content\images\call.png" />
+    <Content Include="Content\images\CSI-Logo.png" />
     <Content Include="Content\images\email.png" />
+    <Content Include="Content\images\GGSIU-Logo.png" />
+    <Content Include="Content\images\ieeelogo.png" />
+    <Content Include="Content\images\IEEE_NEWLOGO.png" />
+    <Content Include="Content\images\IETE-Logo.png" />
+    <Content Include="Content\images\IITP-Logo.jpg" />
+    <Content Include="Content\images\IMP-Logo.jpg" />
+    <Content Include="Content\images\ISTE-Logo.png" />
     <Content Include="Content\images\linkedin.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\map.png" />
@@ -199,10 +225,34 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\ConferenceSecretariat.cshtml" />
+    <Content Include="Views\Shared\Layoutweb.cshtml" />
+    <Content Include="Views\Home\RegistrationFee.cshtml" />
+    <Content Include="Views\Home\Accommodation.cshtml" />
+    <Content Include="Views\Home\ListSpeaker.cshtml" />
+    <Content Include="Views\Home\ReviewProcessPublicationIndexing.cshtml" />
+    <Content Include="Views\Home\SideBar.cshtml" />
+    <Content Include="Views\Home\Downloads.cshtml" />
+    <Content Include="Views\Home\FAQ.cshtml" />
+    <Content Include="Views\Home\OurSupporters.cshtml" />
+    <Content Include="Views\Home\Venue.cshtml" />
+    <Content Include="Views\Home\IndiacomProceedings.cshtml" />
+    <Content Include="Views\Home\GuidelinestoSubmitPaper.cshtml" />
+    <Content Include="Views\Home\PlagiarismPolicy.cshtml" />
+    <Content Include="Views\Home\SubmitPaper.cshtml" />
+    <Content Include="Views\Home\TechnicalCommittee.cshtml" />
+    <Content Include="Views\Home\EditorialBoard.cshtml" />
+    <Content Include="Views\Home\AdvisoryCommittee.cshtml" />
+    <Content Include="Views\Home\ChairsAndCoChairs.cshtml" />
+    <Content Include="Views\Home\Committees.cshtml" />
+    <Content Include="Views\Home\CallForPaper.cshtml" />
+    <Content Include="Views\Home\delcon.cshtml" />
+    <Content Include="Views\Home\IEEEOversightCommittee.cshtml" />
+    <Content Include="Views\Home\InvitedSpeakers.cshtml" />
+    <Content Include="Views\Home\LocalOrganisingCommittee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Dropdown\" />
   </ItemGroup>
   <ItemGroup>

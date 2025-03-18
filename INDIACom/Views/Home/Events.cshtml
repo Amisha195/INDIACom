@@ -1,0 +1,40 @@
+@model INDIACom.Models.DropdownModel
+@{
+    Layout = "~/Views/Shared/Layoutweb.cshtml";
+}
+<link href="~/Content/css/style.css" rel="stylesheet" />
+
+<div class="content-section col-md">
+
+    <div>
+        <label>Event:</label>
+        <select id="ddlEvent" class="form-control">
+            <option value="">Select Event</option>
+        </select>
+    </div>
+
+
+
+</div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function () {
+            loadDropdown("ddlEvent", "/Dropdown/getEvent");
+           
+        });
+       
+        function loadDropdown(elementId, url) {
+            $.ajax({
+                type: "POST",
+                url: url,
+                success: function (data) {
+                    var dropdown = $("#" + elementId);
+                    dropdown.empty();
+                    dropdown.append('<option value="">Select</option>');
+                    $.each(data, function (i, item) {
+                        dropdown.append('<option value="' + item.Value + '">' + item.Text + '</option>');
+                    });
+                }
+            });
+        }</script>
+

@@ -1,841 +1,125 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
-}
+        Layout = "~/Views/Shared/Layoutweb.cshtml";
+    }
+<link href="~/Content/css/style.css" rel="stylesheet" />
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Responsive Images with srcset</title>
-    <link href="~/Content/css/all.min.css" rel="stylesheet" />
-    <link href="~/Content/css/slick.css" rel="stylesheet" />
-    <link href="~/Content/css/style.css" rel="stylesheet" />
-</head>
-<body>
-    <div class="site-wrapper">
+<div class="col-md-10" style="padding:0px 12px 0px 0px">
+    <div class="row">
+        
+        <div class="col-md-8">
+            <div class="hero-section-slider">
+                <div class="hero-section-item">
+                    <img src="~/Content/images/1.jpg" width="100%" height="425" alt="slider" class="responsive" />
+                </div>
+                <div class="hero-section-item">
+                    <img src="~/Content/images/2.jpg" width="100%" height="425" alt="slider" class="responsive" />
+                </div>
+                <div class="hero-section-item">
+                    <img src="~/Content/images/3.jpg" width="100%" height="425" alt="slider" class="responsive" />
+                </div>
+                <div class="hero-section-item">
+                    <img src="~/Content/images/4.jpg" width="100%" height="425" alt="slider" class="responsive" />
+                </div>
+                <div class="hero-section-item">
+                    <img src="~/Content/images/5.jpg" width="100%" height="425" alt="slider" class="responsive" />
+                </div>
+                <div class="hero-section-item">
+                    <img src="~/Content/images/6.jpg" width="100%" height="425" alt="slider" class="responsive" />
+                </div>
+                <div class="hero-section-item">
+                    <img src="~/Content/images/7.jpg" width="100%" height="425" alt="slider" class="responsive" />
+                </div>
+            </div>
+        </div>
 
-        <header class="custom-header">
-            <div align="center" style="width: 100%; padding: 0; margin: 0;">
-                <table border="0" width="100%" cellpadding="0" id="table2" cellspacing="0" height="187" style="padding: 0; margin: 0;">
+       
+        <div class="col-md-4">
+            <div class="menubox-title">News</div>
+            <div class="menubox-bg slidermenubox">
+                <ul class="menubox-menu">
+                    <li><a href="">DELCON-2024 An Official Flagship Conference of IEEE Delhi Section</a></li>
+                    <li><a href="">ICSSR Conference on India Towards    Viksit Bharat@2047</a></li>
+                    <li><a href="">Admission Enquiry</a></li>
+                    <li><a href="">DELCON-2024 An Official Flagship Conference of IEEE Delhi Section</a></li>
+                    <li><a href="">ICSSR Conference on India Towards Viksit Bharat@2047</a></li>
+                    <li><a href="">Admission Enquiry</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <br> 
+    <div class="row">
+        <div class="col-md-12">
+            <p align="justify" class="generalTxt">
+                Throughout the world, nations have started recognizing that IT is now acting as a catalyst in speeding up the economic activity in efficient governance, citizens' empowerment and in improving the quality of human life.
+
+                Since its inception in the year 2007, <b>INDIACom</b> has attracted eminent academicians, scientists, researchers, industrialists, technocrats, government representatives, social visionaries and experts from all strata of society, to explore the new horizons of innovations to identify opportunities and define the path forward. This new path is aimed at eliminating isolation, discouraging redundant efforts and promoting scientific progress to accelerate nations' economic growth to prominence in the international arena and also at contributing effectively to realize the nations' vision of sustainable inclusive development using computing.
+
+                <br>Encouraged by the resounding success met with the prior editions of INDIACom, we announce <b>19th INDIACom 2025 12th International Conference as INDIACom-2025</b>.<br> INDIACom, as always, aims at providing an effective platform to the researchers from all over the world to show-case their original research work, have effective exchange of ideas and develop a strategic plan for balanced and inclusive growth of economy through IT in critical areas like E-Governance, E-Commerce, Disaster Management, GIS, Geo-spatial Technologies, Nano-Technology, Intellectual Property Rights, AI and Expert Systems, Networking, Software Engineering, High Performance Computing and other Emerging Technologies.<br>
+
+                <b>INDIACom-2025</b> will be held at <b>Bharati Vidyapeeth, New Delhi (INDIA)</b>. The conference will provide a platform for technical exchanges within the research community and will encompass regular paper presentation sessions, invited talks, key note addresses, panel discussions and poster exhibitions. In addition, the participants will be treated to a series of cultural activities, receptions and networking to establish new connections and foster everlasting friendship among fellow counterparts. The conference will also provide an opportunity to the participants to visit some of the world’s famous tourist places in Delhi like Qutub Minar, Red Fort, Akshardham Temple, Lotus Temple, Jantar Mantar, and Taj Mahal at Agra (around 200 KM from Delhi).
+            </p>
+        </div>
+    </div>
+        
+    <div class="row">
+        <div class="col-md-12">
+            <div class="customTable">
+                <table class="customTable-main">
+                    <thead>
+                        <tr class="customTable-header">
+                            <th class="customTable-track">Track</th>
+                            <th class="customTable-theme">Theme</th>
+                            <th class="customTable-subtheme">Sub Theme</th>
+                        </tr>
+                    </thead>
                     <tbody>
-                        <tr>
-                            <td align="right" height="30" style="font-family: Verdana; font-size: 10px; padding-top: 0; padding-bottom: 0;">
-                                <b>Welcome, Guest [<a href="login.asp">log in</a>]</b>
+                        
+                        <tr class="customTable-row">
+                            <td>Track 1</td>
+                            <td>Sustainable Computing</td>
+                            <td>
+                                E-Waste Management,<br>Renewable Energy Integration,<br>Low-Power Computing Devices,<br>
+                                Sustainable Software Engineering,<br>Eco-Friendly Cloud Computing,<br>Lifecycle Assessment of IT Products,<br>
+                                Sustainable IT Infrastructure,<br>Carbon Footprint Reduction in IT Computing
                             </td>
                         </tr>
-                        <tr>
-                            <td height="110" style="margin-top: 0; margin-bottom: 0; background-color: #ffffff; padding: 0;">
-                                <table border="0" width="100%" id="table11" cellspacing="0" cellpadding="0" height="106" background="~/Content/images/barINDIA.jpg" style="width: 100%; padding: 0; margin: 0;">
-                                    <tbody>
-                                        <tr>
-                                            <td valign="top" align="center" width="17%" style="padding: 5px 0px 0px 10px; color: white;">
-                                                Organized by<br><br>
-                                                <img src="~/Content/images/BVICAM-Logo.png" alt="Bharati Vidyapeeth, New Delhi" style="width: 148px; height: 65px;"><br>
-                                                Bharati Vidyapeeth, Delhi
-                                            </td>
-                                            <td valign="middle" align="center" width="66%" style="color: white; font-family: Lucida Sans; font-size: 25pt; padding-top: 5px;">
-                                                <i><b>INDIACom-2025</b></i>
-                                                <p style="color: white; font-family: Lucida Sans; font-size: 9pt;">
-                                                    19<sup>th</sup> INDIACom; 12<sup>th</sup> 2025 International Conference on<br>
-                                                    <b style="font-size: 11pt; color: yellow;">Computing for Sustainable Global Development</b><br>
-                                                    02<sup>nd</sup>-04<sup>th</sup> April, 2025
-                                                </p>
-                                            </td>
-                                            <td valign="top" align="center" width="17%" style="padding: 5px 10px 0px 0px; color: white;">
-                                                Applied for Technical Sponsorship <br><br>
-                                                <img src="~/Content/images/IEEE_NEWLOGO.png" width="183" height="69" border="0" alt="IEEE Delhi Section">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+
+                        
+                        <tr class="customTable-row">
+                            <td>Track 2</td>
+                            <td>High Performance Computing</td>
+                            <td>
+                                Algorithms and Computational Mathematics,<br>Changing Software Architectural Paradigms,<br>Low-Power Computing Devices,<br>
+                                Technology for Convergence,<br>Fuzzy, Soft Computing and Nature Inspired Computing,<br>Modelling and Simulation
                             </td>
                         </tr>
-                        <tr>
-                            <td style="padding: 5px 0px 5px 0px; margin: 0; text-align: center; color: red;">
-                                Supported and Promoted by:
+
+                        
+                        <tr class="customTable-row">
+                            <td>Track 3</td>
+                            <td>High Speed Networking and Information Security</td>
+                            <td>
+                                Wireless Networking,<br>Computer Networks and Information Security,<br>Systems, Man, and Cybernetics,<br>
+                                Computational Intelligence,<br>Mobile Computing,<br>Network Monitoring Tools,<br>Information and Collaboration Systems
                             </td>
                         </tr>
-                        <tr>
-                            <td style="display: flex; justify-content: center; align-items: center;">
-                                <div>
-                                    <a href="http://www.iete.org/" target="_blank"><img src="~/Content/images/IETE-Logo.png" width="75" height="75" border="0" alt="IETE"></a>&nbsp;&nbsp;&nbsp;
-                                    <a href="https://safasociety.org/iitp/" target="_blank"><img src="~/Content/images/IITP-Logo.jpg" width="89" height="75" border="0" alt="IITP"></a>&nbsp;&nbsp;&nbsp;
-                                    <a href="https://www.safasociety.org/imp/" target="_blank"><img src="~/Content/images/IMP-Logo.jpg" width="89" height="75" border="0" alt="IMP"></a>&nbsp;&nbsp;&nbsp;
-                                    <a href="http://www.csi-india.org/" target="_blank"><img src="~/Content/images/CSI-Logo.png" width="75" height="75" border="0" alt="CSI"></a>&nbsp;&nbsp;&nbsp;
-                                    <a href="http://www.isteonline.in/" target="_blank"><img src="~/Content/images/ISTE-Logo.png" width="74" height="74" border="0" alt="ISTE"></a>&nbsp;&nbsp;&nbsp;
-                                    <a href="http://ipu.ac.in" target="_blank"><img src="~/Content/images/GGSIU-Logo.png" width="85" height="75" border="0" alt="GGSIPU"></a>
-                                </div>
-                                <a href="login.asp" style="background-color: red; color: white; padding: 10px 20px; text-align: right; text-decoration: none; display: inline-block; font-size: 16px; border: none; cursor: pointer;">Log In</a>
+
+                        
+                        <tr class="customTable-row">
+                            <td>Track 4</td>
+                            <td>Software Engineering and Emerging Technologies</td>
+                            <td>
+                                Blockchain and Distributed Ledger Technologies,<br>Artificial Intelligence and Machine Learning,<br>Internet of Things (IoT) and Embedded Systems
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-
-
-        </header>
-    
-
-
-    <div class="header-menu-wrapper">
-        <ul class="header-menu">
-
-            <li class="has-submenu">
-                <a href="all-notices/"><span class="custom-notic-icon"><img src="~/Content/images/new.gif" alt="new" width="35" height="15"></span> Notices</a>
-                <ul class="submenu">
-                    <li>
-                        <a href="all-notices/">All Notices</a>
-                    </li>
-                    <li>
-                        <a href="admission/">Admission</a>
-                    </li>
-                    <li>
-                        <a href="examinations/">Examinations</a>
-                    </li>
-                    <li>
-                        <a href="placements/">Placements</a>
-                    </li>
-                    <li>
-                        <a href="students-welfare/">Students’ Welfare</a>
-                    </li>
-                    <li>
-                        <a href="time-table/">Time Table</a>
-                    </li>
-                    <li>
-                        <a href="attendance/">Attendance</a>
-                    </li>
-                    <li>
-                        <a href="activities-2/">Activities</a>
-                    </li>
-                    <li>
-                        <a href="achievements/">Achievements</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="">Home</a>
-            </li>
-            <li class="has-submenu">
-                <a href="">About Us</a>
-                <ul class="submenu">
-                    <li>
-                        <a href="">About BVP</a>
-                    </li>
-                    <li>
-                        <a href="about-bvicam/">About BVICAM</a>
-                    </li>
-                    <li>
-                        <a href="vision-mission-quality-policy/">Vision, Mission &amp; Quality Policy</a>
-                    </li>
-                    <li>
-                        <a href="founders-message/">Founder’s Message</a>
-                    </li>
-                    <li>
-                        <a href="chancellors-message/">Chancellor’s Message</a>
-                    </li>
-                    <li>
-                        <a href="secretarys-message/">Secretary’s Message</a>
-                    </li>
-                    <li>
-                        <a href="directors-corner/">Director’s Corner</a>
-                    </li>
-                    <li>
-                        <a href="governing-body/">Governing Body</a>
-                    </li>
-                    <li>
-                        <a href="faculty-council/">Faculty Council</a>
-                    </li>
-                    <li>
-                        <a href="administrative-structure/">Administrative Structure</a>
-                    </li>
-                    <li>
-                        <a href="students-council/">Student’s Council</a>
-                    </li>
-                    <li>
-                        <a href="support-staff/">Support Staff</a>
-                    </li>
-                    <li>
-                        <a href="photo-gallery/">Photo Gallery</a>
-                    </li>
-                    <li>
-                        <a href="contact-us/">Contact Us</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="academics/">Academics</a>
-                <ul class="submenu">
-                    <li>
-                        <a href="director/">Director</a>
-                    </li>
-                    <li>
-                        <a href="faculty/">Faculty</a>
-                    </li>
-                    <li class="has-submenu">
-                        <a>Department</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="mca-3/">MCA</a>
-                            </li>
-                            <li>
-                                <a href="bajmc-2/">BAJMC</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="admission-details/">Admission</a>
-                    </li>
-                    <li>
-                        <a href="fee-structure/">Fee Structure</a>
-                    </li>
-                    <li class="has-submenu">
-                        <a>Syllabus</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="mca-syllabus/">MCA Syllabus</a>
-                            </li>
-                            <li>
-                                <a href="bajmc-syllabus/">BA(JMC) Syllabus</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="has-submenu">
-                        <a>Course Material</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="course-material-mca/">Course Material (MCA)</a>
-                            </li>
-                            <li>
-                                <a href="course-material-ba-jmc/">Course Material (BA-JMC)</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="teaching-pedagogy/">Teaching Pedagogy</a>
-                    </li>
-                    <li>
-                        <a href="student-teacher-wardship/">Student Teacher Wardship</a>
-                    </li>
-                    <li>
-                        <a href="institute-browser/">Institute Brochure</a>
-                    </li>
-                    <li>
-                        <a href="http://bvicam.in/lms/">BVICAM LMS</a>
-                    </li>
-                    <li>
-                        <a href="https://classroom.google.com/">Google Classroom</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a>Infrastructure</a>
-                <ul class="submenu">
-                    <li>
-                        <a href="campus/">Campus</a>
-                    </li>
-                    <li>
-                        <a href="laboratories/">Laboratories</a>
-                    </li>
-                    <li>
-                        <a href="library/">Library</a>
-                    </li>
-                    <li>
-                        <a href="auditorium/">Auditorium</a>
-                    </li>
-                    <li>
-                        <a href="hostel/">Hostel</a>
-                    </li>
-                    <li>
-                        <a href="virtual-tour-of-campus/">Virtual Tour Of Campus</a>
-                    </li>
-                    <li>
-                        <a href="other-facilities/">Other Facilities</a>
-                    </li>
-                    <li>
-                        <a href="amphitheatre/">Amphitheatre</a>
-                    </li>
-                    <li>
-                        <a href="professional-association/">Professional Association</a>
-                    </li>
-                    <li>
-                        <a href="computer-resource-center/">Computer Resource Center</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="activities/">Activities</a>
-                <ul class="submenu">
-                    <li>
-                        <a href="criis/">CRIIS</a>
-                    </li>
-                    <li>
-                        <a href="fdp/">FDP</a>
-                    </li>
-                    <li>
-                        <a href="mdp/">MDP</a>
-                    </li>
-                    <li>
-                        <a href="https://bvicam.ac.in/webinars/">Expert Lectures/Webinars</a>
-                    </li>
-                    <li>
-                        <a href="https://bvicam.ac.in/MediaSeries/">Media Lecture Series</a>
-                    </li>
-                    <li>
-                        <a href="https://bvicam.ac.in/indiacom/">INDIACom</a>
-                    </li>
-                    <li>
-                        <a href="https://bvicam.ac.in/nsc/">NSC</a>
-                    </li>
-                    <li>
-                        <a href="bvicam-csr/">BVICAM CSR</a>
-                    </li>
-                    <li>
-                        <a href="club-activities/">Club Activities</a>
-                    </li>
-                    <li>
-                        <a href="mca-students-activities/">MCA Students’ Activities</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="placements/">Placements</a>
-                <ul class="submenu">
-                    <li>
-                        <a href="directors-message/">Director’s Message</a>
-                    </li>
-                    <li class="has-submenu">
-                        <a href="#">Training and Placement Cell</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="training-and-placement-cell/">Training and Placement Cell(MCA)</a>
-                            </li>
-                            <li>
-                                <a href="training-and-placement-cell-bjmc/">Training and Placement Cell BA(JMC)</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="has-submenu">
-                        <a href="#">Placement History</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="placement-history/">Placement History(MCA)</a>
-                            </li>
-                            <li>
-                                <a href="placement-history-bajmc/">Placement History BA(JMC)</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="has-submenu">
-                        <a href="#">Recruiting Companies</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="recruiting-companies/">Recruiting Companies (MCA)</a>
-                            </li>
-                            <li>
-                                <a href="recruiting-companies-bajmc/">Recruiting Companies BA(JMC)</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="has-submenu">
-                        <a href="#">Placement Trends</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="placement-trends/">Placement Trends (MCA)</a>
-                            </li>
-                            <li>
-                                <a href="placement-trends-of-major-recruiters-bajmc/">Placement Trends BA(JMC)</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a>Publications</a>
-                <ul class="submenu">
-                    <li>
-                        <a href="http://bvicam.ac.in/bjit/">BIJIT</a>
-                    </li>
-                    <li>
-                        <a href="http://bvicam.ac.in/indiacom/">INDIACom Proceedings</a>
-                    </li>
-                    <li>
-                        <a href="http://bvicam.ac.in/ijrms/">IJRMS</a>
-                    </li>
-                    <li>
-                        <a href="http://bvicam.ac.in/nsc/">NSC</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a>Alumni</a>
-                <ul class="submenu">
-                    <li>
-                        <a href="list/">List</a>
-                    </li>
-                    <li>
-                        <a href="alumni-council/">Alumni Council</a>
-                    </li>
-                    <li>
-                        <a href="alumni-meets/">Alumni Meets</a>
-                    </li>
-                    <li>
-                        <a href="alumni-activities/">Alumni Activities</a>
-                    </li>
-                    <li>
-                        <a href="bvp-golden-jubilee-alumni-meet/">BVP Golden Jubilee Alumni Meet</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="press-release-2/">Press Release</a>
-            </li>
-            <li class="has-submenu">
-                <a>Incubation</a>
-                <ul class="submenu">
-                    <li>
-                        <a href="http://Radio%20Bharati">Radio Bharati</a>
-                    </li>
-                    <li>
-                        <a href="http://Manzil">Manzil</a>
-                    </li>
-                    <li>
-                        <a href="http://Bharati%20Times">Bharati Times</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li>
-                <a href="management-quota/">Mgmt. Quota 2024-25</a>
-            </li>
-        </ul>
-    </div>
-
-    </header>
-
-    <div class="custom-marque">
-        <div class="marque-news">
-            <span class="marqueheader">Announcement</span>
-            <div class="marque-mask">
-                <marquee behavior="alternate" scrollamount="6" class="marqueticker" onmouseover="this.stop();" onmouseout="this.start();">
-                    <span>
-                        <img src="~/Content/images/new.gif" alt="new" width="35" height="15">
-                        <a href="http://bvicam.in/AdmissionEnquiry/">Admission Enquiry</a>
-                    </span>
-                    <span>
-                        <img src="~/Content/images/new.gif" alt="new" width="35" height="15">
-                        <a href="https://bvicam.ac.in/Delcon2024/">DELCON-2024 An Official FlagShip Conference of IEEE Delhi Section</a>
-                    </span>
-                    <span>
-                        <img src="~/Content/images/new.gif" alt="new" width="35" height="15">
-                        <a href="https://bvicam.ac.in/ViksitBharat2024/">ICCSR Conference on India Towards Viksit Bharat@2047</a>
-                    </span>
-                </marquee>
-            </div>
         </div>
     </div>
 
-    <div class="hero-section">
-        <div class="hero-section-three">
-            <div class="hero-section-left">
-                <div class="menubox-title">Quick Links</div>
-                <div class="menubox-bg">
-                    <ul class="menubox-menu">
-                        <li><a href="">News</a></li>
-                        <li><a href="">Home</a></li>
-                        <li><a href="">Important Dates</a></li>
-                        <li><a href="">Call for Papers</a></li>
-                        <li><a href="">Get Membership</a></li>
-                        <li><a href="">Member Login</a></li>
-                        <li><a href="">Submit Paper</a></li>
-                        <li><a href="">Special Sessions</a></li>
-                        <li><a href="">Registration</a></li>
-                        <li><a href="">Payment Modes</a></li>
-                        <li><a href="">Conference Secretariat</a></li>
-                        <li><a href="">Review Process, Publication & Indexing</a></li>
-                        <li><a href="">INDIACOM History</a></li>
-                        <li><a href="">Downloads</a></li>
-                        <li><a href="">Invited Speakers</a></li>
-                        <li><a href="">Guidelines to Submit Paper</a></li>
-                        <li><a href="">Join Technical Programme Committee</a></li>
-                        <li><a href="">Plagiarism Policy</a></li>
-                        <li><a href="">Committees</a></li>
-                        <li><a href="">Our Supporters</a></li>
-                        <li><a href="">INDIACom Proceedings</a></li>
-                        <li><a href="">Accommodation</a></li>
-                        <li><a href="">How to reach Venue</a></li>
-                        <li><a href="">FAQs</a></li>
-                        <li><a href="">Submit Feedbacks</a></li>
-                        <li><a href="">Contact Us</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="hero-section-center">
-                <div class="hero-section-slider">
-                    <div class="hero-section-item">
-                        <img src="~/Content/images/slide1.png" width="820" height="425" alt="slider" class="responsive" />
-                    </div>
-                    <div class="hero-section-item">
-                        <img src="~/Content/images/slide2.jpg" width="820" height="425" alt="slider" class="responsive" />
-                    </div>
-                </div>
-            </div>
-            <div class="hero-section-right">
-                <div class="menubox-title">Quick Links</div>
-                <div class="menubox-bg slidermenubox">
-                    <ul class="menubox-menu">
-                        <li><a href="">DELCON-2024 An Official Flagship Conference of IEEE Delhi Section</a></li>
-                        <li><a href="">ICSSR Conference on India Towards Viksit Bharat@2047</a></li>
-                        <li><a href="">Admission Enquiry</a></li>
-                        <li><a href="">DELCON-2024 An Official Flagship Conference of IEEE Delhi Section</a></li>
-                        <li><a href="">ICSSR Conference on India Towards Viksit Bharat@2047</a></li>
-                        <li><a href="">Admission Enquiry</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="admission-proces">
-        <div class="admission-content">
-            <h2>Admission Procedure</h2>
-            <p>The admission to the MCA and BA (JMC) Programmes of this Institute is governed by the rules and regulations of Guru Gobind Singh Indraprastha (GGSIP) University, New Delhi, and Govt. of NCT, Delhi. Detailed Procedure can also be referred at www.ipu.ac.in. For more details, Admission Committee may be contacted, on the below mentioned contact details. <a href="">Click here</a> for more details</p>
-            <h4>Admission Committee :</h4>
-            <ul>
-                <li>+91 – 8130176573, 9667507437, 9650746124</li>
-                <li>+91 – 11 – 25275055, 25255056</li>
-                <li>mca@bvicam.ac.in</li>
-            </ul>
-            <div class="buttomwrap">
-                <a class="button-class" href="">Admission Related Enquiry</a>
-            </div>
-        </div>
-        <div class="admission-slid">
-            <h2>Our Achievers</h2>
-            <div class="archive-slider">
-                <div class="achivslider-in">
-                    <div class="achive-group">
-                        <img src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/06/Tanya-Goyal-185x250.jpg" height="250" width="185" alt="" class="responsive" />
-                        <div class="achiveoverlay">
-                            <h5>Tanya Goyal</h5>
-                            <p>Gold Medalist of MCA Batch 2018-21</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="achivslider-in">
-                    <div class="achive-group">
-                        <img src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/06/Tanya-Goyal-185x250.jpg" height="250" width="185" alt="" class="responsive" />
-                        <div class="achiveoverlay">
-                            <h5>Tanya Goyal</h5>
-                            <p>Gold Medalist of MCA Batch 2018-21</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="achivslider-in">
-                    <div class="achive-group">
-                        <img src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/06/Tanya-Goyal-185x250.jpg" height="250" width="185" alt="" class="responsive" />
-                        <div class="achiveoverlay">
-                            <h5>Tanya Goyal</h5>
-                            <p>Gold Medalist of MCA Batch 2018-21</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="achivslider-in">
-                    <div class="achive-group">
-                        <img src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/06/Tanya-Goyal-185x250.jpg" height="250" width="185" alt="" class="responsive" />
-                        <div class="achiveoverlay">
-                            <h5>Tanya Goyal</h5>
-                            <p>Gold Medalist of MCA Batch 2018-21</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="achivslider-in">
-                    <div class="achive-group">
-                        <img src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/06/Tanya-Goyal-185x250.jpg" height="250" width="185" alt="" class="responsive" />
-                        <div class="achiveoverlay">
-                            <h5>Tanya Goyal</h5>
-                            <p>Gold Medalist of MCA Batch 2018-21</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="achivslider-in">
-                    <div class="achive-group">
-                        <img src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/06/Tanya-Goyal-185x250.jpg" height="250" width="185" alt="" class="responsive" />
-                        <div class="achiveoverlay">
-                            <h5>Tanya Goyal</h5>
-                            <p>Gold Medalist of MCA Batch 2018-21</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="achivslider-in">
-                    <div class="achive-group">
-                        <img src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/06/Tanya-Goyal-185x250.jpg" height="250" width="185" alt="" class="responsive" />
-                        <div class="achiveoverlay">
-                            <h5>Tanya Goyal</h5>
-                            <p>Gold Medalist of MCA Batch 2018-21</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="secondry-grid-wrapmain">
-        <div class="secondry-grid-wrap">
-            <div class="section-title">
-                <h3>Our Incubations</h3>
-            </div>
-            <div class="secondry-grid">
-                <div class="secondry-grid-item">
-                    <a href="">
-                        <img src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/05/WhatsApp-Image-2024-05-09-at-10.10.28_4006e5a2.jpg" alt="" height="290" width="230" class="responsive">
-                    </a>
-                </div>
-                <div class="secondry-grid-item">
-                    <a href="">
-                        <img src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/04/NSCLogo_1.png" alt="" height="290" width="230" class="responsive">
-                    </a>
-                </div>
-                <div class="secondry-grid-item">
-                    <a href="">
-                        <img src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/07/WhatsApp-Image-2024-07-27-at-09.18.33.jpeg" alt="" height="290" width="230" class="responsive">
-                    </a>
-                </div>
-                <div class="secondry-grid-item">
-                    <a href="">
-                        <img src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/04/BJITPosterIcon.jpg" alt="" height="290" width="230" class="responsive">
-                    </a>
-                </div>
-                <div class="secondry-grid-item">
-                    <a href="">
-                        <img src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/07/Incubations-Slides-ver3-new_-Bharatitimes.jpg" alt="" height="290" width="230" class="responsive">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="double-grig-wrap">
-        <div class="double-grig">
-            <div class="double-initem">
-                <a href="" class="scallanimation">
-                    <img width="634" height="181" src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/04/Delcon2024Bannerver4.jpg" alt="" title="Delcon2024Bannerver4" class="responsive">
-                </a>
-            </div>
-            <div class="double-initem">
-                <a href="" class="scallanimation">
-                    <img width="634" height="181" src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/07/WhatsApp-Image-2024-07-30-at-18.09.56.jpeg" alt="" title="WhatsApp Image 2024-07-30 at 18.09.56" class="responsive">
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="incubations-wrap">
-        <div class="section-title">
-            <h3>Our Incubations</h3>
-        </div>
-        <div class="incubations-inner">
-            <div class="incubations-items">
-                <a href="" class="scallanimation">
-                    <img src="~/Content/images/Radio-Bharati.jpg" height="290" width="230" alt="" />
-                </a>
-            </div>
-            <div class="incubations-items">
-                <a href="" class="scallanimation">
-                    <img src="~/Content/images/Radio-Bharati.jpg" height="290" width="230" alt="" />
-                </a>
-            </div>
-            <div class="incubations-items">
-                <a href="" class="scallanimation">
-                    <img src="~/Content/images/Radio-Bharati.jpg" height="290" width="230" alt="" />
-                </a>
-            </div>
-            <div class="incubations-items">
-                <a href="" class="scallanimation">
-                    <img src="~/Content/images/Radio-Bharati.jpg" height="290" width="230" alt="" />
-                </a>
-            </div>
-            <div class="incubations-items">
-                <a href="" class="scallanimation">
-                    <img src="~/Content/images/Radio-Bharati.jpg" height="290" width="230" alt="" />
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="testimonial-wrap">
-        <div class="section-title">
-            <h3>Testimony</h3>
-        </div>
-        <div class="testimonial-inner">
-            <div class="testimonial-items">
-                <div class="testimonitm-in">
-                    <div class="testimonial-img">
-                        <img width="198" height="198" src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/05/1671178501848.jpg" alt="Aditya Rana" class="responsive">
-                    </div>
-                    <div class="testimonial-description">
-                        <h4>Aditya Rana</h4>
-                        <div class="testimonial-sub">
-                            <strong>IVP</strong>
-                            <a href="">
-                                <img src="~/Content/images/linkedin.png" width="24" height="24" alt="linkedin" class="responsive">
-                            </a>
-                        </div>
-                        <p>BVICAM College offers an exceptional learning environment with experienced faculty who are always ready to help. The library and lab facilities are top-notch, providing students with ample resources to excel in their studies.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-items">
-                <div class="testimonitm-in">
-                    <div class="testimonial-img">
-                        <img width="198" height="198" src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/05/1691913486521.jpg" alt="Karan Rawat" class="responsive">
-                    </div>
-                    <div class="testimonial-description">
-                        <h4>Karan Rawat</h4>
-                        <div class="testimonial-sub">
-                            <strong>Invansys Technologies</strong>
-                            <a href="">
-                                <img src="~/Content/images/linkedin.png" width="24" height="24" alt="linkedin" class="responsive">
-                            </a>
-                        </div>
-                        <p>The placement cell at BVICAM is very proactive and has strong connections with top companies. They organize regular workshops and mock interviews, which really helped me secure a job at a leading IT firm.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-items">
-                <div class="testimonitm-in">
-                    <div class="testimonial-img">
-                        <img width="198" height="198" src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/05/WhatsApp-Image-2024-05-24-at-22.46.33_22613bc6-1.jpg" alt="Niti Chauhan" class="responsive">
-                    </div>
-                    <div class="testimonial-description">
-                        <h4>Niti Chauhan</h4>
-                        <div class="testimonial-sub">
-                            <strong>Symbiotic Consulting Group</strong>
-                            <a href="">
-                                <img src="~/Content/images/linkedin.png" width="24" height="24" alt="linkedin" class="responsive">
-                            </a>
-                        </div>
-                        <p>BVICAM has a vibrant campus life with various clubs and activities. The annual tech fest and cultural events are a great way to unwind and showcase your talents. The student community is very supportive and collaborative.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-items">
-                <div class="testimonitm-in">
-                    <div class="testimonial-img">
-                        <img width="198" height="198" src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/08/1705818509847.jpg" alt="Abhijeet Rana" class="responsive">
-                    </div>
-                    <div class="testimonial-description">
-                        <h4>Abhijeet Rana</h4>
-                        <div class="testimonial-sub">
-                            <strong>DrapCode</strong>
-                            <a href="">
-                                <img src="~/Content/images/linkedin.png" width="24" height="24" alt="linkedin" class="responsive">
-                            </a>
-                        </div>
-                        <p>One of the best aspects of studying at BVICAM is the focus on practical learning. The curriculum is designed to include hands-on projects and internships, which prepare you well for the real-world challenges.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-items">
-                <div class="testimonitm-in">
-                    <div class="testimonial-img">
-                        <img width="198" height="198" src="https://projectradio.growthinnovators.digital/wp-content/uploads/2024/05/1671566473310.jpg" alt="Saurav Singh Rawat" class="responsive">
-                    </div>
-                    <div class="testimonial-description">
-                        <h4>Saurav Singh Rawat</h4>
-                        <div class="testimonial-sub">
-                            <strong>Yamaha Motor Solution</strong>
-                            <a href="">
-                                <img src="~/Content/images/linkedin.png" width="24" height="24" alt="linkedin" class="responsive">
-                            </a>
-                        </div>
-                        <p>The college infrastructure is modern and well-maintained. Classrooms are equipped with smart boards, and the campus has high-speed internet. The cafeteria offers a variety of food options, making it a great place to study and socialize.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer class="custom-footer">
-        <div class="footer-main">
-            <div class="footer-menu">
-                <h3>Important Links</h3>
-                <ul>
-                    <li><a href="">Home</a></li>
-                    <li><a href="">Back</a></li>
-                    <li><a href="https://bvicam.in/">BVICAM</a></li>
-                </ul>
-            </div>
-            <div class="footer-menu">
-                <h3>Important Links</h3>
-                <ul>
-                    <li><a href="">Contact us</a></li>
-                    <li><a href="">FAQs</a></li>
-                </ul>
-            </div>
-            <!-- <div class="footer-logos">
-                <img src="~/Content/images/website-logo.png" alt="site logo" height="277" width="328" class="responsive" />
-            </div> -->
-            <div class="footer-maps">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12104.331475922118!2d77.11787271844223!3d28.68263866881487!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d038b9232e7cd%3A0x34ebc68df4428491!2sBharati%20Vidyapeeth's%20Institute%20of%20Computer%20Applications%20and%20Management%20(BVICAM)!5e0!3m2!1sen!2sin!4v1707735737813!5m2!1sen!2sin" width="450" height="110" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </div>
-        <div class="footer-contact">
-            <div class="contact-item-col">
-                <span class="contact-icon">
-                    <img src="~/Content/images/map.png" alt="Map Pin" height="40" width="40" class="responsive">
-                </span>
-                <div class="contact-inner">
-                    <p>
-                        <a target="_blank" href=""> A-4, Paschim Vihar, Rohtak Road, New Delhi - 110063 (INDIA) </a>
-                    </p>
-                </div>
-            </div>
-            <div class="contact-item-col">
-                <span class="contact-icon">
-                    <img src="~/Content/images/call.png" alt="Phone" height="40" width="40" class="responsive">
-                </span>
-                <div class="contact-inner">
-                    <p>
-                        <a href="tel:+91-11-25275055">+91-8130176573</a>
-                    </p>
-                </div>
-            </div>
-            <div class="contact-item-col">
-                <span class="contact-icon">
-                    <a href="" target="_blank">
-                        <img src="~/Content/images/email.png" alt="Email" height="40" width="40" class="responsive">
-                    </a>
-                </span>
-                <div class="contact-inner">
-                    <p>
-                        <a href="" target="_blank">mca@bvicam.ac.in</a>
-                    </p>
-                </div>
-            </div>
-            <div class="contact-item-col">
-                <span class="contact-icon">
-                    <a href="" target="_blank">
-                        <img src="~/Content/images/scop.png" alt="Virtual Tour" height="40" width="40" class="responsive">
-                    </a>
-                </span>
-                <div class="contact-inner">
-                    <p>
-                        <a href="" target="_blank">Virtual Tour</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright">
-            <p>Copyright © 2024 BVICAM, New Delhi</p>
-        </div>
-    </footer>
+</div>
 
 
-    </div>
-
-    <script type="text/javascript" src="~/Content/js/jquery-2.2.4.min.js"></script>
-    <!-- <script type="text/javascript" src="~/Content/js/jcarousellite.js"></script> -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script type="text/javascript" src="~/Content/js/custom.js"></script>
-</body>
-</html>

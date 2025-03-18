@@ -2,25 +2,36 @@
   box-sizing: border-box;
 }    
 body {
-  font: 14px/1.4 'Trebuchet MS', Helvetica, sans-serif;
-  color: #000000;
+  font: 15px/1.4 'Trebuchet MS', Helvetica, sans-serif;
+/*  color: grey;*/
   text-align: left;
   word-wrap: break-word;
-  background-color: #eaeaea;
+  background-color: lightgrey !important;
   margin: 0;
-  padding: 0;
+  padding: 9px;
 }
-h1,h2,h3,h4,h5,h6{
+h1{
+    color: black !important;
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
-    margin: 0px 0px 10px;
+    margin: 0px 0px 8px ;
+    line-height: 1;
+    font-weight: 700;
+    justify-content: left !important;
+  }
+
+h2,h3,h4,h5,h6{
+    font-family: 'Trebuchet MS', Helvetica, sans-serif;
+    margin: 0px 0px 8px;
     line-height: 1;
     font-weight: 400;
+/*    color:orange;*/
 }
 .site-wrapper {
-  max-width: 1280px;
-  min-width: 720px;
-  margin: 0 auto;
-  padding: 0px 15px;
+    max-width: 1280px;
+    min-width: 720px;
+    margin: 0 auto;
+/*    padding: 0px 15px;*/
+    background-color: white;
 }
 .responsive{
   max-width: 100%;
@@ -93,6 +104,7 @@ h1,h2,h3,h4,h5,h6{
   border-radius: 3px;
   text-decoration: none;
 }
+
 .twitter-color {
   background-color: #000000;
 }
@@ -143,13 +155,29 @@ h1,h2,h3,h4,h5,h6{
 .header-button-link li {
   padding-left: 8px;
 }
+.login-button-container {
+    display: flex;
+    flex-direction: column; /* Stack login and date/time */
+    align-items: center; /* Center align content */
+    text-align: center;
+}
 
-.header-days-time {
-  font-size: 14px;
-  font-weight: bold;
-  color: #333;
-  text-align: right;
-  padding-top: 10px;
+/*.current-date-time {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 5px;*/ /* Adds spacing between login button and date/time */
+/*}*/
+
+
+#currentDateTime {
+    flex: 0.49;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    text-align: right;
+/*    padding: 10px 70px 0px 0px;*/
+    margin: 5px 0;
 }
 
 .header-menu-wrapper {
@@ -158,7 +186,7 @@ h1,h2,h3,h4,h5,h6{
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bfe6ff), color-stop(100%, #497dc1));
     background: -webkit-linear-gradient(top, #bfe6ff 0%, #497dc1 100%);
     background: -o-linear-gradient(top, #bfe6ff 0%, #497dc1 100%);
-    background: -ms-linear-gradient(top, #bfe6ff 0%, #497dc1 100%);
+    /*background: -ms-linear-gradient(top, #bfe6ff 0%, #497dc1 100%);*/
     background: linear-gradient(to bottom, #bfe6ff 0%, #497dc1 100%);
     border-radius: 10px;
     margin-bottom: 5px;
@@ -259,11 +287,11 @@ h1,h2,h3,h4,h5,h6{
   top: 0px;
 }
 /*marquee*/
-.marque-news {
-  display: flex;
-  border-radius: 10px;
-  overflow: hidden;
-  background-color: #ffffff;
+/*.marquee {
+    color: darkred !important;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #ffffff;
 }
 
 .marqueheader {
@@ -310,20 +338,58 @@ h1,h2,h3,h4,h5,h6{
   display: flex;
   align-items: center;
   width: calc(100% - 125px);
+}*/
+.custom-marquee {
+    display: flex;
+    align-items: center;
+    background-color: red;
+    padding: 2px 2px;
+    border-radius: 10px;
+    background-color: #E6F4FF;
+    overflow: hidden;
+    border: 1px solid #ddd;
 }
 
+.announcement-box {
+    background-color:#DD3737;
+    color: white;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin-right: 10px;
+    white-space: nowrap;
+}
+
+marquee {
+    flex: 1;
+    color: black;
+/*    font-weight: bold;*/
+}
+
+
+
 /*hero section*/
-.hero-section-three {
-  display: flex;
+
+.hero-section {
+    display: flex;
+    background-color: #ffffff;
+    padding: 0px 0px ;
+    border-radius: 10px 10px 0px 0px;
 }
 
 .hero-section-left {
   width: 20%;
-  padding: 0px 13px;
+  padding: 5px 7px 5px 7px !important;
 }
 
-.hero-section-center {
+.hero-section-center  {
   width: 60%;
+}
+.hero-section-right {
+    padding: 5px 0px 0px 10px   !important;
+}
+.content-section{
+    padding:0px 17px 5px 5px !important;
 }
 .hero-section-slider .slick-arrow {
   position: absolute;
@@ -333,7 +399,7 @@ h1,h2,h3,h4,h5,h6{
   height: 35px;
   width: 35px;
   color: transparent;
-  padding: 0px;
+  padding: 0px 3px;
   font-size: 0px;
   z-index: 9;
   transition: all .4s;
@@ -413,33 +479,20 @@ h1,h2,h3,h4,h5,h6{
   background-color: #fff;
 }
  
-
-.hero-section-right {
-  width: 20%;
-  padding: 0px 13px;
-}
-
-.hero-section {
-  background-color: #ffffff;
-  padding: 19px 0px;
-  border-radius: 10px 10px 0px 0px;
-}
-
 .menubox-title {
   background: linear-gradient(to bottom, #bfe6ff 0%, #497dc1 100%);
   border-radius: 14px;
   text-align: center;
-  padding: 8px 5px;
-  font-size: 19px;
-  font-weight: 600;
+  padding: 6px 5px;
+/*  font-size: 19px;*/
+/*  font-weight: 500;*/
   margin-bottom: 15px;
 }
 
 .menubox-bg {
-  background: linear-gradient(to bottom, #bfe6ff 0%, #497dc1 100%);
-  height: calc(100% - 100px);
-  border-radius: 14px;
-  overflow: hidden;
+    background: linear-gradient(to bottom, #bfe6ff 0%, #497dc1 100%);
+    border-radius: 14px;
+    overflow: hidden;
 }
 
 .menubox-menu {
@@ -462,9 +515,136 @@ h1,h2,h3,h4,h5,h6{
 .menubox-menu li a:hover {
   color: red;
 }
+#table2 {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.welcome-text {
+    font-family: Verdana, sans-serif;
+    font-size: 10px;
+    padding: 0;
+}
+
+.main-header {
+    background-color: blue;
+    background: #70A4DC;
+    padding: 0;
+}
+
+.header-table {
+    width: 100%;
+    height: 106px;
+   /* background: url("~/Content/images/barINDIA.jpg") no-repeat;*/
+}
+
+.logo-section {
+    padding: 5px 0px 0px 10px;
+    color: white;
+    text-align: center;
+}
+
+.logo-img {
+    width: 164px;
+    height: 85px;
+}
+
+.conference-title {
+    color: white;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 25pt;
+    text-align: center;
+    padding-top: 5px;
+}
+
+.conference-details {
+    color: white;
+    font-family: "Lucida Sans", sans-serif;
+    font-size: 12pt;
+}
+
+.conference-subtitle {
+    font-size: 13pt;
+    color: yellow;
+}
+
+.sponsor-section {
+    padding: 5px 10px 0px 0px;
+    color: white;
+    text-align: center;
+}
+
+.supported-by {
+    text-align: center;
+    color: red;
+    padding: 5px 0;
+}
+
+.sponsor-logos {
+    display: flex;
+    flex:2;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 3px 10px 0px 20px ;
+    margin-left:30px;
+}
+
+
+.logo-container {
+    flex: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    padding: 10px 0px 0px 0px;
+    width:50%
+}
+
+.small-logo1, .small-logo4 {
+    width: 83px;
+    height: 82px;
+}
+.small-logo2, .small-logo3 {
+    width: 87px;
+    height: 85px;
+}
+.small-logo5 {
+    width: 87px;
+    height: 85px;
+}
+.small-logo6 {
+    width: 97px;
+    height: 85px;
+}
+
+.login-button-container {
+    text-align: left;
+    padding:0px 0px 0px 60px;
+    flex: 0.5;
+}
+.login-date-container {
+    margin-left: 120px; /* Adjust the value to control space */
+}
+
+.login-button {
+    background-color: #DD3737;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 30px;
+    width: 50%;
+    border-radius:7px;
+}
+
 
 /*Admission*/
-.admission-proces {
+/*.admission-proces {
   background-color: #ffffff;
   display: flex;
   padding: 0px 0px;
@@ -571,10 +751,10 @@ h1,h2,h3,h4,h5,h6{
 .admission-content p {
   margin: 0px 0px 15px;
   text-align: justify;
-}
+}*/
 
 /*publication*/
-.secondry-grid-wrapmain {
+/*.secondry-grid-wrapmain {
   background-color: #ffffff;
 }
 .secondry-grid-wrap {
@@ -602,10 +782,10 @@ h1,h2,h3,h4,h5,h6{
 .secondry-grid-item img {
   display: block;
   width:100%;
-}
+}*/
 
 /*2 col img*/
-.double-grig-wrap {
+/*.double-grig-wrap {
   background-color: #ffffff;
 }
 .double-grig {
@@ -633,10 +813,10 @@ h1,h2,h3,h4,h5,h6{
 
 .scallanimation:hover {
   transform: scale(.9);
-}
+}*/
 
 /*incubations*/
-.incubations-wrap {
+/*.incubations-wrap {
   background-color: #ffffff;
   padding: 25px 20px;
   border-radius: 0px 0px 10px 10px;
@@ -661,13 +841,13 @@ h1,h2,h3,h4,h5,h6{
 .incubations-items img {
   display: block;
   width:100%;
-}
+}*/
 
 
 
 
 /*testimonials*/
-.testimonial-wrap {
+/*.testimonial-wrap {
   position: relative;
   background-color: #fff;
   padding: 30px 0px 20px;
@@ -765,23 +945,70 @@ h1,h2,h3,h4,h5,h6{
   max-width: 100%;
   left: 0;
   right: 0;
+}*/
+/*
+
+index*/
+.customTable {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+/*    padding: 20px;*/
 }
+
+.customTable-main {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+.customTable-header {
+    background-color: #70A4DC;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.customTable td, .customTable th {
+    padding: 8px;
+    border: 1px solid black;
+    text-align: left;
+}
+
+/* Alternating Row Colors */
+.customTable tbody tr:nth-child(odd) {
+    background-color: #EEEEEE;
+}
+/* Light Grey */
+.customTable tbody tr:nth-child(even) {
+    background-color: white;
+}
+
+/* Center Align Track Data */
+.customTable-track {
+    text-align: center;
+}
+
+
 
 
 
 /* footer */
 .custom-footer {
   background: linear-gradient(to bottom, #bfe6ff 0%, #497dc1 100%);
+  padding: 0px;
 }
 
 .footer-main {
   display: flex;
   justify-content: space-between;
-  padding: 28px 0px;
+  padding: 8px 0px 5px 0px;
 }
 
 .footer-menu h3 {
-  font-weight: 600;
+  font-weight: 700;
   color: #191970;
   text-align: left;
   font-size: 20px;
@@ -798,10 +1025,11 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .footer-menu ul li a {
-  text-decoration: none;
-  display: inline-block;
-  color: #191970;
-  font-size: 14px;
+        text-decoration: none;
+        display: inline-block;
+        color: #191970;
+        font-size: 14px;
+        font-weight: 700;
 }
 
 .footer-menu {
@@ -998,4 +1226,432 @@ box-shadow: 3px 3px 3px #7C7C7C;
 .searcbtn i {
   font-weight: 900;
   color: #3f85ff;
+}
+/* Registration */
+.registration-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Table Container */
+.registration-table {
+    width: 90%;
+    background: url('indiacom-link.jpg') no-repeat center;
+    background-size: cover;
+    padding: 0px;
+}
+
+/* Heading Styles */
+.registration-title {
+    text-align: center;
+    color: blue;
+/*    font-size: 24px;*/
+    margin-bottom: 10px;
+}
+
+.registration-subtitle {
+    text-align: center;
+    color: red;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Table Styles */
+.fee-table {
+    width: 100%;
+/*    border-collapse: collapse;*/
+/*    margin-top: 20px;*/
+    border: 3px double black;
+    background: white;
+}
+
+    .fee-table th,
+    .fee-table td {
+        border: 2px double black;
+        padding: 10px;
+        text-align: center;
+    }
+
+    /* Table Header */
+    .fee-table th {
+        background-color: #f2f2f2;
+        color: blue;
+        font-weight: bold;
+    }
+
+/* Category Header */
+.category-header {
+    background-color: #fff;
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Alternating Row Background Colors */
+.fee-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.fee-table tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+
+/* Important Note (red text) */
+.important-note {
+    color: red;
+    font-weight: bold;
+}
+
+/* Highlighted text (red and bold) */
+.highlighted-text {
+    color: red;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Section Titles */
+.section-title {
+    color: red;
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+/* Discount List */
+.discount-list {
+    list-style-type: decimal;
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+    .discount-list li {
+        
+        margin-bottom: 10px;
+    }
+
+/* Bank Details Styling */
+.bank-details {
+    color: red;
+    font-weight: bold;
+}
+
+/* Guidelines Link */
+.guidelines {
+    font-weight: bold;
+    color: blue;
+    text-decoration: underline;
+}
+/* IndiaCom History*/
+.generalTxt {
+    text-align: justify;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    /*    padding-right: 20px;*/
+}
+
+.banner-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.banner-image {
+    width: 500px;
+    height: 300px;
+}
+
+
+.speakers-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+    .speakers-table td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .speakers-table .alt {
+        background-color: #D8E4F8;
+    }
+.faq {
+    cursor: pointer;
+    color: blue;
+    display: block;
+    margin: 5px 0;
+    text-decoration:none;
+    font-size:15px;
+/*    font-size: 20px;*/
+}
+
+.faq-content {
+    display: none;
+    margin-left: 2px;
+/*    font-size: 18px;*/
+}
+/* technical committee */
+.technical-committee {
+    width: 100%;
+    max-width: 100%;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+}
+
+/* Section title styling */
+.section-title {
+    text-align: center;
+    color: blue;
+    font-weight: bold;
+}
+
+/* List styling */
+.committee-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/* Individual committee item styling */
+.committee-item {
+    margin-bottom: 20px;
+    padding: 5px;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+}
+
+    /* Hover effect for committee items */
+    .committee-item:hover {
+        color: blue;
+        font-size: 18px;
+        border: 1px solid black;
+    }
+/*submit Paper*/
+.content-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+/*    padding: 20px;*/
+}
+
+/* Styling for the Submit Paper Section */
+.submitPaper {
+    width: 100%;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+    .submitPaper h2 {
+        color: #2c3e50;
+        font-weight: bold;
+    }
+
+    .submitPaper .generalTxt {
+        line-height: 1.6;
+        margin: 10px 0;
+    }
+
+    /* Links Styling */
+    .submitPaper a {
+        color: #2980b9;
+        text-decoration: none;
+    }
+
+        .submitPaper a:hover {
+            text-decoration: underline;
+        }
+
+    .submitPaper .faq {
+        color: #2980b9;
+        cursor: pointer;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    /* Hide the checkboxes */
+    .submitPaper input[type="checkbox"] {
+        display: none;
+    }
+
+        /* Toggle the visibility of the FAQ content when checkbox is checked */
+        .submitPaper input[type="checkbox"]:checked + .faq-content {
+            display: block;
+        }
+
+    /* Styling for the FAQ content */
+    .submitPaper .faq-content {
+        display: none;
+        margin-top: 10px;
+    }
+
+        .submitPaper .faq-content p {
+            margin: 10px 0;
+            
+        }
+
+        /* Styling for the FAQ title */
+        .submitPaper .faq-content b {
+            color: #e74c3c;
+        }
+
+        /* Additional Section for Buttons/Links Inside the FAQ */
+        .submitPaper .faq-content a {
+            color: #e74c3c;
+        }
+
+            .submitPaper .faq-content a:hover {
+                text-decoration: none;
+            }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .content-container {
+        padding: 10px;
+    }
+
+    .submitPaper {
+        padding: 10px;
+    }
+
+        .submitPaper h2 {
+            font-size: 20px;
+        }
+
+/*        .submitPaper .generalTxt {
+            font-size: 12px;
+        }*/
+}
+/* localOrganisingCommittee */
+.organising-committee {
+    width: 100%;
+    max-width: 100%;
+    margin: 30px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+}
+
+
+ul {
+    list-style-type: disc;
+    padding: 0px;
+}
+       
+    
+    .transitionList li a{
+        margin: 20px;
+        padding: 5px;
+        text-decoration:none !important;
+/*        font-size: 14px;*/
+        color: black;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    }
+
+
+.transitionList li:hover {
+    color: blue;
+    font-size: 17px;
+    border: 1px solid black;
+    text-decoration: none;
+}
+.transitionList li:hover a {
+        color: blue;
+        font-size: 17px;
+    }
+.committee-list li a{
+    text-decoration: none;
+    
+}
+.committee-list {
+    padding: 10px;
+    list-style-type: disc;
+}
+.committee-list li:hover a {
+    text-decoration: underline;
+}
+
+.listSpeaker-container {
+    text-align: center;
+    padding: 20px;
+}
+
+
+.listSpeaker-content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+/*chairsCoChairs*/
+.chairs-container {
+    width: 100%;
+    max-width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chair-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.chair-title {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.chair-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.chair-flex {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.chair-box {
+    text-align: center;
+    flex: 1;
+    margin-right: 20px;
+}
+
+    .chair-box:last-child {
+        margin-right: 0;
+    }
+
+.chair-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.chair-grid-item {
+    flex: 1;
+    text-align: center;
+    margin: 10px;
+}
+
+
+ul {
+    /*list-style-type: decimal;*/ /* Numbers instead of bullets */
+    padding-left: 20px; /* Ensure proper spacing */
+}
+li {
+   margin-bottom: 10px;
 }

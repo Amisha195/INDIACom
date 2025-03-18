@@ -1,0 +1,198 @@
+
+@{
+    Layout = "~/Views/Shared/Layoutweb.cshtml";
+}
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<div class="conten-section col-md">
+    <h1>Frequently Asked Questions </h1>
+    <!-- FAQ 1 -->
+    <a class="faq" onclick="toggleList('1')">Why do I need to become a member on the website?</a>
+    <div id="1" class="faq-content">
+        Getting membership to our site is the <b>first step</b> towards your participation in our conferences.
+        So whether you are an author keen on submitting your paper to us, or someone interested in attending our conference, the first step
+        is getting a membership.
+        Simply put, becoming a member of our site would help us serve you. And its <b>free</b>!
+    </div>
+
+    <!-- FAQ 2 -->
+    <a class="faq" onclick="toggleList('2')">What are the benefits of becoming a member?</a>
+    <div id="2" class="faq-content">
+        Being a member of our site gives you access to "members-only" features like online paper submission, event registration.
+        This guarantees that your data is the processed faster than the conventional route.
+        Also, the correspondence with members is automated and&nbsp; the
+        important messages regarding various events are regularly communicated to the
+        members of our website.
+    </div>
+
+    <!-- FAQ 3 -->
+    <a class="faq" onclick="toggleList('3')">How do I become a member?</a>
+    <div id="3" class="faq-content">
+        You need to fill up an online form with details regarding you and your organisation.
+        Be careful while filling up these forms, as various certificates acknowledging your contributions
+        would be generated based on our records submitted by you.
+        You can access the <a href="addMember.asp">Membership Form here</a>.
+    </div>
+
+    <!-- FAQ 4 -->
+    <a class="faq" onclick="toggleList('4')">
+        The name of my organization does not appear in the list of organizations given on the membership form, What do I do?
+    </a>
+    <div id="4" class="faq-content">
+        Select the last entry
+        <b> </b>
+        "i.e."
+        <b> Other </b>
+        that appears in the listed
+        organizations. You would be prompted to add details related to your
+        organization. Fill in the required data and your organization will be added to
+        our list immediately.
+    </div>
+
+    <!-- FAQ 5 -->
+    <a class="faq" onclick="toggleList('5')">
+        I am a member on the website.
+        Can I change my membership details?
+    </a>
+    <div id="5" class="faq-content">
+        Yes. After logging in, click on the <b>
+            <i>edit profile link</i>
+        </b>that appears next to the login message.
+    </div>
+
+    <!-- FAQ 6 -->
+    <a class="faq" onclick="toggleList('6')">
+        I am a member on the website,
+        but I forgot my password, what do I do ?
+    </a>
+    <div id="6" class="faq-content">
+        Click on the <a href="retrievePassword.asp">Forgot Your Password</a></font>
+        link that appears on the login page
+    </div>
+
+    <!-- FAQ 7 -->
+    <a class="faq" onclick="toggleList('7')">
+        Do I need to register for the conference, if I am not submitting a paper?
+    </a>
+    <div id="7" class="faq-content">
+        If you wish to attend our conference, then you need to register.
+    </div>
+
+    <!-- FAQ 8 -->
+    <a class="faq" onclick="toggleList('8')">How do I register?</a>
+    <div id="8" class="faq-content">
+        To register for an event, you need to fill up a registration form for that
+        specific event.
+        You can access the Event
+        <a href="downloads/Registration_Form_for_INDIACom%202019.doc">Registration Form</a>
+        here.
+    </div>
+
+    <!-- FAQ 9 -->
+    <a class="faq" onclick="toggleList('9')">How do I make payments?</a>
+    <div id="9" class="faq-content">
+        Payments can be made either in Cash or by Demand Draft (DD) (drawn in favour of <b>
+            Director,
+            BVICAM,
+        </b>
+        payable at <b>New Delhi</b>).
+        </font>Online Payments / RTGS in our SBI <font color="#0000FF">
+            <b>
+                Account No.
+            </b>:
+        </font> <b><font color="#FF0000">32077798105</font></b> <b>
+            <font color="#0000FF">Account Name:</font>
+        </b> <b><font color="#FF0000">BVICAM</font></b>
+        <b><font color="#0000FF">Branch Name:</font></b> <b><font color="#FF0000">Jwala</font></b>
+        <b><font color="#FF0000">Heri</font></b> (<b><font color="#FF0000">Delhi</font></b>,
+        <b><font color="#FF0000">INDIA</font></b>), <b><font color="#0000FF">Branch Code</font></b>:
+        <b><font color="#FF0000">06623</font></b>, <b><font color="#0000FF">IFSC:</font></b>
+        <b><font color="#FF0000">SBIN0006623</font></b>, <b>
+            <font color="#0000FF">
+                Account Type:
+            </font>
+        </b> <b><font color="#FF0000">Saving</font></b>. While
+        making online payment, authors are further requested to mention their Member ID
+        &amp; Paper ID clearly in Payment Remark to enable us to trace your payment in the
+        Bank Statement. Kindly also note to add the applicable bank charges, if any, for
+        online payment. .Cash payments are to be made on the spot, while the DD
+        can be mailed to us.
+        <p>
+            Any payment received before the specified <i> early bird date</i> is
+            eligible for the early bird discount.
+        </p>
+    </div>
+
+    <!-- FAQ 10 -->
+    <a class="faq" onclick="toggleList('10')">I don't know the member ID of my co-authors, what do I do?</a>
+    <div id="10" class="faq-content">
+        During Paper submissions, you will be prompted to enter the Member ID's of co-authors.
+        It is required, and hence you need to ask the co-authors for their Member ID's.
+        To obtain a Member ID, one needs to get membership to our site.
+    </div>
+
+    <!-- FAQ 11 -->
+    <a class="faq" onclick="toggleList('11')">My co-authors are not members, what do I do?</a>
+    <div id="11" class="faq-content">
+        During Paper submissions, you will be prompted to enter the Member ID's of co-authors.
+        It is required, and hence you need to ask your co-authors to get membership to our site.
+    </div>
+
+    <!-- FAQ 12 -->
+    <a class="faq" onclick="toggleList('12')">I need an accommodation during the conference, who do I contact?</a>
+    <div id="12" class="faq-content">
+        A <a href="Accomodation%20Details.asp">list of nearby hotels / guest houses</a>
+        is available on the website. The authors are requested to kindly contact the
+        hotel and book accommodation directly.
+    </div>
+
+    <!-- FAQ 13 -->
+    <a class="faq" onclick="toggleList('13')">What would happen if the author due to sudden problems could not attend the conference?</a>
+    <div id="13" class="faq-content">
+        In case none of the authors is able to present the paper, the paper is considered to be "NOT PRESENTED".
+    </div>
+
+    <!-- FAQ 14 -->
+    <a class="faq" onclick="toggleList('14')">What will happen if the author has already paid the registration/proceeding charges, but could not attend the conference?</a>
+    <div id="14" class="faq-content">
+        The payments made on account of any of the services related to INDIACom, are not refundable.
+    </div>
+
+    <!-- FAQ 15 -->
+    <a class="faq" onclick="toggleList('15')">My paper has already been accepted and registration charges have been paid, but the paper was not presented. Under these circumstances, what will be the provision of IEEE organization? Will my paper be published in the conference proceedings?</a>
+    <div id="15" class="faq-content">
+        Since the paper has not been presented, it will NOT be forwarded to IEEE Xplore. Also, registration fee, once paid is not refundable. At best, only a locally published copy can be sent to the author(s) at the postal address intimated to the Conference Organizers.
+    </div>
+
+    <!-- FAQ 16 -->
+    <a class="faq" onclick="toggleList('16')">There have been cases when IEEE published accepted papers for which registration charges had been paid, even if the paper was not presented due to unavoidable circumstances. Why is the practice not being followed now?</a>
+    <div id="16" class="faq-content">
+        The practice might have been adopted earlier, but now it is totally against the policy of IEEE. Hence, as geographic representative of IEEE, it’s Delhi Section, under whose jurisdiction the conference was held, doesn't follow and subscribe to the practices and views as expressed by the author(s), unfortunately those being bad practices as quoted.
+    </div>
+
+    <!-- FAQ 17 -->
+    <a class="faq" onclick="toggleList('17')">It is our humble request to kindly publish our paper (that was not presented) in IEEE conference proceedings.</a>
+    <div id="17" class="faq-content">
+        Sorry, but as made clear above, the accepted paper(s) which are NOT presented in the conference would not be sent for publication in the IEEE Xplore. However, to summarize, upon intimation to Conference Organizers (not to IEEE Delhi Section, but to the Conference Secretariat), local publications could be sent in the name of registered author. For future it is advised that if the registered author cannot come to the conference for presenting paper, any of the other co-author(s) may come and present the paper. In such case the paper automatically becomes eligible for publication through IEEE Xplore.
+        <br><font color="#FF0000">But since in this case paper was not presented, upon request to Conference Organizers, so IEEE Copyright Form pledged in favor of IEEE could be cancelled enabling the paper to be shown withdrawn thus to be eligible for submission elsewhere for further consideration (avoiding automatically duplicate submission with record changed accordingly).
+    </div>
+
+
+</div>
+
+
+
+<script>
+    function toggleList(id) {
+        // Hide all FAQ answers
+        const allFaqs = document.querySelectorAll('.faq-content');
+        allFaqs.forEach((faq) => {
+            faq.style.display = 'none';
+        });
+
+        // Show the clicked FAQ answer
+        const element = document.getElementById(id);
+        if (element) {
+            element.style.display = 'block';
+        }
+    }
+</script>
