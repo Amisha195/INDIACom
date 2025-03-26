@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
     using System.Web.Mvc;
 using INDIACom.Models;
+using System.Reflection;
 
 namespace INDIACom.App_Cude
 {
@@ -106,125 +107,101 @@ namespace INDIACom.App_Cude
         }
 
 
-        #region Common Method to Fetch Dropdown Data
-        private List<SelectListItem> FetchDropdownData(string actionType)
-        {
-            List<SelectListItem> items = new List<SelectListItem>();
-
-            using (SqlConnection con = new SqlConnection("Data Source=localhost;Initial Catalog=SubmitPaper;Trusted_Connection=True; MultipleActiveResultSets=True"))
-            {
-                try
-                {
-                    con.Open();  // Open connection before executing query
-
-                    using (SqlCommand cmd = new SqlCommand("Proc_Common", con))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@ActionType", actionType);
-
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                items.Add(new SelectListItem
-                                {
-                                    Value = reader["Value"].ToString(),
-                                    Text = reader["Text"].ToString()
-                                });
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Log error (Implement logging mechanism here)
-                    throw new Exception("Error fetching dropdown data: " + ex.Message);
-                }
-                finally
-                {
-                    if (con.State == ConnectionState.Open)
-                    {
-                        con.Close();  // Close connection after execution
-                    }
-                }
-            }
-            return items;
-        }
-        #endregion
-
-        #region Public Methods for Dropdowns
-        public List<SelectListItem> GetTracks()
-        {
-            return FetchDropdownData("TRACK");
-        }
-
-        public List<SelectListItem> GetEvents()
-        {
-            return FetchDropdownData("EVENT");
-        }
-
-        public List<SelectListItem> GetSessions()
-        {
-            return FetchDropdownData("SESSION");
-        }
-        #endregion
-        #region Event Methods
-
-        
-        public string DeleteExpiredEvents()
-        {
-            string message = "Expired events deleted successfully.";
-            OpenConnection();
-            SqlTransaction transaction = con.BeginTransaction();
-
-            try
-            {
-                using (SqlCommand cmd = new SqlCommand("Proc_Common", con, transaction))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@ActionType", "DELETE_EXPIRED_EVENTS");
-                    cmd.ExecuteNonQuery();
-                }
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction.Rollback();
-              
-            }
-            finally
-            {
-                DisposeConnection();
-            }
-            return message; 
-        }
-        #endregion
-        #region Feedback
-        //public bool InsertFeedback(FeedbackModel feedback)
+        //#region Common Method to Fetch Dropdown Data
+        //private List<SelectListItem> FetchDropdownData(string actionType)
         //{
+        //    List<SelectListItem> items = new List<SelectListItem>();
+
         //    using (SqlConnection con = new SqlConnection("Data Source=localhost;Initial Catalog=SubmitPaper;Trusted_Connection=True; MultipleActiveResultSets=True"))
         //    {
-        //        using (SqlCommand cmd = new SqlCommand("Proc_InsertFeedback", con))
+        //        try
         //        {
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.Parameters.AddWithValue("@Name", feedback.Name);
-        //            cmd.Parameters.AddWithValue("@Email", feedback.Email);
-        //            cmd.Parameters.AddWithValue("@Mobile", string.IsNullOrEmpty(feedback.Mobile) ? (object)DBNull.Value : feedback.Mobile);
-        //            cmd.Parameters.AddWithValue("@Organization", string.IsNullOrEmpty(feedback.Organization) ? (object)DBNull.Value : feedback.Organization);
-        //            cmd.Parameters.AddWithValue("@ConferenceInfo", feedback.ConferenceInfo);
-        //            cmd.Parameters.AddWithValue("@PaperSubmission", feedback.PaperSubmission);
-        //            cmd.Parameters.AddWithValue("@Registration", feedback.Registration);
-        //            cmd.Parameters.AddWithValue("@ConferenceOrg", feedback.ConferenceOrg);
-        //            cmd.Parameters.AddWithValue("@Proceedings", feedback.Proceedings);
-        //            cmd.Parameters.AddWithValue("@Comments", string.IsNullOrEmpty(feedback.Comments) ? (object)DBNull.Value : feedback.Comments);
+        //            con.Open();  // Open connection before executing query
 
-        //            con.Open();
-        //            int rowsAffected = cmd.ExecuteNonQuery();
-        //            return rowsAffected > 0;
+        //            using (SqlCommand cmd = new SqlCommand("Proc_Common", con))
+        //            {
+        //                cmd.CommandType = CommandType.StoredProcedure;
+        //                cmd.Parameters.AddWithValue("@ActionType", actionType);
+
+        //                using (SqlDataReader reader = cmd.ExecuteReader())
+        //                {
+        //                    while (reader.Read())
+        //                    {
+        //                        items.Add(new SelectListItem
+        //                        {
+        //                            Value = reader["Value"].ToString(),
+        //                            Text = reader["Text"].ToString()
+        //                        });
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            // Log error (Implement logging mechanism here)
+        //            throw new Exception("Error fetching dropdown data: " + ex.Message);
+        //        }
+        //        finally
+        //        {
+        //            if (con.State == ConnectionState.Open)
+        //            {
+        //                con.Close();  // Close connection after execution
+        //            }
         //        }
         //    }
+        //    return items;
+        //}
+        //#endregion
+
+        //#region Public Methods for Dropdowns
+        //public List<SelectListItem> GetTracks()
+        //{
+        //    return FetchDropdownData("TRACK");
         //}
 
+        //public List<SelectListItem> GetEvents()
+        //{
+        //    return FetchDropdownData("EVENT");
+        //}
+
+        //public List<SelectListItem> GetSessions()
+        //{
+        //    return FetchDropdownData("SESSION");
+        //}
+        //#endregion
+        //#region Event Methods
+
+
+        //public string DeleteExpiredEvents()
+        //{
+        //    string message = "Expired events deleted successfully.";
+        //    OpenConnection();
+        //    SqlTransaction transaction = con.BeginTransaction();
+
+        //    try
+        //    {
+        //        using (SqlCommand cmd = new SqlCommand("Proc_Common", con, transaction))
+        //        {
+        //            cmd.CommandType = CommandType.StoredProcedure;
+        //            cmd.Parameters.AddWithValue("@ActionType", "DELETE_EXPIRED_EVENTS");
+        //            cmd.ExecuteNonQuery();
+        //        }
+        //        transaction.Commit();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        transaction.Rollback();
+
+        //    }
+        //    finally
+        //    {
+        //        DisposeConnection();
+        //    }
+        //    return message;
+        //}
+        //#endregion
+        #region Feedback
+       
 
         public string InsertFeedback(FeedbackModel model)
         {
@@ -273,5 +250,57 @@ namespace INDIACom.App_Cude
 
 
         #endregion
+
+
+        #region PaperSubmission
+
+
+
+        
+        //public bool SubmitPapers(PaperSubmissionModel model)
+        //{
+        //    string message = "";
+        //    OpenConnection();
+        //    SqlCommand cmd = new SqlCommand();
+        //    SqlTransaction transaction = con.BeginTransaction();
+
+        //    try
+        //    {
+        //        cmd = new SqlCommand("sp_InsertPaperSubmission", con, transaction);
+        //        cmd.CommandType = CommandType.StoredProcedure;
+
+        //        cmd.Parameters.AddWithValue("@title", model.title);
+        //        cmd.Parameters.AddWithValue("@paper_path",model.paper_path);
+        //        cmd.Parameters.AddWithValue("@plagiarism_path", model.plagiarism_path);
+        //        cmd.Parameters.AddWithValue("@correspondance_id", Convert.ToInt32(model.correspondance_id));
+
+        //        // Convert List<string> Authors to a comma-separated string
+        //        string coAuthors = string.Join(",", model.co_authors_id);
+        //        cmd.Parameters.AddWithValue("@co_authors_id", coAuthors);
+
+        //        // Set EventID and TrackID as NULL
+        //        cmd.Parameters.AddWithValue("@EventID", DBNull.Value);
+        //        cmd.Parameters.AddWithValue("@TrackID", DBNull.Value);
+
+        //        int rowsAffected = cmd.ExecuteNonQuery();
+        //        transaction.Commit();
+        //        return rowsAffected > 0;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        transaction.Rollback();
+        //        Console.WriteLine("SQL Error: " + ex.Message);  // ✅ Log exact SQL error
+        //        return false;
+        //    }
+
+        //    finally
+        //    {
+        //        con.Close();
+        //    }
+        //}
+
+
+        #endregion
     }
 }
+
