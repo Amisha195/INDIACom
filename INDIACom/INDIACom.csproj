@@ -129,17 +129,20 @@
     <Compile Include="Controllers\DropdownController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PaperSubmissionControllercs.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DropdownModel.cs" />
+    <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\FeedbackModel.cs" />
+    <Compile Include="Models\PaperSubmissionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="Views\Home\Events.cshtml" />
+    <Content Include="Views\Home\Event.cshtml" />
     <Content Include="Views\Home\Sessions.cshtml" />
     <None Include="Views\Home\SpecialSession.cshtml" />
     <Content Include="Views\Home\Track.cshtml" />
-    <Content Include="Views\Home\SubmitPapers.cshtml" />
+    <Content Include="Views\PaperSubmission\SubmitPapers.cshtml" />
     <Content Include="Views\Feedback\SubmitFeedback.cshtml" />
   </ItemGroup>
   <ItemGroup>

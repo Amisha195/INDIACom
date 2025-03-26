@@ -24,29 +24,41 @@ namespace INDIACom.Controllers
             CommonMethod.bindDropDownHnGrid("Proc_Common", list, "DEPT", "", "", "", "", type);
             return Json(list, 0);
         }
-     
-
-        [HttpPost]
-        public JsonResult getTrack(string type = "")
-        {
-            List<SelectListItem> list = dropdownDAL.GetTracks();
-            return Json(list, JsonRequestBehavior.AllowGet);
-        }
 
         [HttpPost]
         public JsonResult getEvent(string type = "")
         {
-        
-            List<SelectListItem> list = dropdownDAL.GetEvents();
-            return Json(list, JsonRequestBehavior.AllowGet);
+            List<SelectListItem> list = new List<SelectListItem>();
+            CommonMethod.bindDropDownHnGrid("Proc_Common", list, "EVENT", "", "", "", "", type);
+            return Json(list, 0);
+
         }
+
+
+        //[HttpPost]
+        //public JsonResult getTrack(string type = "")
+        //{
+        //    List<SelectListItem> list = dropdownDAL.GetTracks();
+        //    return Json(list, JsonRequestBehavior.AllowGet);
+        //}
+
+        //[HttpPost]
+        //public JsonResult getEvent(string type = "")
+        //{
+
+        //    List<SelectListItem> list = dropdownDAL.GetEvents();
+        //    return Json(list, JsonRequestBehavior.AllowGet);
+        //}
+
+
+        //[HttpPost]
+        //public JsonResult getSession(string type = "")
+        //{
+        //    List<SelectListItem> list = dropdownDAL.GetSessions();
+        //    return Json(list, JsonRequestBehavior.AllowGet);
+        //}
+        
        
 
-        [HttpPost]
-        public JsonResult getSession(string type = "")
-        {
-            List<SelectListItem> list = dropdownDAL.GetSessions();
-            return Json(list, JsonRequestBehavior.AllowGet);
-        }
     }
 }
