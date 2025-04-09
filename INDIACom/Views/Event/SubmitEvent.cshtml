@@ -1,0 +1,98 @@
+﻿@model INDIACom.Models.EventModel
+@{
+    Layout = null;
+}
+
+@*@using (Html.BeginForm("SubmitEvent", "Event", FormMethod.Post, new { @class = "", enctype = "multipart/form-data", id = "eventForm" }))*@
+
+
+    <h1 style="color: blue;">Submit Event</h1>
+    <p>Fields marked with <span style="color: red;">*</span> are required.</p>
+
+    @if (ViewBag.Message != null)
+    {
+        <p style="color: green;"><b>@ViewBag.Message</b></p>
+    }
+
+    @Html.AntiForgeryToken()
+<form id="eventForm">
+    <label><span style="color: red;">*</span> Event ID:</label>
+    @Html.TextBoxFor(m => m.Event_Id, new { @class = "form-control", required = "required", name = "Event_Id" })
+    <br />
+
+
+    <label><span style="color: red;">*</span> Event Name:</label>
+    @Html.TextBoxFor(m => m.Event_Name, new { @class = "form-control", required = "required" , name = "Event_Name" })
+    <br />
+
+    <label>Event Creation:</label>
+    @Html.TextBoxFor(m => m.Event_Creation_date, new { @class = "form-control",type="date", name = "Event_Creation_Date" })
+    <br />
+
+    <label>Event Opening</label>
+    @Html.TextBoxFor(m => m.Event_Opening_date, new { @class = "form-control", type = "date", name = "Event_Opening_date" })
+    <br />
+
+    <label>Event Closing</label>
+    @Html.TextBoxFor(m => m.Event_Closing_date, new { @class = "form-control", type = "date", name = "Event_Closing_date" })
+    <br />
+
+    <label>Event Description</label>
+    @Html.TextBoxFor(m => m.Event_Description, new { @class = "form-control", name = "Event_Description" })
+    <br />
+
+    <label>Event Type</label>
+    @Html.TextBoxFor(m => m.Event_Type, new { @class = "form-control", name = "Event_Type" })
+    <br />
+
+    <button type="button" id="submitBtn">Submit</button>
+    <input type="reset" value="Reset">
+</form>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/js/common.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#submitBtn").click(function () {
+            var formData = $("#eventForm").serialize(); // Collect form data
+
+            $("#submitBtn").prop("disabled", true); // Disable button to prevent double submission
+
+            $.ajax({
+                url: "@Url.Action("SubmitEvent", "Event")",
+                type: "POST",
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Success",
+                            text: "Event submitted successfully!"
+                        }).then(() => {
+                            location.reload(); // Reloads after success
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: response.message || "Submission failed."
+                        });
+                        $("#submitBtn").prop("disabled", false); // Re-enable if failed
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error:", xhr.responseText);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Something went wrong! " + xhr.responseText
+                    });
+                    $("#submitBtn").prop("disabled", false);
+                }
+            });
+        });
+    });</script>
