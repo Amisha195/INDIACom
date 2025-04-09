@@ -1,10 +1,18 @@
-<p>ur logged in</p>
+@{
+    Layout = "~/Views/Shared/Layoutweb.cshtml";
 
-<a href="@Url.Action("EditProfile", "Member")">Edit Profile</a>
+}
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<div class="content-section col md">
+    <p>You are logged in</p>
+
+    <a href="@Url.Action("EditProfile", "Member")">Edit Profile</a>
+
+    <br>
+    <br>
+    <a href="@Url.Action("Logout", "Account")" class="btn btn-warning" onclick="return confirm('Are you sure you want to logout?');">
+        Logout
+    </a>
 
 
-<a href="@Url.Action("Logout", "Account")" class="btn btn-warning" onclick="return confirm('Are you sure you want to logout?');">
-    Logout
-</a>
-
-
+</div>

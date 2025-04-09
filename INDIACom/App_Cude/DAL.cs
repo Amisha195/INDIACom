@@ -257,7 +257,7 @@ namespace INDIACom.App_Cude
 
 
         #region SpecialSession 
-        public string InsertSession(SpecialSessionModel ss)
+        /*public string InsertSession(SpecialSessionModel ss)
         {
             string message = "";
             OpenConnection();
@@ -290,7 +290,7 @@ namespace INDIACom.App_Cude
                 DisposeConnection();
             }
             return message;
-        }
+        }*/
 
         #endregion
 
