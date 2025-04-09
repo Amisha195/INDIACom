@@ -33,32 +33,30 @@ namespace INDIACom.Controllers
             return Json(list, 0);
 
         }
+        [HttpPost]
+        public JsonResult getSession(string type = "")
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            // Call the stored procedure to fetch session data
+            CommonMethod.bindDropDownHnGrid("Proc_Common", list, "SESSION", "", "", "", "", type);
+
+            return Json(list, 0);
+        }
+        [HttpPost]
+        public JsonResult getTrack(string type = "")
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            // Call the stored procedure to fetch session data
+            CommonMethod.bindDropDownHnGrid("Proc_Common", list, "TRACK", "", "", "", "", type);
+
+            return Json(list, 0);
+        }
 
 
-        //[HttpPost]
-        //public JsonResult getTrack(string type = "")
-        //{
-        //    List<SelectListItem> list = dropdownDAL.GetTracks();
-        //    return Json(list, JsonRequestBehavior.AllowGet);
-        //}
-
-        //[HttpPost]
-        //public JsonResult getEvent(string type = "")
-        //{
-
-        //    List<SelectListItem> list = dropdownDAL.GetEvents();
-        //    return Json(list, JsonRequestBehavior.AllowGet);
-        //}
 
 
-        //[HttpPost]
-        //public JsonResult getSession(string type = "")
-        //{
-        //    List<SelectListItem> list = dropdownDAL.GetSessions();
-        //    return Json(list, JsonRequestBehavior.AllowGet);
-        //}
-        
-       
 
     }
 }

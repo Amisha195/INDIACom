@@ -1,148 +1,340 @@
+﻿@model INDIACom.Models.PaperSubmissionModel
 
+<link href="~/Content/css/style.css" rel="stylesheet" />
 @{
     Layout = "~/Views/Shared/Layoutweb.cshtml";
 }
-<link href="~/Content/css/style.css" rel="stylesheet" />
 
-@model INDIACom.Models.PaperSubmissionModel
+<div class="content-section col-md">
+    <h1>Submit Paper</h1>
+    <p class="microfont">Fields marked with an asterisk <span class="asterix">*</span> are required.</p>
 
-@*<div class="content-section col-md">
+    @using (Html.BeginForm("SubmitPapers", "Paper", FormMethod.Post, new { enctype = "multipart/form-data", id = "PaperSubmissionForm" }))
+    {
+        <table class="form" border="0" width="760" cellpadding="5">
+            <tr>
+                <td><span class="asterix">*</span> Event</td>
+                <td>
+                    @{
 
-        <h2>Submit Paper</h2>
+                        var empty = Enumerable.Empty<SelectListItem>();
+                    }
+                    @Html.DropDownListFor(m => m.Event_Id, empty, "--Select Event--")
+                    <div class="error" id="EventError">Please select an event.</div>
+                </td>
+            </tr>
 
-        @if (ViewBag.Message != null)
-        {
-            <div class="alert alert-info">@ViewBag.Message</div>
-        }
+            <tr>
+                <td><span class="asterix">*</span> Track</td>
+                <td>
+                    @{
 
-        <form id="paperSubmissionForm" enctype="multipart/form-data">
-            <div class="form-group">
-                @Html.LabelFor(model => model.title, new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.title, new { @class = "form-control", required = "required" })
-            </div>
+                        var empty1 = Enumerable.Empty<SelectListItem>();
+                    }
+                    @Html.DropDownListFor(m => m.Track_Id, empty1, "--Select Event--")
+                    <br />
 
-            <div class="form-group">
-                @Html.Label("Paper (Only .doc, .docx) *", new { @class = "control-label" })
-                <input type="file" name="PaperDocument" class="form-control" accept=".doc,.docx" required />
-            </div>
+                    <div class="error" id="TrackError">Please select a track.</div>
+                </td>
+            </tr>
 
-            <div class="form-group">
-                @Html.Label("Plagiarism Report (Only .pdf) *", new { @class = "control-label" })
-                <input type="file" name="PlagiarismReport" class="form-control" accept=".pdf" required />
-            </div>
+            <tr>
+                <td><span class="asterix">*</span> Session</td>
+                <td>
+                    @{
 
-            <div class="form-group">
-                @Html.Label("Co_Authors *", new { @class = "control-label" })
-                <p>Enter the Member IDs of all co-authors. Select one as the corresponding author.</p>
+                        var empty2 = Enumerable.Empty<SelectListItem>();
 
-                <table class="table">
-                    <thead>
+                        @Html.DropDownListFor(m => m.Session_Id, empty2, "--Select Event--")
+                        <br />
+
+                    }
+                    <div class="error" id="SessionError">Please select a session.</div>
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td><span class="asterix">*</span> Title</td>
+                <td>
+                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", required = "required" })
+                    <div class="error" id="TitleError">Please type the paper's title.</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td><span class="asterix">*</span> Paper (DOC, DOCX, PDF)</td>
+                <td>
+                    <input type="file" name="PaperFile" id="PaperFile" class="form-control" accept=".doc,.docx,.pdf" required />
+                    <div class="error" id="PaperError">Please upload your paper.</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Plagiarism Report (PDF only)</td>
+                <td>
+                    <input type="file" name="PlagiarismReport" id="PlagiarismReport" class="form-control" accept=".pdf" />
+                    <div class="error" id="PlagiarismError">Please upload the plagiarism report (if required).</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td><span class="asterix">*</span> Authors</td>
+                <td>
+                    <p>
+                        All authors need to register with us to obtain a <b>Member ID (MID)</b>. Enter the member id's of all your co-authors, leaving unused fields blank.
+                        Select the author to be nominated for further correspondence..
+                    </p>
+                    <table border="0">
                         <tr>
-                            <th>Select</th>
-                            <th>Author No.</th>
+                            <th>AuthorNo</th>
                             <th>Member ID</th>
+                            @*<th>Corresponding Author</th>*@
                         </tr>
-                    </thead>
-                    <tbody>
+
+                        @*new code*@
                         @for (int i = 0; i < 8; i++)
                         {
                             <tr>
+                                <td># @(i+1)</td>
                                 <td>
-                                    <input type="radio" name="CorrespondenceRadio" value="@i" onclick="updateCorrespondance(@i)" />
+                                    <input type="text" name="Authors[@i].MemberID" id="AuthorID_@i" class="form-control" oninput="updateCoAuthorsID()" />
                                 </td>
-                                <td>Author #@(i + 1)</td>
                                 <td>
-                                    <input type="text" id="co_authors_id@i" name="co_authors_id[@i]" class="form-control" />
+                                    <input type="radio" name="CorrespondingAuthor" value="@i" onclick="setCorrespondingID(@i)" @(i == 0 ? "checked" : "") />
                                 </td>
                             </tr>
                         }
-                    </tbody>
-                </table>
 
-                <label>Correspondence ID</label>
-                <input type="text" id="Correspondance_id" name="Correspondance_id" class="form-control" readonly />
-            </div>
 
-            <div class="form-group">
-                <input type="checkbox" name="ttnrepo" checked /> I affirm that this manuscript is not added in Turnitin repository.
-            </div>
 
-            <div class="form-group">
-                <input type="checkbox" name="notpublished" checked /> I affirm that this manuscript has not been submitted elsewhere.
-            </div>
+                    </table>
 
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary" onclick="validateAndSubmit(event)">Submit</button>
-                <button type="reset" class="btn btn-secondary">Reset</button>
-            </div>
-        </form>
+                    <p><b>Correspondence Author ID:</b></p>
+                    <input type="text" id="CorrespondenceID" name="CorrespondingAuthorID" class="form-control" readonly />
+                    @*button to verify member id*@
+                    <button type="button" class="btn btn-primary" onclick="verifySelectedCorrespondingAuthor()">Verify Corresponding Author</button>
+                    @*<p id="verifyResult" class="mt-2"></p>*@
 
-    </div>
+                    <div class="error" id="AuthorError">Please enter valid author details.</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>
+                    <input type="checkbox" name="NotInTurnitin" required /> I hereby affirm that this manuscript is not added in  turnitin repository or of any other plagiarism detection software.<br />
+                    <input type="checkbox" name="NotPublished" required /> I hereby affirm that this manuscript has not been submitted or accepted for publication anywhere except this INDIACom. Further, I know that after review, if the paper is Accepted in INDIACom, I will not be permitted to to Withdraw my paper. I hereby affirm my consent to Transfer the copyright of my Paper to INDIACom and authorize the INDIACom authorities to add my paper in the Turnitin repository of INDIACom, after its Acceptance.
+                    <br>
+                    <button type="submit" id="SubmitButton" class="btn btn-primary">Submit Paper</button>
+                    <input type="reset" value="Reset" class="btn btn-secondary" />
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" id="hiddenEventName" name="Event_Name" />
+        <input type="hidden" id="hiddenTrackName" name="Track_Name" />
+        <input type="hidden" id="hiddenSessionName" name="Session_Name" />
+        <input type="hidden" id="CoAuthorsID" name="CoAuthorsID" />
+
+    }
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 
 
     <script>
-        function updateCorrespondence(index) {
-            var authorID = $("#Author_" + index).val();
-            $("#CorrespondenceID").val(authorID);
-        }
+ //for co-authors
 
-        function validateAndSubmit(event) {
-            event.preventDefault(); // Prevent default form submission
+    //function updateCoAuthorsID() {
+    //    let coAuthors = [];
 
-            // Get form data
-            var formData = new FormData($("#paperSubmissionForm")[0]);
+    //    for (let i = 0; i < 8; i++) {
+    //        let authorInput = document.getElementById(`AuthorID_${i}`);
+    //        if (authorInput && authorInput.value.trim() !== "") {
+    //            coAuthors.push(authorInput.value.trim()); // Collect non-empty values
+    //        }
+    //    }
 
-            // Append Correspondence ID manually
-            formData.append("correspondance_id", $("#CorrespondenceID").val());
+    //    // Store as a comma-separated string in the hidden input
+    //    document.getElementById("CoAuthorsID").value = coAuthors.join(",");
+    //}
+    function updateCoAuthorsID() {
+        let coAuthors = Array.from(document.querySelectorAll("[id^=AuthorID_]")) // Select all author inputs dynamically
+            .map(input => input.value.trim()) // Get values and trim spaces
+            .filter(value => value !== "");  // Remove empty values
 
-            // Collect co-authors' IDs
-            var coAuthors = [];
-            $("input[name^='Authors']").each(function () {
-                var val = $(this).val();
-                if (val) {
-                    coAuthors.push(val);
-                }
-            });
+        document.getElementById("CoAuthorsID").value = coAuthors.join(","); // Store as comma-separated string
+    }
+ function populateDropdown(dropdownId, data) {
+     var dropdown = $("#" + dropdownId);
+     dropdown.empty(); // Clear previous options
 
-            formData.append("co_authors_id", coAuthors.join(',')); // Convert to comma-separated string
+     /*dropdown.append('<option value="">-- Select --</option>'); // Add default option*/
 
-            // AJAX request
+     $.each(data, function (index, item) {
+         dropdown.append('<option value="' + item.Value + '">' + item.Text + '</option>');
+     });
+ }
+
+    $(document).ready(function () {
+     // var Emp_Name = '@ViewBag.empName';
+     // $('#Emp_Name').val(Emp_Name);
+
+     loadEvent();
+        loadSession();
+        loadTrack();
+        // Log selected value when an event is selected
+        // Update hidden input when Event is selected
+        $("#Event_Id").change(function () {
+            var selectedText = $("#Event_Id option:selected").text();
+            $("#hiddenEventName").val(selectedText);
+        });
+
+        // Update hidden input when Track is selected
+        $("#Track_Id").change(function () {
+            var selectedText = $("#Track_Id option:selected").text();
+            $("#hiddenTrackName").val(selectedText);
+        });
+
+        // Update hidden input when Session is selected
+        $("#Session_Id").change(function () {
+            var selectedText = $("#Session_Id option:selected").text();
+            $("#hiddenSessionName").val(selectedText);
+        });
+        $("#SubmitButton").click(function (e) {
+            e.preventDefault();
+
+            var formData = new FormData($("#PaperSubmissionForm")[0]);
+
             $.ajax({
-                url: "@Url.Action("SubmitPapers", "PaperSubmission")",
+                url: "/PaperSubmission/SubmitPapers",
                 type: "POST",
                 data: formData,
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                    alert(response.message);
+                    if (response.success) {
+                        Swal.fire({
+                            title: "Success!",
+                            text: response.message,
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            $("#PaperSubmissionForm")[0].reset(); // Reset Form after success
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: response.message,
+                            icon: "error",
+                            confirmButtonText: "Try Again"
+                        });
+                    }
                 },
                 error: function (xhr, status, error) {
-                    alert("Error: " + xhr.responseText);
+                    Swal.fire({
+                        title: "Something went wrong!",
+                        text: "Please try again.",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                }
+            });
+        });
+    });
+
+ function loadEvent(obj) {
+     $.post('@Url.Action("getEvent", "dropdown")', obj, function (data, status) {
+    if (status == "success") {
+    populateDropdown("Event_Id", data);
+    } else {
+    console.log("No data");
+    }
+    });
+ }
+    function loadSession(obj) {
+    $.post('@Url.Action("getSession", "dropdown")', obj, function (data, status) {
+   if (status == "success") {
+   populateDropdown("Session_Id", data);
+   } else {
+   console.log("No data");
+   }
+   });
+    }
+
+        function loadTrack(obj) {
+            $.post('@Url.Action("getTrack", "dropdown")', obj, function (data, status) {
+                if (status == "success") {
+                    populateDropdown("Track_Id", data);
+                } else {
+                    console.log("No data");
+                }
+            });
+    }
+
+    function setCorrespondingID(index) {
+        let selectedAuthorID = document.getElementById("AuthorID_" + index).value;
+        document.getElementById("CorrespondenceID").value = selectedAuthorID;
+    }
+
+    function updateCorrespondenceID() {
+        let radios = document.getElementsByName("CorrespondingAuthor");
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                setCorrespondingID(i);
+            }
+        }
+        }
+
+        //Script for verifying memeber id
+
+        function verifySelectedCorrespondingAuthor() {
+            // Get the selected radio button value (index)
+            var selectedIndex = $("input[name='CorrespondingAuthor']:checked").val();
+
+            if (selectedIndex === undefined) {
+                $("#verifyResult").text("Please select a corresponding author.");
+                alert("⚠️ Please select a corresponding author.");
+                return;
+            }
+
+            // Get the corresponding MemberID input value
+            var memberId = $("#AuthorID_" + selectedIndex).val().trim();
+
+            if (!memberId) {
+                $("#verifyResult").text("Please enter Member ID for the selected corresponding author.");
+                alert("⚠️ Please enter Member ID for the selected corresponding author.");
+                return;
+            }
+
+            // Make AJAX call to controller
+            $.ajax({
+                url: '/PaperSubmission/VerifyMemberID',
+                type: 'GET',
+                data: { memberId: memberId },
+                success: function (response) {
+                    if (response.success) {
+                        const message = `✅ Member Found!\n\nName: ${response.name}\nMember ID: ${memberId}`;
+                        $("#verifyResult").css("color", "green").text("Member Found: " + response.name);
+                        alert(message); // Show success popup
+                    } else {
+                        const errorMessage = `❌ Member not found!\n\nReason: ${response.message}`;
+                        $("#verifyResult").css("color", "red").text(response.message);
+                        alert(errorMessage); // Show failure popup
+                    }
+                },
+                error: function () {
+                    const errorMessage = "❌ Error verifying member. Please try again later.";
+                    $("#verifyResult").css("color", "red").text("Error verifying member.");
+                    alert(errorMessage);
                 }
             });
         }
-    </script>*@
-<label><span style="color: red;">*</span> Event</label>
-@Html.DropDownListFor(m => m.EventID, empty, "--Select Event--")
-<br />
-
-<script>
-
-    function populateDropdown(dropdownId, data) {
-        var dropdown = $("#" + dropdownId);
-        dropdown.empty(); // Clear previous options
-
-        /*dropdown.append('<option value="">-- Select --</option>'); // Add default option*/
-
-        $.each(data, function (index, item) {
-            dropdown.append('<option value="' + item.Value + '">' + item.Text + '</option>');
-        });
-    }
-
-</script>
 
 
 
-
-
-
+    </script>
+</div>

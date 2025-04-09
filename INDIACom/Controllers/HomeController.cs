@@ -131,7 +131,7 @@ namespace INDIACom.Controllers
         {
             return View();
         }
-        public ActionResult Events()
+        public ActionResult Event()
         {
             return View();
         }
@@ -143,6 +143,12 @@ namespace INDIACom.Controllers
         {
             return View();
         }
+
+        public ActionResult SubmitRevisedPaper()
+        {
+            return View();
+        }
+
 
 
     }
