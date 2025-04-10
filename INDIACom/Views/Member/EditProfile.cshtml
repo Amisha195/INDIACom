@@ -1,5 +1,6 @@
 @model INDIACom.Models.MemberModel
 @{
+
     Layout = "~/Views/Shared/Layoutweb.cshtml";
     var empty = Enumerable.Empty<SelectListItem>();
 }
@@ -316,6 +317,7 @@
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
 
     <script type="text/javascript">
+
     var form = $('#__AjaxAntiForgeryForm');
     var token = $('input[name="__RequestVerificationToken"]', form).val();
 
@@ -478,6 +480,7 @@
         formData.append("CSI_No", $("#CSI_No").val());
         formData.append("IEEE_No", $("#IEEE_No").val());
         formData.append("Category", $("#Category").val());
+
         formData.append("EventID", $("#EventID").val());
         formData.append("Event", $("#EventID option:selected").text());
         formData.append("file", $("#file")[0].files[0]);
@@ -496,7 +499,9 @@
         $("#submitBtn").prop("disabled", true); // Disable button to prevent double submission
 
         $.ajax({
+
             url: "@Url.Action("UpdateProfile", "Member")",
+
             type: "POST",
             data: formData,
 
@@ -533,6 +538,7 @@
             }
         });
     });
+
     </script>
 
 </div>

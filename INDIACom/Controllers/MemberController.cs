@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using System.Web.Helpers;
 
+
 namespace INDIACom.Controllers
 {
     public class MemberController : Controller
@@ -27,6 +28,7 @@ namespace INDIACom.Controllers
         public JsonResult SubmitRegister(MembersModel model, HttpPostedFileBase file)
         {
 
+
             var pwdValidationResult = PwdValid(model.Password, model.ConfirmPassword);
 
             // Extract the JSON response
@@ -35,6 +37,7 @@ namespace INDIACom.Controllers
             {
                 return Json(resultData); // Return the validation error
             }
+
 
             try
             {
@@ -54,6 +57,7 @@ namespace INDIACom.Controllers
 
                 if (result == "Success")
                 {
+
                     long id = dal.GetMemberID(Email);
                     if (id > 0 && file != null)
                     {
@@ -66,6 +70,7 @@ namespace INDIACom.Controllers
                     else
                     {
                         return Json(new { success = true, message = "Registerd Successfully" });
+
                     }
                 }
                 else
@@ -197,6 +202,7 @@ namespace INDIACom.Controllers
        
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public JsonResult UpdateProfile(MemberModel model, HttpPostedFileBase file)
         {
             try
@@ -299,6 +305,8 @@ namespace INDIACom.Controllers
             }
         }
 
+
+       
 
 
     }

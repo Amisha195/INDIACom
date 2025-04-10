@@ -281,8 +281,10 @@
     <Content Include="Views\Dashboard\AdminDashboard.cshtml" />
     <Content Include="Views\Dashboard\UserDashboard.cshtml" />
     <Content Include="Views\Event\SubmitEvent.cshtml" />
+
     <Content Include="Views\Account\retrievePassword.cshtml" />
     <Content Include="Views\Account\retrieveMID.cshtml" />
+
     <None Include="Views\Home\SpecialSession.cshtml" />
     <Content Include="Views\Home\Track.cshtml" />
     <Content Include="Views\PaperSubmission\SubmitPapers.cshtml" />
