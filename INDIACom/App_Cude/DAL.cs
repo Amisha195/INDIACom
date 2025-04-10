@@ -256,10 +256,7 @@ namespace INDIACom.App_Cude
         #endregion
 
 
-
-       /* #region SpecialSession
         #region SpecialSession 
-
         public string InsertSession(SpecialSessionModel ss)
         {
             string message = "";
@@ -271,13 +268,14 @@ namespace INDIACom.App_Cude
                 cmd.Connection = con;
                 cmd.Transaction = transaction;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "ProcInsertSession";
+                cmd.CommandText = "Proc_InsertSession";
+                cmd.Parameters.AddWithValue("@MemberID", ss.MemberID);
                 cmd.Parameters.AddWithValue("@SSName", ss.SSName);
                 cmd.Parameters.AddWithValue("@Mobile", ss.Mobile);
                 cmd.Parameters.AddWithValue("@Email", ss.Email);
                 cmd.Parameters.AddWithValue("@Org", ss.Organization);
                 cmd.Parameters.AddWithValue("@Topic", ss.Topic);
-                cmd.Parameters.AddWithValue("@Request_Date", ss.Request_Date);
+                cmd.Parameters.AddWithValue("@TrackID", ss.TrackID);
                 cmd.ExecuteNonQuery();
                 transaction.Commit();
                 message = "Success";
@@ -296,9 +294,6 @@ namespace INDIACom.App_Cude
         }
 
         #endregion
-
-       */
-
 
 
         #region file
