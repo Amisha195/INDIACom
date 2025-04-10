@@ -256,7 +256,7 @@ namespace INDIACom.App_Cude
         #endregion
 
 
-        #region SpecialSession 
+       /* #region SpecialSession 
         public string InsertSession(SpecialSessionModel ss)
         {
             string message = "";
@@ -292,7 +292,7 @@ namespace INDIACom.App_Cude
             return message;
         }
 
-        #endregion
+        #endregion*/
 
         #region file
         public string SaveFilePath(MemberDocumentModel doc)

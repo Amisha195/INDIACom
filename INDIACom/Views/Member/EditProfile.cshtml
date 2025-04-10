@@ -524,7 +524,7 @@
         $("#submitBtn").prop("disabled", true); // Disable button to prevent double submission
 
         $.ajax({
-            url: "@Url.Action("EditProfile", "Member")",
+            url: "@Url.Action("UpdateProfile", "Member")",
             type: "POST",
             data: formData,
 

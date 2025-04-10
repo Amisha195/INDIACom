@@ -141,5 +141,19 @@ namespace INDIACom.Controllers
                 Session.Abandon();
             }
         }
+
+
+
+        [HttpGet]
+        public ActionResult retrievePassword() 
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult RetrivePwd(long memberid)
+        {
+
+        }
     }
 }

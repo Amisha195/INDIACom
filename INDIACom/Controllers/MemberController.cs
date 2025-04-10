@@ -193,29 +193,38 @@ namespace INDIACom.Controllers
        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProfile(MemberModel model, HttpPostedFileBase file)
+        public JsonResult UpdateProfile(MemberModel model, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
+            try
             {
-                bool isUpdated = dal.UpdateUserProfile(model);
-                if (file != null)
+                if (ModelState.IsValid)
                 {
-                    return UploadFile(file, model.MemberID, model.Name);
-                }
-               
+                    bool isUpdated = dal.UpdateUserProfile(model);
 
-                if (isUpdated)
-                {
-                    ViewBag.Message = "Profile updated successfully!";
-                    Session["user"] = model; // Refresh session
+                    if (file != null)
+                    {
+                        return UploadFile(file, model.MemberID, model.Name);
+                    }
+
+                    if (isUpdated)
+                    {
+                        Session["user"] = model; // Refresh session
+                        return Json(new { success = true, message = "Profile updated successfully!" });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Failed to update profile." });
+                    }
                 }
-                else
-                {
-                    ViewBag.Message = "Failed to update profile.";
-                }
+
+                // If model state is invalid
+                return Json(new { success = false, message = "Invalid form data." });
             }
-
-            return View(model);
+            catch (Exception ex)
+            {
+                // You can also log the exception here
+                return Json(new { success = false, message = "An error occurred while updating the profile.", error = ex.Message });
+            }
         }
 
 
