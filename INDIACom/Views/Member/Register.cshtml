@@ -1,5 +1,6 @@
 @model INDIACom.Models.MembersModel
 @{
+
     Layout = "~/Views/Shared/Layoutweb.cshtml";
     var empty = Enumerable.Empty<SelectListItem>();
 }
@@ -128,10 +129,12 @@
                 <td width="256" align="right" valign="top"><span style="color: red">* </span>Organisation</td>
                 <td>
                     @Html.DropDownListFor(m => m.OrgID, empty, "--Select Org--")
+
                 </td>
             </tr>
             <tr>
                 <td width="256" align="right" valign="top">
+
                     <span style="color: red">* </span> Category
                 </td>
                 <td>
@@ -143,10 +146,12 @@
                         new SelectListItem { Text = "Industrial Representative", Value = "Industrial Representative" }
                     }, new { @class = "form-control", required = "required", name = "Category" })
                     <div class="text-danger" id="CategoryError"></div>
+
                 </td>
             </tr>
 
             <tr>
+
                 <td width="256" align="right"><span class="asterix" style="color: red">* </span>Password</td>
                 <td>
                     @Html.PasswordFor(model => model.Password, new { @class = "form-control", size = "50" })
@@ -346,12 +351,15 @@
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
 
     <script type="text/javascript">
+
     var form = $('#__AjaxAntiForgeryForm');
     var token = $('input[name="__RequestVerificationToken"]', form).val();
 
     function populateDropdown(dropdownId, data) {
         var dropdown = $("#" + dropdownId);
         dropdown.empty(); // Clear previous options
+
+
 
         $.each(data, function (index, item) {
             dropdown.append('<option value="' + item.Value + '">' + item.Text + '</option>');
@@ -386,6 +394,8 @@
         $('#OrgID').change(function () {
             var orgid = $(this).val();
             var org = $("#OrgID option:selected").text();
+
+
 
             var form2 = $("#OrgDetails");
 
@@ -471,6 +481,7 @@
              console.log("No data");
          }
         });
+
         }
 
         $('#resetBtn').click(function () {
@@ -494,6 +505,7 @@
 
         });
 
+
     $("#submitBtn").click(function () {
         var OrgID = $("#OrgID").val();
 
@@ -504,6 +516,7 @@
         var OrgEmail = $("#OrgEmail").val();
         var OrgAddress = $("#OrgAddress").val();
         var OrgPerson = $("#OrgContactPerson").val();
+
         console.log(OrgName);
         console.log("OrganisationName", OrganisationName);
         console.log(OrgID);
@@ -511,6 +524,7 @@
         var formData = new FormData();
         var fileInput = $("#file")[0].files[0];
        
+
 
         formData.append("__RequestVerificationToken", token);
         formData.append("Salutation", $("#Salutation").val());
@@ -532,9 +546,11 @@
         formData.append("ConfirmPassword", $("#ConfirmPassword").val());
         formData.append("EventID", $("#EventID").val());
         formData.append("Event", $("#EventID option:selected").text());
+
         formData.append("file", fileInput);
         formData.append("OrgID", OrgID);
         formData.append("OrganisationName", OrganisationName);
+
         formData.append("OrgEmail", OrgEmail);
         formData.append("OrgName", OrgName);
         formData.append("OrgShortName", OrgShortName);
@@ -543,9 +559,10 @@
         formData.append("OrgPhone", OrgPhone);
 
 
+
         $("#submitBtn").prop("disabled", true); 
     
-    //reset button
+    
 
 
         $.ajax({
@@ -586,6 +603,8 @@
             }
         });
     });
+
 });
     </script>
 </div>
+

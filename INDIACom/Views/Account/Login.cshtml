@@ -1,5 +1,6 @@
 @model INDIACom.Models.LoginUserModel
 @{
+
     Layout = "~/Views/Shared/Layoutweb.cshtml";
     var empty = Enumerable.Empty<SelectListItem>();
 }
@@ -112,6 +113,7 @@
             }
 
         });
+
         $("#submitBtn").click(function () {
             console.log("Email: ", $('#Email').val());
             console.log("MemberID: ", $('#UserID').val());
@@ -138,7 +140,7 @@
                             swal.fire(response);
                         }
                     
-                           
+
                     } else {
                         Swal.fire({
                             icon: "error",
@@ -160,4 +162,6 @@
             });
         });
     });</script>
+
 </div>
+

@@ -1,10 +1,13 @@
+
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace INDIACom.Models
+
 {
     public class MembersModel
     {
         public long MemberID { get; set; }  // Primary Key (Auto-increment)
+
         [Required]
         public string Salutation { get; set; }
         [Required]
@@ -29,10 +32,12 @@ namespace INDIACom.Models
         public long Mobile { get; set; }
         public string EventID { get; set; }
         [Required]
+
         public string Event { get; set; }
         public string CSI_No { get; set; }
         public string IEEE_No { get; set; }
         public string OrgID { get; set; }
+
         [Required]
         public string OrganisationName { get; set; }
         public string Biodata { get; set; }
@@ -41,6 +46,7 @@ namespace INDIACom.Models
         [Required]
         public string Password { get; set; }
         [Required]
+
         public string ConfirmPassword { get; set; }
 
 

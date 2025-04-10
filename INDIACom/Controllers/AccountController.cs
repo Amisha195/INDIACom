@@ -71,7 +71,9 @@ namespace INDIACom.Controllers
                                     UserPassword = m["Password"].ToString(),
                                     Event = m["Event"].ToString(),
                                     UserType = m["UserType"].ToString(),
+
                                     UserTypeId = short.Parse(m["UserTypeId"].ToString())
+
 
                                 }).FirstOrDefault();
                                 /*str = "success";*/
@@ -103,13 +105,17 @@ namespace INDIACom.Controllers
                         {
                             str = dt.Rows[0]["Msg"].ToString().Trim();
                         }
+
                     }
+
 
                     else
                     {
                         str = dt.Rows[0]["Msg"].ToString().Trim();
                     }
+
                     return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+
                 }
             }
             catch (Exception ex)
@@ -118,7 +124,6 @@ namespace INDIACom.Controllers
             }
             return Json(str, JsonRequestBehavior.AllowGet);
         }
-
 
         [HttpGet]
         public ActionResult Logout()
@@ -141,6 +146,7 @@ namespace INDIACom.Controllers
                 Session.Abandon();
             }
         }
+
 
 
 
@@ -217,5 +223,6 @@ namespace INDIACom.Controllers
                 }
             }
         }
+
     }
 }
