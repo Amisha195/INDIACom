@@ -9,6 +9,8 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Xml.Linq;
+using System.Web.Helpers;
+
 
 namespace INDIACom.Controllers
 {
@@ -25,14 +27,15 @@ namespace INDIACom.Controllers
      [HttpPost]
         public JsonResult SubmitRegister(MembersModel model, HttpPostedFileBase file)
         {
-            if(model == null)
-            {
-                return Json(new { success = false, message = "Enter Details" });
-            }
 
-            if (model.Password != model.ConfirmPassword)
+
+            var pwdValidationResult = PwdValid(model.Password, model.ConfirmPassword);
+
+            // Extract the JSON response
+            dynamic resultData = pwdValidationResult.Data;
+            if (!(bool)resultData.success)
             {
-                return Json(new { success = false, message = "Password and Confirm Password do not match!" });
+                return Json(resultData); // Return the validation error
             }
 
 
@@ -54,14 +57,20 @@ namespace INDIACom.Controllers
 
                 if (result == "Success")
                 {
-                    long id = dal.GetMemberID(Email,Mobile);
-                    if (id > 0)
+
+                    long id = dal.GetMemberID(Email);
+                    if (id > 0 && file != null)
                     {
                        return UploadFile(file, id, Name);
                     }
-                    else
+                    else if(id == 0) 
                     {
                         return Json(new { success = false, message = "Member ID retrieval failed!" });
+                    }
+                    else
+                    {
+                        return Json(new { success = true, message = "Registerd Successfully" });
+
                     }
                 }
                 else
@@ -193,30 +202,90 @@ namespace INDIACom.Controllers
        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProfile(MemberModel model, HttpPostedFileBase file)
+
+        public JsonResult UpdateProfile(MemberModel model, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
+            try
             {
-                bool isUpdated = dal.UpdateUserProfile(model);
-                if (file != null)
+                if (ModelState.IsValid)
                 {
-                    return UploadFile(file, model.MemberID, model.Name);
-                }
-               
+                    bool isUpdated = dal.UpdateUserProfile(model);
 
-                if (isUpdated)
-                {
-                    ViewBag.Message = "Profile updated successfully!";
-                    Session["user"] = model; // Refresh session
+                    if (file != null)
+                    {
+                        return UploadFile(file, model.MemberID, model.Name);
+                    }
+
+                    if (isUpdated)
+                    {
+                        Session["user"] = model; // Refresh session
+                        return Json(new { success = true, message = "Profile updated successfully!" });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Failed to update profile." });
+                    }
                 }
-                else
-                {
-                    ViewBag.Message = "Failed to update profile.";
-                }
+
+                // If model state is invalid
+                return Json(new { success = false, message = "Invalid form data." });
             }
-
-            return View(model);
+            catch (Exception ex)
+            {
+                // You can also log the exception here
+                return Json(new { success = false, message = "An error occurred while updating the profile.", error = ex.Message });
+            }
         }
+
+
+
+
+        
+        public JsonResult PwdValid(string pwd, string confirmPwd)
+        {
+            
+            try
+            {
+                if (pwd != confirmPwd)
+                {
+                    return Json(new { success = false, message = "Password and Confirm Password do not match!" });
+                }
+                else if (pwd.Length < 8 || pwd.Length > 16)
+                {
+                    return Json(new { success = false, message = "Password must be between 8 and 16 characters." });
+                }
+                else if (!System.Text.RegularExpressions.Regex.IsMatch(pwd, @"^[a-zA-Z0-9!@#$%^&*]+$"))
+                {
+                    return Json(new { success = false, message = "Password must contain only letters, digits, and special characters !@#$%^&*" });
+                }
+                else if (!System.Text.RegularExpressions.Regex.IsMatch(pwd, @"[a-z]"))
+                {
+                    return Json(new { success = false, message = "Password must contain at least one lowercase letter." });
+                }
+                else if (!System.Text.RegularExpressions.Regex.IsMatch(pwd, @"[A-Z]"))
+                {
+                    return Json(new { success = false, message = "Password must contain at least one uppercase letter." });
+                }
+                else if (!System.Text.RegularExpressions.Regex.IsMatch(pwd, @"\d"))
+                {
+                    return Json(new { success = false, message = "Password must contain at least one digit." });
+                }
+                else if (!System.Text.RegularExpressions.Regex.IsMatch(pwd, @"[!@#$%&*?()]"))
+                {
+                    return Json(new { success = false, message = "Password must contain at least one of the following: !@#$%&*?()" });
+                }
+
+                return Json(new { success = true });
+                
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred during password validation." });
+            }
+        }
+
+
+       
 
 
     }

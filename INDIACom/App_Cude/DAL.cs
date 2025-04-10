@@ -256,7 +256,10 @@ namespace INDIACom.App_Cude
         #endregion
 
 
+
+       /* #region SpecialSession
         #region SpecialSession 
+
         public string InsertSession(SpecialSessionModel ss)
         {
             string message = "";
@@ -293,6 +296,10 @@ namespace INDIACom.App_Cude
         }
 
         #endregion
+
+       */
+
+
 
         #region file
         public string SaveFilePath(MemberDocumentModel doc)
@@ -382,7 +389,11 @@ namespace INDIACom.App_Cude
             return message;
         }
 
-        public long GetMemberID(string email, long mobile)
+
+        public long GetMemberID(string email)
+
+      
+
         {
             long memberID = 0;
             OpenConnection();
@@ -396,7 +407,9 @@ namespace INDIACom.App_Cude
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "Proc_GetMemberID";
                 cmd.Parameters.AddWithValue("@Email", email);
-                cmd.Parameters.AddWithValue("@Mobile", mobile);
+
+                
+
                 cmd.ExecuteNonQuery();
                 transaction.Commit();
                 object result = cmd.ExecuteScalar();
