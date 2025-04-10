@@ -1,85 +1,117 @@
 @model INDIACom.Models.LoginUserModel
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/Layoutweb.cshtml";
     var empty = Enumerable.Empty<SelectListItem>();
 }
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<div class="content-section col-md">
+    <h1 style="color: blue;">Login</h1>
+    <p><i>Fields marked with <span style="color: red;">*</span> are required.</i></p>
 
 
-<h1 style="color: blue;">Login</h1>
-<p>Fields marked with <span style="color: red;">*</span> are required.</p>
+    @if (ViewBag.Message != null)
+    {
+        <p style="color: green;"><b>@ViewBag.Message</b></p>
+    }
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "", enctype = "multipart/form-data", id = "__AjaxAntiForgeryForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <!-- Display Validation Errors -->
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <table>
 
 
-@if (ViewBag.Message != null)
-{
-    <p style="color: green;"><b>@ViewBag.Message</b></p>
-}
-@using (Html.BeginForm("EditProdile", "Account", FormMethod.Post, new { @class = "", enctype = "multipart/form-data", id = "__AjaxAntiForgeryForm" }))
-{
-    @Html.AntiForgeryToken()
+            <tr>
+                <td align="center" valign="top"><span style="color: red">* </span>Member ID:-</td>
+                <td>
+                    @Html.TextBoxFor(model => model.UserID, new { @class = "form-control", size = "50" })
+                    <div class="text-danger" id="NameError"></div>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td align="center"><b>OR</b></td>
+            </tr>
+            <tr>
+                <td width="256" align="center" valign="top"><span style="color: red">* </span>Email:-</td>
+                <td>
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", size = "50" })
+                    <div class="text-danger" id="NameError"></div>
+                </td>
 
-    <!-- Display Validation Errors -->
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </tr>
+            <tr>
+                <td width="256" align="center" valign="top"><span style="color: red">* </span>Password:-</td>
+                <td>
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control", size = "50" })
+                    <div class="text-danger" id="NameError"></div>
+                </td>
 
-    <table>
-
-
-        <tr>
-            <td width="256" align="right" valign="top"><span style="color: red">* </span>Member ID</td>
-            <td>
-                @Html.TextBoxFor(model => model.UserID, new { @class = "form-control", size = "50" })
-                <div class="text-danger" id="NameError"></div>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>OR</td>
-        </tr>
-        <tr>
-            <td width="256" align="right" valign="top"><span style="color: red">* </span>Email</td>
-            <td>
-                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", size = "50" })
-                <div class="text-danger" id="NameError"></div>
-            </td>
-
-        </tr>
-        <tr>
-            <td width="256" align="right" valign="top"><span style="color: red">* </span>Password</td>
-            <td>
-                @Html.PasswordFor(model => model.Password, new { @class = "form-control", size = "50" })
-                <div class="text-danger" id="NameError"></div>
-            </td>
-
-        </tr>
-    </table>
-}
-<button type="button" id="submitBtn">Submit</button>
-<input type="reset" value="Reset">
+            </tr>
+        </table>
+    } <br>
+    <div align="center">
+        <button type="button" id="submitBtn">Submit</button>
 
 
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="~/Scripts/bootstrap.min.js"></script>
-
-
-<script src="~/Scripts/jquery-3.7.0.min.js"></script>
-<script src="~/Content/assets/js/jquery.min.js"></script>
-<script src="~/Scripts/common.js"></script>
-<script src="~/Content/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
-<script src="~/Content/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
-<script src="~/Content/assets/js/app.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+        <input type="reset" value="Reset">
+    </div>
+    <br>
+    <br>
+    <br>    
+    <p align="center">
+        Forgot Your Password. <a href="@Url.Action("retrievePassword", "Account")">Click here</a><br>
+        Forgot Member ID. <a href="@Url.Action("retrieveMID", "Account")">Click here</a><br>
+        Not a Member? <a href="@Url.Action("Register", "Member")">Sign Up.</a>
+    </p>
 
 
-<script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+    <script src="~/Content/assets/js/jquery.min.js"></script>
+    <script src="~/Scripts/common.js"></script>
+    <script src="~/Content/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/Content/assets/js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+
+
+    <script>
     $(document).ready(function () {
         var form = $('#__AjaxAntiForgeryForm');
         var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+        $('#resetBtn').click(function () {
+            // Reset the form fields
+            var form = document.getElementById('__AjaxAntiForgeryForm');
+
+            if (form) {
+                form.reset(); // Native JS reset
+
+                // Optional: Remove validation errors
+                $('#__AjaxAntiForgeryForm .field-validation-error').empty();
+                $('#__AjaxAntiForgeryForm .input-validation-error').removeClass('input-validation-error');
+
+                // Optional: Clear file input separately
+                $('#__AjaxAntiForgeryForm input[type="file"]').val('');
+
+                console.log("Form reset successfully.");
+            } else {
+                console.warn("Form not found.");
+            }
+
+        });
         $("#submitBtn").click(function () {
             console.log("Email: ", $('#Email').val());
             console.log("MemberID: ", $('#UserID').val());
@@ -106,7 +138,7 @@
                             swal.fire(response);
                         }
                     
-                          
+                           
                     } else {
                         Swal.fire({
                             icon: "error",
@@ -128,3 +160,4 @@
             });
         });
     });</script>
+</div>

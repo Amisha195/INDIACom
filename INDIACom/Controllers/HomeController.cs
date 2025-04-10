@@ -58,7 +58,7 @@ namespace INDIACom.Controllers
         {
             return View();
         }
-        public ActionResult SubmitPapers()
+        public ActionResult SubmitPaper()
         {
             return View();
         }

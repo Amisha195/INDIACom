@@ -23,6 +23,10 @@ namespace INDIACom.Controllers
         [HttpGet]
         public ActionResult SubmitEvent()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             return View();
         }
 

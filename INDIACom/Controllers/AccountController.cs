@@ -71,7 +71,7 @@ namespace INDIACom.Controllers
                                     UserPassword = m["Password"].ToString(),
                                     Event = m["Event"].ToString(),
                                     UserType = m["UserType"].ToString(),
-                                    UserTypeId =short.Parse( m["UserTypeId"].ToString())
+                                    UserTypeId = short.Parse(m["UserTypeId"].ToString())
 
                                 }).FirstOrDefault();
                                 /*str = "success";*/
@@ -79,7 +79,7 @@ namespace INDIACom.Controllers
 
                                 Session["user"] = user.LoggedInUser;
 
-                               
+
                                 if (user.LoggedInUser.UserTypeId == 1)
                                 {
                                     return Json(new { status = "success", message = "", url = "/Dashboard/AdminDashboard", showPdf = "no" }, 0);
@@ -103,13 +103,13 @@ namespace INDIACom.Controllers
                         {
                             str = dt.Rows[0]["Msg"].ToString().Trim();
                         }
-                        }
-                        
+                    }
+
                     else
                     {
                         str = dt.Rows[0]["Msg"].ToString().Trim();
                     }
-                    return Json(new{success = true}, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
@@ -118,8 +118,8 @@ namespace INDIACom.Controllers
             }
             return Json(str, JsonRequestBehavior.AllowGet);
         }
-        
-        
+
+
         [HttpGet]
         public ActionResult Logout()
         {
@@ -145,15 +145,77 @@ namespace INDIACom.Controllers
 
 
         [HttpGet]
-        public ActionResult retrievePassword() 
+        public ActionResult retrievePassword()
         {
             return View();
         }
 
         [HttpPost]
-        public JsonResult RetrivePwd(long memberid)
+        public JsonResult RetrievePwd(long id)
         {
+            if (id == 0)
+            {
+                return Json(new { success = false, message = "Enter a member id" });
+            }
+            else
+            {
+                // Retrieve user data from the database
+                DataTable dt = dal.GetUserById(id);
 
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    // Map the data from the DataTable to the RetrieveModel
+                    RetrieveModel model = new RetrieveModel
+                    {
+                        Member_Id = long.Parse(dt.Rows[0]["member_id"].ToString()),
+                        Password = dt.Rows[0]["Password"].ToString()
+                    };
+
+                    // Return the password in the response
+                    return Json(new { success = true, password = model.Password });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Member not found!" });
+                }
+            }
+        }
+
+        [HttpGet]
+        public ActionResult retrieveMID()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult RetrieveID(string email)
+        {
+            if (email == null)
+            {
+                return Json(new { success = false, message = "Enter a valid email" });
+            }
+            else
+            {
+                // Retrieve user data from the database
+                long ID = dal.GetMemberID(email);
+
+                if (ID != 0)
+                {
+                    // Map the data from the DataTable to the RetrieveModel
+                    RetrieveModel model = new RetrieveModel
+                    {
+                        Member_Id = ID
+                 
+                    };
+
+                    // Return the password in the response
+                    return Json(new { success = true, ID = model.Member_Id });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Member not found!" });
+                }
+            }
         }
     }
 }
