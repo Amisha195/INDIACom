@@ -21,133 +21,134 @@
         <!-- Display Validation Errors -->
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <table>
-            <tr>
-                <td width="256" align="right" valign="top"><span style="color: red">* </span>Salutation</td>
-                <td>
-                    @Html.DropDownListFor(m => m.Salutation, new List<SelectListItem> {
-                        new SelectListItem { Text = "Please Select a Salutation", Value = "" },
-                        new SelectListItem { Text = "Ms.", Value = "Ms." },
-                        new SelectListItem { Text = "Mrs.", Value = "Mrs." },
-                        new SelectListItem { Text = "Mr.", Value = "Mr." }
-                    }, new { @class = "form-control", required = "required", name = "Salutation" })
-                    <div class="text-danger" id="SalutationError"></div>
-                </td>
-            </tr>
+<table>
+    @Html.HiddenFor(model => model.MemberID, new { id = "MemberID" })
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>Salutation</td>
+        <td>
+            @Html.DropDownListFor(m => m.Salutation, new List<SelectListItem> {
+                new SelectListItem { Text = "Please Select a Salutation", Value = "" },
+                new SelectListItem { Text = "Ms.", Value = "Ms." },
+                new SelectListItem { Text = "Mrs.", Value = "Mrs." },
+                new SelectListItem { Text = "Mr.", Value = "Mr." }
+            }, new { @class = "form-control", required = "required", name = "Salutation" })
+            <div class="text-danger" id="SalutationError"></div>
+        </td>
+    </tr>
 
-            <tr>
-                <td width="256" align="right" valign="top"><span style="color: red">* </span>Name</td>
-                <td>
-                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", size = "50" })
-                    <div class="text-danger" id="NameError"></div>
-                </td>
-            </tr>
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>Name</td>
+        <td>
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", size = "50" })
+            <div class="text-danger" id="NameError"></div>
+        </td>
+    </tr>
 
-            <tr>
-                <td width="256" align="right" valign="top"><span style="color: red">* </span>Address</td>
-                <td>
-                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control", size = "50" })
-                    <div class="error" id="AddressError" style="margin-bottom: 15px;"></div>
-                </td>
-            </tr>
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>Address</td>
+        <td>
+            @Html.TextBoxFor(model => model.Address, new { @class = "form-control", size = "50" })
+            <div class="error" id="AddressError" style="margin-bottom: 15px;"></div>
+        </td>
+    </tr>
 
-            <tr>
-                <td width="256" align="right" valign="top"><span style="color: red">* </span>Country</td>
-                <td>
-                    @Html.DropDownListFor(m => m.CountryID, empty, "--Select Country--")
-                    <div class="text-danger" id="CountryError"></div>
-                </td>
-            </tr>
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>Country</td>
+        <td>
+            @Html.DropDownListFor(m => m.CountryID, empty, "--Select Country--")
+            <div class="text-danger" id="CountryError"></div>
+        </td>
+    </tr>
 
-            <tr>
-                <td width="256" align="right" valign="top"><span style="color: red">* </span>State</td>
-                <td>
-                    @Html.DropDownListFor(m => m.StateID, empty, "--Select State--")
-                    <div class="text-danger" id="StateError"></div>
-                </td>
-            </tr>
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>State</td>
+        <td>
+            @Html.DropDownListFor(m => m.StateID, empty, "--Select State--")
+            <div class="text-danger" id="StateError"></div>
+        </td>
+    </tr>
 
-            <tr>
-                <td width="256" align="right" valign="top"><span style="color: red">* </span>City</td>
-                <td>
-                    @Html.DropDownListFor(m => m.CityID, empty, "--Select City--")
-                    <div class="text-danger" id="CityError"></div>
-                </td>
-            </tr>
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>City</td>
+        <td>
+            @Html.DropDownListFor(m => m.CityID, empty, "--Select City--")
+            <div class="text-danger" id="CityError"></div>
+        </td>
+    </tr>
 
-            <tr>
-                <td width="256" align="right" valign="top"><span style="color: red">* </span>Pincode</td>
-                <td>
-                    @Html.TextBoxFor(model => model.Pincode, new { @class = "form-control", size = "50" })
-                    <div class="error" id="PincodeError" style="margin-bottom: 15px;"></div>
-                </td>
-            </tr>
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>Pincode</td>
+        <td>
+            @Html.TextBoxFor(model => model.Pincode, new { @class = "form-control", size = "50" })
+            <div class="error" id="PincodeError" style="margin-bottom: 15px;"></div>
+        </td>
+    </tr>
 
-            <tr>
-                <td width="256" align="right" valign="top"><span style="color: red">* </span>E-Mail</td>
-                <td>
-                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", size = "50" })
-                    <div class="error" id="EmailError" style="margin-bottom: 15px;"></div>
-                </td>
-            </tr>
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>E-Mail</td>
+        <td>
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", size = "50" })
+            <div class="error" id="EmailError" style="margin-bottom: 15px;"></div>
+        </td>
+    </tr>
 
-            <tr>
-                <td width="256" align="right"><span style="color: red">* </span>Mobile No.</td>
-                <td>
-                    @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", size = "50" })
-                    <div class="error" id="MobileError" style="margin-bottom: 15px;"></div>
-                </td>
-            </tr>
-            <tr>
-                <td width="256" align="right"><span style="color: red">* </span>Biodata (.pdf Only)</td>
-                <td><input type="file" id="file" name="file" class="form-control" accept=".pdf" required /></td>
-            </tr>
-            <tr>
-                <td width="256" align="right"><span class="asterix" style="color: red">* </span>Interested Event</td>
-                <td> @Html.DropDownListFor(m => m.EventID, empty, "--Select Event--")</td>
-            </tr>
+    <tr>
+        <td width="256" align="right"><span style="color: red">* </span>Mobile No.</td>
+        <td>
+            @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", size = "50" })
+            <div class="error" id="MobileError" style="margin-bottom: 15px;"></div>
+        </td>
+    </tr>
+    <tr>
+        <td width="256" align="right"><span style="color: red">* </span>Biodata (.pdf Only)</td>
+        <td><input type="file" id="file" name="file" class="form-control" accept=".pdf" required /></td>
+    </tr>
+    <tr>
+        <td width="256" align="right"><span class="asterix" style="color: red">* </span>Interested Event</td>
+        <td> @Html.DropDownListFor(m => m.EventID, empty, "--Select Event--")</td>
+    </tr>
 
-            <tr>
-                <td width="256" align="right" valign="top"><span style="color: red">* </span>CSI Membership No.</td>
-                <td>
-                    @Html.TextBoxFor(model => model.CSI_No, new { @class = "form-control", size = "50" })
-                    <div class="error" id="CSI_Error" style="margin-bottom: 15px;"></div>
-                </td>
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>CSI Membership No.</td>
+        <td>
+            @Html.TextBoxFor(model => model.CSI_No, new { @class = "form-control", size = "50" })
+            <div class="error" id="CSI_Error" style="margin-bottom: 15px;"></div>
+        </td>
 
-            </tr>
+    </tr>
 
-            <tr>
-                <td width="256" align="right" valign="top"><span style="color: red">* </span>IEEE/ISTE/IETE/IITP/IMP Membership No.</td>
-                <td>
-                    @Html.TextBoxFor(model => model.IEEE_No, new { @class = "form-control", size = "50" })
-                    <div class="error" id="IEEE_Error" style="margin-bottom: 15px;"></div>
-                </td>
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>IEEE/ISTE/IETE/IITP/IMP Membership No.</td>
+        <td>
+            @Html.TextBoxFor(model => model.IEEE_No, new { @class = "form-control", size = "50" })
+            <div class="error" id="IEEE_Error" style="margin-bottom: 15px;"></div>
+        </td>
 
-            </tr>
-            <tr>
-                <td width="256" align="right" valign="top"><span style="color: red">* </span>Organisation</td>
-                <td>
-                    @Html.DropDownListFor(m => m.OrgID, empty, "--Select Org--")
-                </td>
-            </tr>
-            <tr>
-                <td width="256" align="right" valign="top">
-                    <span style="color: red">* </span> Category
-                </td>
-                <td>
-                    @Html.DropDownListFor(m => m.Category, new List<SelectListItem> {
-                        new SelectListItem { Text = "[Select Category]", Value = "" },
-                        new SelectListItem { Text = "Research Scholar", Value = "Research Scholar" },
-                        new SelectListItem { Text = "Full-Time Student", Value = "Full-Time Student" },
-                        new SelectListItem { Text = "Faculty", Value = "Faculty" },
-                        new SelectListItem { Text = "Industrial Representative", Value = "Industrial Representative" }
-                    }, new { @class = "form-control", required = "required", name = "Category" })
-                    <div class="text-danger" id="SalutationError"></div>
-                </td>
-            </tr>
+    </tr>
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>Organisation</td>
+        <td>
+            @Html.DropDownListFor(m => m.OrgID, empty, "--Select Org--")
+        </td>
+    </tr>
+    <tr>
+        <td width="256" align="right" valign="top">
+            <span style="color: red">* </span> Category
+        </td>
+        <td>
+            @Html.DropDownListFor(m => m.Category, new List<SelectListItem> {
+                new SelectListItem { Text = "[Select Category]", Value = "" },
+                new SelectListItem { Text = "Research Scholar", Value = "Research Scholar" },
+                new SelectListItem { Text = "Full-Time Student", Value = "Full-Time Student" },
+                new SelectListItem { Text = "Faculty", Value = "Faculty" },
+                new SelectListItem { Text = "Industrial Representative", Value = "Industrial Representative" }
+            }, new { @class = "form-control", required = "required", name = "Category" })
+            <div class="text-danger" id="SalutationError"></div>
+        </td>
+    </tr>
 
-           
-        </table>
+
+</table>
 
         <div id="OrgDetails" class="hidden" style="display: none">
             <table class="form"
@@ -458,22 +459,10 @@
         var OrgAddress = $("#OrgAddress").val();
         var OrgPerson = $("#OrgContactPerson").val();
 
-        console.log("OrganizationName", OrganisationName);
-        console.log("OrgName", OrgName);
-        console.log("OrgShortName", OrgShortName);
-        console.log("OrgPhone", OrgPhone);
-        console.log("OrgEmail", OrgEmail);
-        console.log("address", OrgAddress);
-        console.log("person", OrgPerson);
-
-
 
         var formData = new FormData();
         var fileInput = $("#file")[0].files[0];
-        /*if (!fileInput) {
-            Swal.fire("Error", "Please select a file.", "error");
-            return;
-        }*/
+       
 
         formData.append("__RequestVerificationToken", token);
         formData.append("Salutation", $("#Salutation").val());
@@ -503,10 +492,9 @@
         formData.append("OrgAddress", OrgAddress);
         formData.append("OrgContactPerson", OrgPerson);
         formData.append("OrgPhone", OrgPhone);
+        formData.append("MemberID", $("#MemberID").val());
 
-        formData.forEach((value, key) => {
-            console.log(key + ": " + value);
-        });
+       
 
         $("#submitBtn").prop("disabled", true); // Disable button to prevent double submission
 

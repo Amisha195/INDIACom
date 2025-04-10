@@ -209,12 +209,19 @@ namespace INDIACom.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    bool isUpdated = dal.UpdateUserProfile(model);
 
                     if (file != null)
                     {
                         return UploadFile(file, model.MemberID, model.Name);
                     }
+                    if (model.OrganisationName == null)
+                    {
+                        string org = AddOrganisation(model);
+
+                        if (org == "Success") model.OrganisationName = model.OrgName;
+                        else model.OrganisationName = null;
+                    }
+                    bool isUpdated = dal.UpdateUserProfile(model);
 
                     if (isUpdated)
                     {
@@ -237,10 +244,24 @@ namespace INDIACom.Controllers
             }
         }
 
+        public string AddOrganisation(MemberModel org)
+        {
+            if (org == null)
+            {
+                return "failed";
+            }
+
+            string result = dal.AddOrganisation(org);
+
+            if (result == "Success")
+            {
+                return result;
+            }
+            else return null;
+        }
 
 
 
-        
         public JsonResult PwdValid(string pwd, string confirmPwd)
         {
             

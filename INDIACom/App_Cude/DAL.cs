@@ -256,10 +256,7 @@ namespace INDIACom.App_Cude
         #endregion
 
 
-
-       /* #region SpecialSession
         #region SpecialSession 
-
         public string InsertSession(SpecialSessionModel ss)
         {
             string message = "";
@@ -271,13 +268,14 @@ namespace INDIACom.App_Cude
                 cmd.Connection = con;
                 cmd.Transaction = transaction;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "ProcInsertSession";
+                cmd.CommandText = "Proc_InsertSession";
+                cmd.Parameters.AddWithValue("@MemberID", ss.MemberID);
                 cmd.Parameters.AddWithValue("@SSName", ss.SSName);
                 cmd.Parameters.AddWithValue("@Mobile", ss.Mobile);
                 cmd.Parameters.AddWithValue("@Email", ss.Email);
                 cmd.Parameters.AddWithValue("@Org", ss.Organization);
                 cmd.Parameters.AddWithValue("@Topic", ss.Topic);
-                cmd.Parameters.AddWithValue("@Request_Date", ss.Request_Date);
+                cmd.Parameters.AddWithValue("@TrackID", ss.TrackID);
                 cmd.ExecuteNonQuery();
                 transaction.Commit();
                 message = "Success";
@@ -296,9 +294,6 @@ namespace INDIACom.App_Cude
         }
 
         #endregion
-
-       */
-
 
 
         #region file
@@ -547,6 +542,43 @@ namespace INDIACom.App_Cude
 
         #region Organisation
         public string AddOrganisation(MembersModel model)
+        {
+            string result = "";
+            OpenConnection();
+            SqlCommand cmd = new SqlCommand();
+            SqlTransaction transaction = con.BeginTransaction();
+
+            try
+            {
+                cmd.Connection = con;
+                cmd.Transaction = transaction;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "Proc_SaveOrganisation";
+                cmd.Parameters.AddWithValue("@OrgEmail", model.OrgEmail);
+                cmd.Parameters.AddWithValue("@OrgName", model.OrgName);
+                cmd.Parameters.AddWithValue("@OrgShortName", model.OrgShortName);
+                cmd.Parameters.AddWithValue("@OrgAddress", model.OrgAddress);
+                cmd.Parameters.AddWithValue("@OrgContactPerson", model.OrgContactPerson);
+                cmd.Parameters.AddWithValue("@OrgPhone", model.OrgPhone);
+                cmd.ExecuteNonQuery();
+                transaction.Commit();
+                result = "Success";
+            }
+            catch (Exception)
+            {
+
+                transaction.Rollback();
+                result = "Something went wrong";
+
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+            return result;
+        }
+
+        public string AddOrganisation(MemberModel model)
         {
             string result = "";
             OpenConnection();
