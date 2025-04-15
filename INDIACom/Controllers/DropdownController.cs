@@ -78,5 +78,21 @@ namespace INDIACom.Controllers
 
         }
 
+        public JsonResult getSal(string type = "")
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            CommonMethod.bindDropDownHnGrid("Proc_Common", list, "SAL", "", "", "", "", type);
+            return Json(list, 0);
+
+        }
+        public JsonResult getCat(string type = "")
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            CommonMethod.bindDropDownHnGrid("Proc_Common", list, "CAT", "", "", "", "", type);
+            return Json(list, 0);
+
+        }
+
+
     }
 }
