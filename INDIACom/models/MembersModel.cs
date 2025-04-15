@@ -9,6 +9,7 @@ namespace INDIACom.Models
         public long MemberID { get; set; }  // Primary Key (Auto-increment)
 
         [Required]
+
         public string Salutation { get; set; }
         [Required]
         public string Name { get; set; }

@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Xml.Linq;
 using System.Web.Helpers;
+using System.Text.RegularExpressions;
 
 
 namespace INDIACom.Controllers
@@ -28,6 +29,12 @@ namespace INDIACom.Controllers
         public JsonResult SubmitRegister(MembersModel model, HttpPostedFileBase file)
         {
 
+            bool userEmail = IsValidEmail(model.Email);
+
+            if (!userEmail)
+            {
+                return Json(new { success = false, message = "Use Vaild Email" });
+            }
 
             var pwdValidationResult = PwdValid(model.Password, model.ConfirmPassword);
 
@@ -305,9 +312,23 @@ namespace INDIACom.Controllers
             }
         }
 
-
        
 
+        
+        public static bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
 
-    }
+            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(email, pattern);
+        }
+           
+
+
+
+
+
+
+}
 }
