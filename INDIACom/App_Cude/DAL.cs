@@ -163,52 +163,106 @@ namespace INDIACom.App_Cude
         #region PaperSubmission
 
 
+        public string SubmitPapers(PaperSubmissionModel model)
+        {
+            string message = "";
+            OpenConnection();
+            SqlCommand cmd = new SqlCommand();
+            SqlTransaction transaction = con.BeginTransaction();
 
+            try
+            {
+                cmd.Connection = con;
+                cmd.Transaction = transaction;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "Proc_InsertPaperSubmission";
 
-        //public bool SubmitPapers(PaperSubmissionModel model)
-        //{
-        //    string message = "";
-        //    OpenConnection();
-        //    SqlCommand cmd = new SqlCommand();
-        //    SqlTransaction transaction = con.BeginTransaction();
+                cmd.Parameters.AddWithValue("@Title", model.Title);
+                cmd.Parameters.AddWithValue("@DateOfSubmission", model.DateOfSubmission);
+                cmd.Parameters.AddWithValue("@EventId", model.Event_Id);
+                cmd.Parameters.AddWithValue("@TrackId", model.Track_Id);
+                cmd.Parameters.AddWithValue("@SessionId", model.Session_Id);
+                cmd.Parameters.AddWithValue("@EventName", model.Event_Name);
+                cmd.Parameters.AddWithValue("@TrackName", model.Track_Name);
+                cmd.Parameters.AddWithValue("@SessionName", model.Session_Name);
+                cmd.Parameters.AddWithValue("@MemberId", model.Member_Id);
+                cmd.Parameters.AddWithValue("@PaperPath", model.PaperPath ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@PlagiarismPath", model.PlagiarismPath ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@CorrespondanceId", model.Correspondence_Id);
+                cmd.Parameters.AddWithValue("@CoAuthorsId", model.Co_Authors_Id ?? (object)DBNull.Value);
 
-        //    try
-        //    {
-        //        cmd = new SqlCommand("sp_InsertPaperSubmission", con, transaction);
-        //        cmd.CommandType = CommandType.StoredProcedure;
+                cmd.ExecuteNonQuery();
+                transaction.Commit();
+                message = "Success";
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                message = "Error: " + ex.Message;
+            }
+            finally
+            {
+                DisposeConnection();
+            }
 
-        //        cmd.Parameters.AddWithValue("@title", model.title);
-        //        cmd.Parameters.AddWithValue("@paper_path",model.paper_path);
-        //        cmd.Parameters.AddWithValue("@plagiarism_path", model.plagiarism_path);
-        //        cmd.Parameters.AddWithValue("@correspondance_id", Convert.ToInt32(model.correspondance_id));
-
-        //        // Convert List<string> Authors to a comma-separated string
-        //        string coAuthors = string.Join(",", model.co_authors_id);
-        //        cmd.Parameters.AddWithValue("@co_authors_id", coAuthors);
-
-        //        // Set EventID and TrackID as NULL
-        //        cmd.Parameters.AddWithValue("@EventID", DBNull.Value);
-        //        cmd.Parameters.AddWithValue("@TrackID", DBNull.Value);
-
-        //        int rowsAffected = cmd.ExecuteNonQuery();
-        //        transaction.Commit();
-        //        return rowsAffected > 0;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        transaction.Rollback();
-        //        Console.WriteLine("SQL Error: " + ex.Message);  // ✅ Log exact SQL error
-        //        return false;
-        //    }
-
-        //    finally
-        //    {
-        //        con.Close();
-        //    }
-        //}
+            return message;
+        }
 
 
         #endregion
+        //for verificationbutton
+
+        #region Verifybutton
+        public string VerifyMemberByID(string memberId, out string message)
+        {
+            string memberName = "";
+            message = "";
+
+            try
+            {
+                OpenConnection();
+                SqlCommand cmd = new SqlCommand();
+                SqlTransaction transaction = con.BeginTransaction();
+
+                cmd.Connection = con;
+                cmd.Transaction = transaction;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "Proc_CheckCredentials";
+
+                cmd.Parameters.AddWithValue("@UserID", memberId);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    memberName = reader["Name"].ToString();
+                    message = "Member found.";
+                }
+                else
+                {
+                    message = "Member not found.";
+                }
+
+                reader.Close();
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message;
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return memberName;
+        }
+
+
+        #endregion
+
+
+
 
         #region Event
 
@@ -386,9 +440,6 @@ namespace INDIACom.App_Cude
 
 
         public long GetMemberID(string email)
-
-      
-
         {
             long memberID = 0;
             OpenConnection();
@@ -402,8 +453,6 @@ namespace INDIACom.App_Cude
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "Proc_GetMemberID";
                 cmd.Parameters.AddWithValue("@Email", email);
-
-                
 
                 cmd.ExecuteNonQuery();
                 transaction.Commit();
