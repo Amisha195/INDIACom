@@ -14,5 +14,8 @@ namespace INDIACom.Models
         public DateTime Event_Opening_date { get; set; }
         public DateTime Event_Closing_date { get; set; }
         public string Event_Type { get; set; }
+
+        public int Session_Id { get; set; }
+        public string Session_Name { get; set; }
     }
 }

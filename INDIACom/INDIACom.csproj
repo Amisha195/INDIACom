@@ -261,7 +261,7 @@
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
-    <Compile Include="Controllers\PaperSubmissionControllercs.cs" />
+    <Compile Include="Controllers\SpecialSessionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -274,6 +274,10 @@
     <Compile Include="Models\MembersModel.cs" />
     <Compile Include="Models\PaperSubmissionModel.cs" />
     <Compile Include="Models\RetrieveModel.cs" />
+    <Compile Include="Models\RevisedPaperModel.cs" />
+    <Compile Include="Models\SessionModel.cs" />
+    <Compile Include="Models\SpecialSessionModel.cs" />
+    <Compile Include="Models\TrackModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Views\Home\Event.cshtml" />
     <Content Include="Views\Home\Sessions.cshtml" />
@@ -397,6 +401,10 @@
     <Content Include="Views\Home\IEEEOversightCommittee.cshtml" />
     <Content Include="Views\Home\InvitedSpeakers.cshtml" />
     <Content Include="Views\Home\LocalOrganisingCommittee.cshtml" />
+    <Content Include="Views\SpecialSession\SpecialSession.cshtml" />
+    <Content Include="Views\SpecialSession\SpecialSession2.cshtml" />
+    <Content Include="Views\Home\SpecialSessionStatic.cshtml" />
+    <Content Include="Views\Home\SubmitRevisedPaper.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

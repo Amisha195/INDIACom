@@ -28,7 +28,12 @@ namespace INDIACom.Controllers
             {
                 SpecialSessionModel model = new SpecialSessionModel
                 {
-                    MemberID = user.MemberID // 👈 Pass the MemberID to the view model
+                    MemberID = long.Parse(dt.Rows[0]["member_id"].ToString()),
+                    SSName = dt.Rows[0]["Name"].ToString(),
+                    Email = dt.Rows[0]["Email"].ToString(),
+                    Mobile = dt.Rows[0]["Mobile"].ToString(),
+                    Organization = dt.Rows[0]["Organisation"].ToString()
+
                 };
 
             
