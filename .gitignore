@@ -361,3 +361,14 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/INDIACom/Controllers/RevisedPaperController.cs
+/INDIACom/models/PaperSubmissionModel.cs
+/INDIACom/UploadedFiles/0_Shivangi _Resume.pdf
+/INDIACom/UploadedFiles/1_Shivangi _Resume.pdf
+/INDIACom/Views/PaperSubmission/papersubmission
+/INDIACom/Views/PaperSubmission/RevisedPaper.cshtml
+/INDIACom/Views/PaperSubmission/SubmitPapers.cshtml
+/INDIACom/Controllers/PaperSubmissionControllercs.cs
+/INDIACom/Application/PlagiarismPolicies
+/INDIACom/Application/Papers
+/INDIACom/UploadedFiles

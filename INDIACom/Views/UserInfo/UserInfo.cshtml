@@ -1,0 +1,92 @@
+
+@model List<INDIACom.Models.UserInfoModel>
+
+@{
+    ViewBag.Title = "User Information - Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Include if you're using layout
+}
+
+<!-- Link the external CSS file -->
+@*<link href="~/Content/UserInfo.csss" rel="stylesheet" type="text/css" />*@
+<link href="@Url.Content("~/Content/css/UserInfo.css")" rel="stylesheet" type="text/css" />
+
+
+<h2 class="page-title"> User Information  </h2>
+
+<div class="table-container">
+    <table class="user-info-table">
+        <thead>
+            <tr>
+                <th>Member ID</th>
+                <th>Salutation</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Category</th>
+                <th>Address</th>
+                <th>Country</th>
+                <th>Country ID</th>
+                <th>State </th>
+                <th>City </th>
+                <th>Pincode</th>
+                <th>Mobile</th>
+                <th>Organisation</th>
+                <th>Bio Data Path</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MemberId</td>
+                    <td>@item.Salutation</td>
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                    <td>@item.Password</td>
+                    <td>@item.Category</td>
+                    <td>@item.Address</td>
+                    <td>@item.Country</td>
+                    <td>@item.CountryID</td>
+                    <td>@item.State</td>
+                    <td>@item.City</td>
+                    <td>@item.Pincode</td>
+                    <td>@item.Mobile</td>
+                    <td>@item.Organisation</td>
+                    <td>@item.BioDataPath</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@{
+    int totalPages = (int)Math.Ceiling((double)ViewBag.TotalUsers / ViewBag.PageSize);
+    int currentPage = ViewBag.CurrentPage;
+}
+
+<div class="pagination-container">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @if (currentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("UserInfo", new { page = currentPage - 1 })">Previous</a>
+                </li>
+            }
+
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("UserInfo", new { page = i })">@i</a>
+                </li>
+            }
+
+            @if (currentPage < totalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("UserInfo", new { page = currentPage + 1 })">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>

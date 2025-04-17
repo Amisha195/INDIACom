@@ -160,10 +160,7 @@ namespace INDIACom.App_Cude
         #endregion
 
 
-        #region PaperSubmission
-
-
-
+        //#region PaperSubmission
 
         //public bool SubmitPapers(PaperSubmissionModel model)
         //{
@@ -178,7 +175,7 @@ namespace INDIACom.App_Cude
         //        cmd.CommandType = CommandType.StoredProcedure;
 
         //        cmd.Parameters.AddWithValue("@title", model.title);
-        //        cmd.Parameters.AddWithValue("@paper_path",model.paper_path);
+        //        cmd.Parameters.AddWithValue("@paper_path", model.paper_path);
         //        cmd.Parameters.AddWithValue("@plagiarism_path", model.plagiarism_path);
         //        cmd.Parameters.AddWithValue("@correspondance_id", Convert.ToInt32(model.correspondance_id));
 
@@ -208,7 +205,7 @@ namespace INDIACom.App_Cude
         //}
 
 
-        #endregion
+        //#endregion
 
         #region Event
 
@@ -256,7 +253,7 @@ namespace INDIACom.App_Cude
         #endregion
 
 
-        #region SpecialSession 
+       /* #region SpecialSession 
         public string InsertSession(SpecialSessionModel ss)
         {
             string message = "";
@@ -293,7 +290,7 @@ namespace INDIACom.App_Cude
         }
 
         #endregion
-
+*/
         #region file
         public string SaveFilePath(MemberDocumentModel doc)
         {
@@ -569,6 +566,235 @@ namespace INDIACom.App_Cude
             }
             return result;
         }
+
+        #endregion
+
+
+
+
+
+        #region Paper
+        // PAPER SUBMISSION
+
+        public string SubmitPapers(PaperSubmissionModel model)
+        {
+            string message = "";
+            OpenConnection();
+            SqlCommand cmd = new SqlCommand();
+            SqlTransaction transaction = con.BeginTransaction();
+
+            try
+            {
+                cmd.Connection = con;
+                cmd.Transaction = transaction;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "Proc_InsertPaperSubmission";
+
+                cmd.Parameters.AddWithValue("@Title", model.Title);
+                cmd.Parameters.AddWithValue("@DateOfSubmission", model.DateOfSubmission);
+                cmd.Parameters.AddWithValue("@EventId", model.Event_Id);
+                cmd.Parameters.AddWithValue("@TrackId", model.Track_Id);
+                cmd.Parameters.AddWithValue("@SessionId", model.Session_Id);
+                cmd.Parameters.AddWithValue("@EventName", model.Event_Name);
+                cmd.Parameters.AddWithValue("@TrackName", model.Track_Name);
+                cmd.Parameters.AddWithValue("@SessionName", model.Session_Name);
+                cmd.Parameters.AddWithValue("@MemberId", model.Member_Id);
+                cmd.Parameters.AddWithValue("@PaperPath", model.PaperPath ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@PlagiarismPath", model.PlagiarismPath ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@CorrespondanceId", model.CorrespondanceId);
+                cmd.Parameters.AddWithValue("@CoAuthorsId", model.Co_Authors_Id ?? (object)DBNull.Value);
+
+                cmd.ExecuteNonQuery();
+                transaction.Commit();
+                message = "Success";
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                message = "Error: " + ex.Message;
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return message;
+        }
+
+
+        //REVISED PAPER SUBMISSION
+
+        public RevisedPaperModel GetRevisedPaper(int paperId)
+        {
+            RevisedPaperModel model = new RevisedPaperModel();
+            OpenConnection();
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("Proc_GetRevisedPaperDetails", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@PaperId", paperId);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                //if (reader.Read())
+                //{
+                //    model.Event_ID = reader["Event_Id"].ToString();
+                //    model.Track = reader["Track"].ToString();
+                //    model.Title = reader["Title"].ToString();
+                //    model.Authors = reader["Authors"].ToString();
+                //    model.Version = Convert.ToInt32(reader["Version"]);
+                //    model.ReviewResult = reader["ReviewResult"].ToString();
+                //    model.DetailedComments = reader["DetailedComments"].ToString();
+                //    // If stored, also populate existing file paths
+                //    model.MasterListPath = reader["MasterListPath"].ToString();
+                //    model.RevisedPaperPath = reader["RevisedPaperPath"].ToString();
+                //    model.CertificateOfOriginalityPath = reader["CertificateOfOriginalityPath"].ToString();
+                //    model.CopyrightTransferFormPath = reader["CopyrightTransferFormPath"].ToString();
+                //    model.PresentationPath = reader["PresentationPath"].ToString();
+                //}
+
+
+                if (reader.Read())
+                {
+                    model.Event_ID = reader["Event_Id"]?.ToString() ?? "";
+                    model.Track = reader["Track"]?.ToString() ?? "";
+                    model.Title = reader["Title"]?.ToString() ?? "";
+                    model.Authors = reader["Authors"]?.ToString() ?? "";
+                    model.Version = reader["Version"] != DBNull.Value ? Convert.ToInt32(reader["Version"]) : 0;
+                    model.ReviewResult = reader["ReviewResult"]?.ToString() ?? "";
+                    model.DetailedComments = reader["DetailedComments"]?.ToString() ?? "";
+
+                    model.MasterListPath = reader["MasterListPath"]?.ToString() ?? "";
+                    model.RevisedPaperPath = reader["RevisedPaperPath"]?.ToString() ?? "";
+                    model.CertificateOfOriginalityPath = reader["CertificateOfOriginalityPath"]?.ToString() ?? "";
+                    model.CopyrightTransferFormPath = reader["CopyrightTransferFormPath"]?.ToString() ?? "";
+                    model.PresentationPath = reader["PresentationPath"]?.ToString() ?? "";
+                }
+
+
+
+                reader.Close();
+            }
+            catch (Exception)
+            {
+                // Handle error if needed
+                return null;
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return model;
+        }
+
+
+        //submit_to_Db
+        public string SubmitRevisedPaper(RevisedPaperModel model)
+        {
+            string message = "";
+            OpenConnection();
+            SqlTransaction transaction = con.BeginTransaction();
+            SqlCommand cmd = new SqlCommand();
+
+            try
+            {
+                cmd.Connection = con;
+                cmd.Transaction = transaction;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "Proc_SubmitRevisedPaper";
+
+                cmd.Parameters.AddWithValue("@Event_Id", model.Event_ID);
+                cmd.Parameters.AddWithValue("@Track", model.Track);
+                cmd.Parameters.AddWithValue("@Title", model.Title);
+                cmd.Parameters.AddWithValue("@Authors", model.Authors);
+                cmd.Parameters.AddWithValue("@Version", model.Version);
+                cmd.Parameters.AddWithValue("@ReviewResult", model.ReviewResult);
+                cmd.Parameters.AddWithValue("@DetailedComments", model.DetailedComments ?? "");
+                cmd.Parameters.AddWithValue("@AuthorsComments", model.AuthorsComments ?? "");
+                cmd.Parameters.AddWithValue("@DoYouWishToSubmitRevision", model.DoYouWishToSubmitRevision);
+
+                cmd.Parameters.AddWithValue("@MasterListPath", model.MasterListPath ?? "");
+                cmd.Parameters.AddWithValue("@RevisedPaperPath", model.RevisedPaperPath ?? "");
+                cmd.Parameters.AddWithValue("@CertificateOfOriginalityPath", model.CertificateOfOriginalityPath ?? "");
+                cmd.Parameters.AddWithValue("@CopyrightTransferFormPath", model.CopyrightTransferFormPath ?? "");
+                cmd.Parameters.AddWithValue("@PresentationPath", model.PresentationPath ?? "");
+
+                cmd.ExecuteNonQuery();
+                transaction.Commit();
+                message = "Success";
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                message = "Something went wrong";
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return message;
+        }
+
+
+        #endregion
+
+        #region UserDetailsAdmin
+        //FETCH USER INFO
+        public List<UserInfoModel> GetAllMembers()
+        {
+            List<UserInfoModel> members = new List<UserInfoModel>();
+
+            try
+            {
+                OpenConnection();
+                SqlCommand cmd = new SqlCommand("Proc_GetAllMembers", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    UserInfoModel m = new UserInfoModel
+                    {
+                        MemberId = Convert.ToInt64(dr["member_id"]),
+                        Salutation = dr["Salutation"]?.ToString(),
+                        Name = dr["Name"]?.ToString(),
+                        Email = dr["Email"]?.ToString(),
+                        Password = dr["Password"]?.ToString(),
+                        Category = dr["Category"]?.ToString(),
+                        Address = dr["Address"]?.ToString(),
+                        Country = dr["Country"]?.ToString(),
+                        CountryID = dr["CountryID"]?.ToString(),
+                        State = dr["State"]?.ToString(),
+                        City = dr["City"]?.ToString(),
+                        Pincode = dr["Pincode"]?.ToString(),
+                        Mobile = dr["Mobile"]?.ToString(),
+                        Organisation = dr["Organisation"]?.ToString(),
+                        BioDataPath = dr["Bio_data_path"]?.ToString()
+                    };
+
+                    members.Add(m);
+                }
+
+                dr.Close();
+            }
+            catch (SqlException ex)
+            {
+                // Log exception (could use a logging library)
+                throw new Exception("Database operation failed: " + ex.Message, ex);
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return members;
+        }
+
+
 
         #endregion
     }
