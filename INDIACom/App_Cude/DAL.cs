@@ -107,9 +107,9 @@ namespace INDIACom.App_Cude
         }
 
 
-       
+
         #region Feedback
-       
+
 
         public string InsertFeedback(FeedbackModel model)
         {
@@ -387,7 +387,7 @@ namespace INDIACom.App_Cude
 
         public long GetMemberID(string email)
 
-      
+
 
         {
             long memberID = 0;
@@ -403,7 +403,7 @@ namespace INDIACom.App_Cude
                 cmd.CommandText = "Proc_GetMemberID";
                 cmd.Parameters.AddWithValue("@Email", email);
 
-                
+
 
                 cmd.ExecuteNonQuery();
                 transaction.Commit();
@@ -616,6 +616,96 @@ namespace INDIACom.App_Cude
         }
 
         #endregion
+
+        #region Category Verification
+
+        public List<MembersDocumentsModel> GetMemberDocuments()
+        {
+            List<MembersDocumentsModel> documents = new List<MembersDocumentsModel>();
+            OpenConnection();
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("GetMemberDocuments", con)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        documents.Add(new MembersDocumentsModel
+                        {
+                            MemberID = Convert.ToInt32(reader["MemberID"]),
+                            EventID = reader["EventID"].ToString(),
+                            InstitutionCard = reader["InstitutionCard"].ToString(),
+                            InstitutionCardPath = reader["InstitutionCardPath"].ToString(),
+                            ProfBodyIDCardPath = reader["MembershipProofPath"].ToString(),
+                            PassportPath = reader["OtherDocumentPath"].ToString(),
+                        });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("Something went wrong while fetching member documents.");
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return documents;
+        }
+
+        public string InsertMemberDocument(MembersDocumentsModel model)
+        {
+            string message = "";
+            OpenConnection();
+            SqlCommand cmd = new SqlCommand();
+            SqlTransaction transaction = con.BeginTransaction();
+
+            try
+            {
+                cmd.Connection = con;
+                cmd.Transaction = transaction;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "InsertMemberDocument";
+
+                cmd.Parameters.AddWithValue("@EventID", model.EventID);
+                cmd.Parameters.AddWithValue("@InstitutionCard", model.InstitutionCard);
+                cmd.Parameters.AddWithValue("@ProfBodyIDCard", model.ProfBodyIDCard);
+                cmd.Parameters.AddWithValue("@Passport", model.Passport);
+                cmd.Parameters.AddWithValue("@MemberCatVerificationStatus", model.MemberCatVerificationStatus);
+                cmd.Parameters.AddWithValue("@ProfBodyVerificationStatus", model.ProfBodyVerificationStatus);
+                cmd.Parameters.AddWithValue("@PassportVerification", model.PassportVerification);
+                cmd.Parameters.AddWithValue("@DecisionDate", (object)model.DecisionDate ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@Comment", model.Comment);
+                cmd.Parameters.AddWithValue("@InstitutionCardPath", model.InstitutionCardPath);
+                // Mapping model -> renamed DB columns
+                cmd.Parameters.AddWithValue("@MembershipProofPath", model.ProfBodyIDCardPath);
+                cmd.Parameters.AddWithValue("@OtherDocumentPath", model.PassportPath);
+
+                cmd.ExecuteNonQuery();
+                transaction.Commit();
+                message = "Success";
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                message = "Something went wrong";
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return message;
+        }
+
+        #endregion
+
     }
 }
 

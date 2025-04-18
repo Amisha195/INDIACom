@@ -255,6 +255,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CategoryVerificationController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DropdownController.cs" />
     <Compile Include="Controllers\EventController.cs" />
@@ -262,6 +263,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\PaperSubmissionControllercs.cs" />
+    <Compile Include="Controllers\SpecialSessionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -271,9 +273,11 @@
     <Compile Include="Models\LoginUserModel.cs" />
     <Compile Include="Models\MemberDocumentModel.cs" />
     <Compile Include="Models\MemberModel.cs" />
+    <Compile Include="Models\MembersDocumentsModel.cs" />
     <Compile Include="Models\MembersModel.cs" />
     <Compile Include="Models\PaperSubmissionModel.cs" />
     <Compile Include="Models\RetrieveModel.cs" />
+    <Compile Include="Models\SpecialSessionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Views\Home\Event.cshtml" />
     <Content Include="Views\Home\Sessions.cshtml" />
@@ -397,6 +401,7 @@
     <Content Include="Views\Home\IEEEOversightCommittee.cshtml" />
     <Content Include="Views\Home\InvitedSpeakers.cshtml" />
     <Content Include="Views\Home\LocalOrganisingCommittee.cshtml" />
+    <Content Include="Views\CategoryVerification\DocumentVerification.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
