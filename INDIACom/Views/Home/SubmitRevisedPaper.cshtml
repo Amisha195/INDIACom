@@ -1,0 +1,109 @@
+@model INDIACom.Models.RevisedPaperModel
+
+@*@{
+        Layout = "~/Views/Shared/Layoutweb.cshtml";
+    }*@
+
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<div class="content-section col-md">
+    <h2>Submit Revised Documents</h2>
+
+    @using (Html.BeginForm("SubmitRevisedPaper", "Paper", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.PaperId)
+
+        <table class="table">
+            <tr>
+                <td><strong>Event:</strong></td>
+                <td>@Html.DisplayFor(model => model.EventName)</td>
+            </tr>
+            <tr>
+                <td><strong>Track:</strong></td>
+                <td>@Html.DisplayFor(model => model.TrackName)</td>
+            </tr>
+            <tr>
+                <td><strong>Title:</strong></td>
+                <td>@Html.DisplayFor(model => model.Title)</td>
+            </tr>
+            <tr>
+                <td><strong>Authors:</strong></td>
+                <td>@Html.DisplayFor(model => model.Authors)</td>
+            </tr>
+            <tr>
+                <td><strong>Version:</strong></td>
+                <td>@Html.DisplayFor(model => model.VersionNumber)</td>
+            </tr>
+            <tr>
+                <td><strong>Review Result:</strong></td>
+                <td>@Html.DisplayFor(model => model.ReviewResult)</td>
+            </tr>
+            <tr>
+                <td><strong>Detailed Comments:</strong></td>
+                <td>@Html.DisplayFor(model => model.DetailedComments)</td>
+            </tr>
+
+            <tr>
+                <td><strong>Author's Comments:</strong></td>
+                <td>
+                    @Html.TextAreaFor(model => model.AuthorsComments, new { @class = "form-control", rows = 4 })
+                    @Html.ValidationMessageFor(model => model.AuthorsComments)
+                </td>
+            </tr>
+
+            <tr>
+                <td><strong>Submit a Revision?</strong></td>
+                <td>
+                    @Html.CheckBoxFor(model => model.SubmitRevision)
+                    @Html.ValidationMessageFor(model => model.SubmitRevision)
+                </td>
+            </tr>
+
+            <tr>
+                <td><strong>Master List of Revisions (PDF):</strong></td>
+                <td>@Html.TextBoxFor(m => m.RevisionListFile, new { type = "file", accept = ".pdf" })</td>
+            </tr>
+
+            <tr>
+                <td><strong>Revised Paper (DOC/DOCX):</strong></td>
+                <td>
+                    @Html.TextBoxFor(m => m.RevisedPaperFile, new { type = "file", accept = ".doc,.docx" })
+                    <br /><span style="color:red;">[Please do not attach Turnitin report]</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td><strong>Certificate of Originality (PDF):</strong></td>
+                <td>@Html.TextBoxFor(m => m.OriginalityCertFile, new { type = "file", accept = ".pdf" })</td>
+            </tr>
+
+            <tr>
+                <td><strong>Copyright Transfer Form (PDF):</strong></td>
+                <td>@Html.TextBoxFor(m => m.CopyrightFormFile, new { type = "file", accept = ".pdf" })</td>
+            </tr>
+
+            <tr>
+                <td><strong>Presentation (PPT/PPTX):</strong></td>
+                <td>@Html.TextBoxFor(m => m.PresentationFile, new { type = "file", accept = ".ppt,.pptx" })</td>
+            </tr>
+
+            <tr>
+                <td colspan="2" class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </td>
+            </tr>
+        </table>
+    }
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success mt-3">
+            @TempData["Message"]
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

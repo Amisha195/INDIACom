@@ -7,84 +7,142 @@ using System.Web.Mvc;
 using INDIACom.Models;
 using System.IO;
 
-public class PaperSubmissionController : Controller
+public class PaperSubmissionControllercs : Controller
 {
-    private readonly DAL _paperDAL = new DAL();
+    private readonly DAL paperDAL = new DAL();
     [HttpGet]
     public ActionResult SubmitPapers()
     {
         return View(); // This will look for Views/PaperSubmission/SubmitPapers.cshtml
     }
+    //for verify button
+    [HttpGet]
+
+    public JsonResult VerifyMemberID(string memberId)
+    {
+        if (string.IsNullOrWhiteSpace(memberId))
+        {
+            return Json(new { success = false, message = "Member ID is required." }, JsonRequestBehavior.AllowGet);
+        }
+
+        //DAL dal = new DAL();
+        string message;
+        string name = paperDAL.VerifyMemberByID(memberId, out message);
+
+        if (!string.IsNullOrEmpty(name))
+        {
+            return Json(new { success = true, name = name, message = message }, JsonRequestBehavior.AllowGet);
+        }
+        else
+        {
+            return Json(new { success = false, message = message }, JsonRequestBehavior.AllowGet);
+        }
+    }
 
 
-   
-    //[HttpPost]
-    //public ActionResult SubmitPapers(PaperSubmissionModel model)
-    //{
-    //    // Ensure files are uploaded properly
-    //    if (Request.Files["PaperDocument"] == null || Request.Files["PlagiarismReport"] == null)
-    //    {
-    //        ViewBag.Message = "Both paper and plagiarism report must be uploaded.";
-    //        return View(model);
-    //    }
-
-    //    HttpPostedFileBase paperFile = Request.Files["PaperDocument"];
-    //    HttpPostedFileBase plagFile = Request.Files["PlagiarismReport"];
-
-    //    if (paperFile == null || paperFile.ContentLength == 0 || plagFile == null || plagFile.ContentLength == 0)
-    //    {
-    //        ViewBag.Message = "Both paper and plagiarism report must be uploaded.";
-    //        return View(model);
-    //    }
-
-    //    string paperPath = "";
-    //    string plagiarismPath = "";
-
-    //    string paperFolder = Server.MapPath("~/Uploads/Papers/Documents/");
-    //    string plagFolder = Server.MapPath("~/Uploads/Papers/PlagiarismReports/");
-
-    //    try
-    //    {
-    //        if (!Directory.Exists(paperFolder)) Directory.CreateDirectory(paperFolder);
-    //        if (!Directory.Exists(plagFolder)) Directory.CreateDirectory(plagFolder);
-
-    //        // Save Paper Document
-    //        string paperFileName = Guid.NewGuid() + Path.GetExtension(paperFile.FileName);
-    //        paperPath = Path.Combine(paperFolder, paperFileName);
-    //        paperFile.SaveAs(paperPath);
-
-    //        // Save Plagiarism Report
-    //        string plagFileName = Guid.NewGuid() + Path.GetExtension(plagFile.FileName);
-    //        plagiarismPath = Path.Combine(plagFolder, plagFileName);
-    //        plagFile.SaveAs(plagiarismPath);
-
-    //        // Store paths in model
-    //        model.paper_path = paperPath;
-    //        model.plagiarism_path = plagiarismPath;
-
-    //        // Insert into DB
-           
-    //            bool isInserted = _paperDAL.SubmitPapers(model);
-
-    //            if (isInserted)
-    //            {
-    //                ViewBag.Message = "Paper submitted successfully!";
-    //            }
-    //            else
-    //            {
-    //                ViewBag.Message = "Error submitting the paper. Check logs for details.";
-    //            }
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            ViewBag.Message = "Exception: " + ex.Message; // ✅ Show exact error
-    //        }
 
 
-    //        return View(model);
-    //    }
+    //ends here 
 
-     }
-    
+    [AllowAnonymous]
+
+    [HttpPost]
+
+    public ActionResult SubmitPapers(FormCollection form, HttpPostedFileBase PaperFile, HttpPostedFileBase PlagiarismReport)
+    {
+        int eventId, tackId, sessionId, memberId, correspondenceId;
+        int.TryParse(form["Event_Id"], out eventId);
+        int.TryParse(form["Track_Id"], out trackId);
+        int.TryParse(form["Session_Id"], out sessionId);
+        int.TryParse(form["Authors[0].MemberID"], out memberId);
+        int.TryParse(form["CorrespondingAuthorID"], out correspondenceId);
+
+        PaperSubmissionModel model = new PaperSubmissionModel
+        {
+            Title = form["Title"],
+            DateOfSubmission = DateTime.Now,
+            Event_Id = eventId,
+            Track_Id = trackId,
+            Session_Id = sessionId,
+            Event_Name = form["Event_Name"],
+            Track_Name = form["Track_Name"],
+            Session_Name = form["Session_Name"],
+            Member_Id = memberId,  // First author as main
+            Correspondence_Id = correspondenceId,
+            Co_Authors_Id = form["co_authors_id"]
+        };
+        //for co_authors
+
+        List<string> coAuthorIds = new List<string>();
+        for (int i = 0; i < 8; i++) // Assuming max 8 co-authors
+        {
+            string authorId = form[$"Authors[{i}].MemberID"];
+            if (!string.IsNullOrEmpty(authorId))
+            {
+                coAuthorIds.Add(authorId);
+            }
+        }
+        model.Co_Authors_Id = string.Join(",", coAuthorIds);
 
 
+        if (PaperFile != null && PaperFile.ContentLength > 0)
+        {
+            string directoryPath = Server.MapPath("~/Application/Papers/");
+
+            // Ensure the directory exists
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            // Create a unique filename using timestamp
+            string uniqueFileName = Path.GetFileNameWithoutExtension(PaperFile.FileName) +
+                                    "_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") +
+                                    Path.GetExtension(PaperFile.FileName);
+
+            string paperPath = Path.Combine(directoryPath, uniqueFileName);
+            PaperFile.SaveAs(paperPath);
+
+            model.PaperPath = "/Application/Papers/" + uniqueFileName;
+        }
+
+        // For Plagiarism Report
+        if (PlagiarismReport != null && PlagiarismReport.ContentLength > 0)
+        {
+            string directoryPath = Server.MapPath("~/Application/PlagiarismPolicies/");
+
+            // Ensure the directory exists
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            // Create a unique filename using timestamp
+            string uniquePolicyName = Path.GetFileNameWithoutExtension(PlagiarismReport.FileName) +
+                                      "_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") +
+                                      Path.GetExtension(PlagiarismReport.FileName);
+
+            string policyPath = Path.Combine(directoryPath, uniquePolicyName);
+            PlagiarismReport.SaveAs(policyPath);
+
+            model.PlagiarismPath = "/Application/PlagiarismPolicies/" + uniquePolicyName;
+        }
+
+        DAL paperDAL = new DAL();
+        string result = paperDAL.SubmitPapers(model);
+
+        if (result == "Success")
+        {
+            return Json(new { success = true, message = "Paper submitted successfully!" });
+        }
+        else
+        {
+            return Json(new { success = false, message = "Submission failed: " + result });
+        }
+
+
+
+
+
+    }
+}
