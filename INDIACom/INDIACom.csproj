@@ -262,10 +262,9 @@
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
-<<<<<<< HEAD
+
     <Compile Include="Controllers\PaperSubmissionControllercs.cs" />
-=======
->>>>>>> origin/main
+
     <Compile Include="Controllers\SpecialSessionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -280,14 +279,13 @@
     <Compile Include="Models\MembersModel.cs" />
     <Compile Include="Models\PaperSubmissionModel.cs" />
     <Compile Include="Models\RetrieveModel.cs" />
-<<<<<<< HEAD
-    <Compile Include="Models\SpecialSessionModel.cs" />
-=======
+
+
     <Compile Include="Models\RevisedPaperModel.cs" />
     <Compile Include="Models\SessionModel.cs" />
     <Compile Include="Models\SpecialSessionModel.cs" />
     <Compile Include="Models\TrackModel.cs" />
->>>>>>> origin/main
+
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Views\Home\Event.cshtml" />
     <Content Include="Views\Home\Sessions.cshtml" />
