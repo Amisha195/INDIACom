@@ -409,14 +409,14 @@
     <Content Include="Views\Home\IEEEOversightCommittee.cshtml" />
     <Content Include="Views\Home\InvitedSpeakers.cshtml" />
     <Content Include="Views\Home\LocalOrganisingCommittee.cshtml" />
-<<<<<<< HEAD
+
     <Content Include="Views\CategoryVerification\DocumentVerification.cshtml" />
-=======
+
     <Content Include="Views\SpecialSession\SpecialSession.cshtml" />
     <Content Include="Views\SpecialSession\SpecialSession2.cshtml" />
     <Content Include="Views\Home\SpecialSessionStatic.cshtml" />
     <Content Include="Views\Home\SubmitRevisedPaper.cshtml" />
->>>>>>> origin/main
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
