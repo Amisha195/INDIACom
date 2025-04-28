@@ -134,8 +134,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
-    <Compile Include="Controllers\PaperSubmissionControllercs.cs" />
-    <Compile Include="Controllers\RevisedPaperController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -147,8 +145,6 @@
     <Compile Include="Models\MemberModel.cs" />
     <Compile Include="Models\MembersModel.cs" />
     <Compile Include="Models\UserInfoModel.cs" />
-    <Compile Include="Models\PaperSubmissionModel.cs" />
-    <Compile Include="Models\RevisedPaperModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\css\UserInfo.css" />
     <Content Include="Views\Home\Event.cshtml" />
@@ -164,8 +160,8 @@
     <Content Include="Views\Member\EditProfile.cshtml" />
     <Content Include="Views\Member\Register.cshtml" />
     <Content Include="Views\PaperSubmission\papersubmission\SubmitPapers.cshtml" />
-    <Content Include="Views\PaperSubmission\RevisedPaper.cshtml" />
     <Content Include="Views\UserInfo\UserInfo.cshtml" />
+    <Content Include="Views\UserInfo\UserDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />

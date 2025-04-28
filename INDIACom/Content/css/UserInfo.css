@@ -1,4 +1,4 @@
-/* UserInfo.css */
+﻿/* UserInfo.css */
 
 /* Page Title */
 .page-title {
@@ -7,6 +7,42 @@
     margin-bottom: 20px;
     color: #2c3e50;
 }
+
+/* ─── Filter bar (top‑right) ─── */
+.filter-bar {
+    display: flex;
+    justify-content: flex-end; /* positions bar at right */
+    gap: 10px;
+    margin: 10px 20px 15px;
+    flex-wrap: wrap;
+}
+
+.filter-input {
+    width: 180px;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.filter-select {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 150px;
+}
+
+.filter-btn {
+    padding: 6px 14px;
+    background: #e0e0e0;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+    .filter-btn:hover {
+        background: #d5d5d5;
+    }
 
 /* Table Container */
 .table-container {
@@ -73,4 +109,30 @@
     .pagination .active .page-link {
         background-color: #2c3e50;
         border-color: #2c3e50;
+    }
+
+/* --- detail page --- */
+.detail-title {
+    text-align: center;
+    margin: 20px 0;
+    color: #2c3e50;
+}
+
+.detail-box {
+    max-width: 600px;
+    margin: 0 auto 40px;
+    border: 1px solid #ccc;
+    padding: 25px 30px;
+    background: #fafafa;
+    font-size: 16px;
+    line-height: 1.6;
+}
+/* link styling in the table (optional) */
+.user-info-table a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+    .user-info-table a:hover {
+        text-decoration: underline;
     }
