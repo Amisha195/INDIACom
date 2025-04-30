@@ -58,7 +58,9 @@ namespace INDIACom.Controllers
         {
             return View();
         }
+
         public ActionResult SubmitPaper()
+
         {
             return View();
         }
@@ -131,7 +133,7 @@ namespace INDIACom.Controllers
         {
             return View();
         }
-        public ActionResult Events()
+        public ActionResult Event()
         {
             return View();
         }
@@ -148,5 +150,18 @@ namespace INDIACom.Controllers
         {
             return View();
         }
+
+        public ActionResult AddAuthor()
+        {
+            return View();
+        }
+        public ActionResult MySubmittedPapers()
+        {
+            return View();
+        }
+
+
+
+
     }
 }

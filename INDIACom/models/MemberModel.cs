@@ -1,4 +1,4 @@
-namespace INDIACom.Models
+﻿namespace INDIACom.Models
 {
     public class MemberModel
     {
@@ -14,7 +14,7 @@ namespace INDIACom.Models
         public string Event { get; set; }
         public string Bio_data_path { get; set; }
         public string CSI_No { get; set; }
-        public string  IEEE_No{ get; set; }
+        public string IEEE_No { get; set; }
         public string Mobile { get; set; }
         public string Salutation { get; set; }
         public string Address { get; set; }
