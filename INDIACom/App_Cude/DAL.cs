@@ -160,7 +160,7 @@ namespace INDIACom.App_Cude
         #endregion
 
 
-        //#region PaperSubmission
+        #region PaperSubmission
 
 
         public string SubmitPapers(PaperSubmissionModel model)
@@ -310,7 +310,7 @@ namespace INDIACom.App_Cude
         #endregion
 
 
-       /* #region SpecialSession 
+        #region SpecialSession 
         public string InsertSession(SpecialSessionModel ss)
         {
             string message = "";

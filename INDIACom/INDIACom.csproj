@@ -255,7 +255,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CategoryVerificationController.cs" />
+    <Compile Include="Content\CategoryVerificationController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DropdownController.cs" />
     <Compile Include="Controllers\EventController.cs" />
@@ -278,12 +278,12 @@
     <Compile Include="Models\MembersDocumentsModel.cs" />
     <Compile Include="Models\MembersModel.cs" />
     <Compile Include="Models\PaperSubmissionModel.cs" />
-
     <Compile Include="Models\RetrieveModel.cs" />
     <Compile Include="Models\RevisedPaperModel.cs" />
     <Compile Include="Models\SessionModel.cs" />
     <Compile Include="Models\SpecialSessionModel.cs" />
     <Compile Include="Models\TrackModel.cs" />
+    <Compile Include="Models\UserInfoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\backend\css\app.css" />
     <Content Include="Content\backend\css\bootstrap-extended.css" />
@@ -493,10 +493,8 @@
     <Content Include="Content\backend\plugins\vectormap\jquery-jvectormap-world-mill-en.js" />
     <Content Include="Content\backend\plugins\vectormap\jvectormap.custom.js" />
     <Content Include="Content\css\admin-dashboard.css" />
-
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\css\UserInfo.css" />
-
     <Content Include="Views\Home\Event.cshtml" />
     <Content Include="Views\Home\Sessions.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
