@@ -261,6 +261,8 @@
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PaperAdminController.cs" />
+    <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
 
     <Compile Include="Controllers\PaperSubmissionControllercs.cs" />
@@ -278,15 +280,8 @@
     <Compile Include="Models\MembersDocumentsModel.cs" />
     <Compile Include="Models\MembersModel.cs" />
     <Compile Include="Models\PaperSubmissionModel.cs" />
-    <Compile Include="Models\RetrieveModel.cs" />
-
-
-    <Compile Include="Models\RevisedPaperModel.cs" />
-    <Compile Include="Models\SessionModel.cs" />
-    <Compile Include="Models\SpecialSessionModel.cs" />
-    <Compile Include="Models\TrackModel.cs" />
-
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Content\css\UserInfo.css" />
     <Content Include="Views\Home\Event.cshtml" />
     <Content Include="Views\Home\Sessions.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -300,6 +295,10 @@
     <Content Include="Views\Feedback\SubmitFeedback.cshtml" />
     <Content Include="Views\Member\EditProfile.cshtml" />
     <Content Include="Views\Member\Register.cshtml" />
+    <Content Include="Views\PaperSubmission\papersubmission\SubmitPapers.cshtml" />
+    <Content Include="Views\UserInfo\UserInfo.cshtml" />
+    <Content Include="Views\UserInfo\UserDetails.cshtml" />
+    <Content Include="Views\PaperAdmin\SubmitPaperAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
