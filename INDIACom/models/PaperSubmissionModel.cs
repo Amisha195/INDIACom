@@ -41,6 +41,9 @@ namespace INDIACom.Models
         public string PlagiarismPath { get; set; }
         public int Correspondence_Id { get; set; }
         public string Co_Authors_Id { get; set; }
+        //new addtition
+        public int PaperId { get; set; }
+
     }
 
 }

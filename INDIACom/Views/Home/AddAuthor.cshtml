@@ -1,0 +1,188 @@
+@{
+    ViewBag.Title = "Associate Author with Paper";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #000;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header {
+            border: 2px solid #000;
+            padding: 10px;
+            text-align: center;
+            background-color: #fff;
+        }
+
+            .header h4 {
+                margin: 0;
+                font-size: 20px;
+            }
+
+            .header p {
+                margin: 5px 0;
+                font-size: 14px;
+            }
+
+            .header strong {
+                font-size: 16px;
+                color: #0066cc;
+            }
+
+        .logos img {
+            height: 50px;
+            margin: 5px;
+        }
+
+        .topbar {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        .card {
+            border: 1px solid #000;
+            background-color: #fff;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+            table td {
+                padding: 8px;
+            }
+
+            table th {
+                text-align: left;
+                padding: 8px;
+                width: 35%;
+            }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .input-section {
+            margin-top: 10px;
+        }
+
+            .input-section input[type="text"] {
+                padding: 5px;
+                width: 250px;
+                margin-right: 10px;
+            }
+
+        .button-row {
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 6px 12px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .footer-links {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+
+            .footer-links a {
+                margin: 0 8px;
+                text-decoration: none;
+                color: #0077cc;
+            }
+
+                .footer-links a:hover {
+                    text-decoration: underline;
+                }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Bar -->
+    <div class="topbar">
+        <div>Welcome, Vaishnavi</div>
+        <div>
+            <a href="#">[log out]</a> |
+            <a href="#">[edit profile]</a>
+        </div>
+    </div>
+
+    <!-- Paper Details -->
+    <div class="card">
+        <h5><b>Associate Author with Paper</b></h5>
+        <table>
+            <tr>
+                <th>Event</th>
+                <td>INDIACom-2025</td>
+            </tr>
+            <tr>
+                <th>Paper ID</th>
+                <td>20</td>
+            </tr>
+            <tr>
+                <th>Version</th>
+                <td>1</td>
+            </tr>
+            <tr>
+                <th>Track</th>
+                <td>Regular Track #1 : Sustainable Computing</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>TESTasdfg</td>
+            </tr>
+            <tr>
+                <th>Set of Authors associated with the paper</th>
+                <td>Preeti, Vaishnavi</td>
+            </tr>
+        </table>
+
+        <!-- Member ID Form -->
+        <form method="post">
+            <div class="form-group">
+                <label for="memberId">Please enter the Member ID of the author to be added:</label>
+                <div class="input-section">
+                    <input type="text" id="memberId" name="memberId" />
+                    <button type="button">Verify Member ID's</button>
+                </div>
+            </div>
+
+            <!-- Buttons moved completely below -->
+            <div class="button-row">
+                <button type="submit">Submit</button>
+                <button type="reset">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer Links -->
+    <div class="footer-links">
+        <a href="#">Home</a> |
+        <a href="#">Back</a> |
+        <a href="#">Contact Us</a> |
+        <a href="#">FAQs</a>
+        <br />
+        <a href="https://www.bvicam.ac.in" target="_blank">www.bvicam.ac.in</a>
+    </div>
+
+</body>
+</html>
