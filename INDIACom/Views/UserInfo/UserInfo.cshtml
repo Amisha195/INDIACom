@@ -1,0 +1,140 @@
+﻿@model List<INDIACom.Models.UserInfoModel>
+
+@{
+    ViewBag.Title = "User Information - Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="@Url.Content("~/Content/css/UserInfo.css")" rel="stylesheet" />
+
+<h2 class="page-title">User Information</h2>
+
+<!-- ───── Filter bar ───── -->
+<div class="filter-bar">
+    <input id="nameFilter"
+           type="text"
+           class="filter-input"
+           placeholder="Search by Name…" />
+
+    <select id="stateFilter" class="filter-select">
+        <option value="">All States</option>
+        @foreach (var st in Model.Select(m => m.State).Distinct().OrderBy(s => s))
+        {
+            <option value="@st">@st</option>
+        }
+    </select>
+
+    <button id="clearFilter" class="filter-btn">Clear</button>
+</div>
+
+<!-- ───── Data table ───── -->
+<div class="table-container">
+    <table class="user-info-table">
+        <thead>
+            <tr>
+                <th>Member ID</th>
+                <th>Salutation</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Category</th>
+                <th>Address</th>
+                <th>Country</th>
+                <th>State</th>
+                <th>Pincode</th>
+                <th>Mobile</th>
+                <th>Organisation</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MemberId</td>
+                    <td>@item.Salutation</td>
+                    <td>
+                        <a href="@Url.Action("UserDetails","UserInfo", new { id = item.MemberId })" target="_blank">
+                            @item.Name
+                        </a>
+                    </td>
+                    <td>@item.Email</td>
+                    <td>@item.Category</td>
+                    <td>@item.Address</td>
+                    <td>@item.Country</td>
+                    <td>@item.State</td>
+                    <td>@item.Pincode</td>
+                    <td>@item.Mobile</td>
+                    <td>@item.Organisation</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- ───── Pagination (unchanged) ───── -->
+@{
+    int totalPages = (int)Math.Ceiling((double)ViewBag.TotalUsers / ViewBag.PageSize);
+    int currentPage = ViewBag.CurrentPage;
+}
+<div class="pagination-container">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @if (currentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("UserInfo", new { page = currentPage - 1 })">Previous</a>
+                </li>
+            }
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("UserInfo", new { page = i })">@i</a>
+                </li>
+            }
+            @if (currentPage < totalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("UserInfo", new { page = currentPage + 1 })">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
+
+<!-- ───── JavaScript filter (Name OR State) ───── -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const nameBox  = document.getElementById('nameFilter');
+    const stateBox = document.getElementById('stateFilter');
+    const clearBtn = document.getElementById('clearFilter');
+    const rows     = document.querySelectorAll('.user-info-table tbody tr');
+
+    function applyFilter() {
+        const nameVal  = nameBox.value.trim().toLowerCase();
+        const stateVal = stateBox.value;
+
+        rows.forEach(r => {
+            const name  = r.children[2].innerText.toLowerCase();  // Name column
+            const state = r.children[7].innerText;                // State column (index 7)
+
+            /* Show row if:
+               - no filters at all
+               - name filter matches
+               - OR state filter matches                               */
+            const matchName  = nameVal  && name.includes(nameVal);
+            const matchState = stateVal && state === stateVal;
+            const showRow    = (nameVal || stateVal) ? (matchName || matchState) : true;
+
+            r.style.display = showRow ? '' : 'none';
+        });
+    }
+
+    nameBox.addEventListener('input',  applyFilter);
+    stateBox.addEventListener('change', applyFilter);
+    clearBtn.addEventListener('click', () => {
+        nameBox.value  = '';
+        stateBox.value = '';
+        applyFilter();
+    });
+});
+</script>

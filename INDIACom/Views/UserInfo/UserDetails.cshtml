@@ -1,0 +1,33 @@
+@model INDIACom.Models.UserInfoModel
+@{
+    ViewBag.Title = "Member Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="@Url.Content("~/Content/css/UserInfo.css")" rel="stylesheet" type="text/css" />
+
+<h2 class="detail-title">Member Details</h2>
+
+<div class="detail-box">
+
+    <p><strong>Member ID:</strong> @Model.MemberId</p>
+    <p><strong>Salutation:</strong> @Model.Salutation</p>
+    <p><strong>Name:</strong> @Model.Name</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Password:</strong> @Model.Password</p>
+    <p><strong>Category:</strong> @Model.Category</p>
+    @*<p><strong>UserTypeId:</strong> @Model.UserTypeId</p>*@
+    <p><strong>Address:</strong> @Model.Address</p>
+    <p><strong>Country:</strong> @Model.Country</p>
+    <p><strong>Country ID:</strong> @Model.CountryID</p>
+    <p><strong>State:</strong> @Model.State</p>
+    <p><strong>City:</strong> @Model.City</p>
+    <p><strong>Pincode:</strong> @Model.Pincode</p>
+    <p><strong>Mobile:</strong> @Model.Mobile</p>
+    @*<p><strong>Event:</strong> @Model.Event</p>*@
+    @*<p><strong>CSINo:</strong> @Model.CSINo</p>
+    <p><strong>IEEENo:</strong> @Model.IEEENo</p>*@
+    <p><strong>Organisation:</strong> @Model.Organisation</p>
+    <p><strong>BioDataPath:</strong> @Model.BioDataPath</p>
+</div>
+
