@@ -20,7 +20,7 @@
                     <tbody>
                         <tr>
                             <td align="right" height="30" class="welcome-text">
-                                <b>Welcome, Guest [<a href="login.asp">log in</a>]</b>
+                                <b>Welcome, Guest [<a href="@Url.Action("Login", "Account")">log in</a>]</b>
                             </td>
                         </tr>
                         <tr>
@@ -70,7 +70,7 @@
                                 
                                 <div class="login-date-container" >
                                     <div class="login-button-container" >
-                                        <a href="login.asp" class="login-button">Log In</a>
+                                        <a href="@Url.Action("Login", "Account")" class="login-button">Log In</a>
                                     </div>
                                     <div class="current-date-time" id="currentDateTime">
                                         Saturday, August 21, 2024 10:16:05 PM
@@ -84,9 +84,6 @@
 
             </div>
         </header>
-
-
-
        
             <br>
             <div class="custom-marquee">
@@ -119,9 +116,9 @@
                             <li><a href="@Url.Action("", "Home")">Important Dates</a></li>
                             <li><a href="@Url.Action("CallForPaper", "Home")">Call for Papers</a></li>
                             <li><a href="@Url.Action("GetMembership", "Home")">Get Membership</a></li>
-                            <li><a href="@Url.Action("MemberLogin", "Home")">Member Login</a></li>
+                            <li><a href="@Url.Action("Login", "Account")">Member Login</a></li>
                             <li><a href="@Url.Action("SubmitPaper", "Home")">Submit Paper</a></li>
-                            <li><a href="@Url.Action("SpecialSession", "Home")">Special Sessions</a></li>
+                            <li><a href="@Url.Action("SpecialSessionStatic", "Home")">Special Sessions</a></li>
                             <li><a href="@Url.Action("RegistrationFee", "Home")">Registration</a></li>
                             <li><a href="@Url.Action("PaymentModes", "Home")">Payment Modes</a></li>
                             <li><a href="@Url.Action("ConferenceSecretariat", "Home")">Conference Secretariat</a></li>
@@ -270,7 +267,8 @@
     <script type="text/javascript" src="~/Content/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script type="text/javascript" src="~/Content/js/custom.js"></script>
-        @RenderSection("script",false)
+      
+    @RenderSection("script",false)
 </body>
 
 </html>

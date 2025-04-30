@@ -1,0 +1,19 @@
+@model INDIACom.Models.MemberModel
+
+@{
+    Layout = "~/Views/Shared/Layoutweb.cshtml";
+ 
+}
+<link href="~/Content/css/style.css" rel="stylesheet" />
+
+<div class="content-section col-md">
+    <td>
+        <h1>Special Session Request<br></h1>
+
+        <p>Dear @Model.Name,<br></p>
+        <p>
+            You did not provide mobile number / biodata while filling the registration form. Kindly edit your profile, by
+            <a href="/Member/EditProfile">clicking here</a> before submitting your request to join TPC.<br><br><br>
+        </p>
+    </td>
+</div>

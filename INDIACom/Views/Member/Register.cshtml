@@ -26,7 +26,9 @@
             <tr>
                 <td width="256" align="right" valign="top"><span style="color: red">* </span>Salutation</td>
                 <td>
-                    @Html.DropDownListFor(m => m.Salutation, empty, "--select--")
+
+                    @Html.DropDownListFor(m => m.Salutation,empty,"--select--")
+
                     <div class="text-danger" id="SalutationError"></div>
                 </td>
             </tr>
@@ -613,4 +615,7 @@
 
 });
     </script>
+
 </div>
+
+

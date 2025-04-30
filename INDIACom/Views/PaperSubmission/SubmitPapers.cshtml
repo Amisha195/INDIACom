@@ -1,10 +1,15 @@
-﻿@model INDIACom.Models.PaperSubmissionModel
+
+﻿﻿@model INDIACom.Models.PaperSubmissionModel
+
 
 <link href="~/Content/css/style.css" rel="stylesheet" />
 @{
     Layout = "~/Views/Shared/Layoutweb.cshtml";
 }
- <div class="content-section col-md">
+
+
+<div class="content-section col-md">
+
     <h1>Submit Paper</h1>
     <p class="microfont">Fields marked with an asterisk <span class="asterix">*</span> are required.</p>
 
@@ -90,8 +95,7 @@
                             <th>AuthorNo</th>
                             <th>Member ID</th>
                             @*<th>Corresponding Author</th>*@
-                        </tr>
-
+      
 
                         @{
                             string loggedInID = ViewBag.LoggedInMemberID?.ToString();
@@ -115,6 +119,7 @@
                                            value="@i"
                                            onclick="setCorrespondingID(@i)"
                                            @(i == 0 ? "checked" : "") />
+
                                 </td>
                             </tr>
                         }
@@ -122,6 +127,7 @@
 
 
                     </table>
+
 
                     <p><b>Correspondence Author ID:</b></p>
                     <input type="text" id="CorrespondenceID" name="CorrespondingAuthorID" class="form-control" readonly />
@@ -178,6 +184,13 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
+
+         
+        </table>
+        <input type="hidden" id="hiddenEventName" name="Event_Name" />
+        <input type="hidden" id="hiddenTrackName" name="Track_Name" />
+        <input type="hidden" id="hiddenSessionName" name="Session_Name" />
+        <input type="hidden" id="CoAuthorsID" name="CoAuthorsID" />
 
 
     <script>
@@ -431,6 +444,130 @@
                     console.log("No data");
                 }
             });
+
+    }
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
+    <script>
+
+    function updateCoAuthorsID() {
+        let coAuthors = Array.from(document.querySelectorAll("[id^=AuthorID_]")) // Select all author inputs dynamically
+            .map(input => input.value.trim()) // Get values and trim spaces
+            .filter(value => value !== "");  // Remove empty values
+
+        document.getElementById("CoAuthorsID").value = coAuthors.join(","); // Store as comma-separated string
+    }
+ function populateDropdown(dropdownId, data) {
+     var dropdown = $("#" + dropdownId);
+     dropdown.empty(); // Clear previous options
+
+     /*dropdown.append('<option value="">-- Select --</option>'); // Add default option*/
+
+     $.each(data, function (index, item) {
+         dropdown.append('<option value="' + item.Value + '">' + item.Text + '</option>');
+     });
+ }
+
+    $(document).ready(function () {
+     // var Emp_Name = '@ViewBag.empName';
+     // $('#Emp_Name').val(Emp_Name);
+
+     loadEvent();
+        loadSession();
+        loadTrack();
+        // Log selected value when an event is selected
+        // Update hidden input when Event is selected
+        $("#Event_Id").change(function () {
+            var selectedText = $("#Event_Id option:selected").text();
+            $("#hiddenEventName").val(selectedText);
+        });
+
+        // Update hidden input when Track is selected
+        $("#Track_Id").change(function () {
+            var selectedText = $("#Track_Id option:selected").text();
+            $("#hiddenTrackName").val(selectedText);
+        });
+
+        // Update hidden input when Session is selected
+        $("#Session_Id").change(function () {
+            var selectedText = $("#Session_Id option:selected").text();
+            $("#hiddenSessionName").val(selectedText);
+        });
+        $("#SubmitButton").click(function (e) {
+            e.preventDefault();
+
+            var formData = new FormData($("#PaperSubmissionForm")[0]);
+
+            $.ajax({
+                url: "/PaperSubmission/SubmitPapers",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: "Success!",
+                            text: response.message,
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            $("#PaperSubmissionForm")[0].reset(); // Reset Form after success
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: response.message,
+                            icon: "error",
+                            confirmButtonText: "Try Again"
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        title: "Something went wrong!",
+                        text: "Please try again.",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                }
+            });
+        });
+    });
+
+ function loadEvent(obj) {
+     $.post('@Url.Action("getEvent", "dropdown")', obj, function (data, status) {
+    if (status == "success") {
+    populateDropdown("Event_Id", data);
+    } else {
+    console.log("No data");
+    }
+    });
+ }
+    function loadSession(obj) {
+    $.post('@Url.Action("getSession", "dropdown")', obj, function (data, status) {
+   if (status == "success") {
+   populateDropdown("Session_Id", data);
+   } else {
+   console.log("No data");
+   }
+   });
+    }
+
+        function loadTrack(obj) {
+            $.post('@Url.Action("getTrack", "dropdown")', obj, function (data, status) {
+                if (status == "success") {
+                    populateDropdown("Track_Id", data);
+                } else {
+                    console.log("No data");
+                }
+            });
+
     }
 
     function setCorrespondingID(index) {

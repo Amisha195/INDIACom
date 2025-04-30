@@ -58,7 +58,9 @@ namespace INDIACom.Controllers
         {
             return View();
         }
-        public ActionResult  NotLoggedIn()
+
+        public ActionResult SubmitPaper()
+
         {
             return View();
         }
@@ -109,7 +111,7 @@ namespace INDIACom.Controllers
             return View();
         }
         
-        public ActionResult SpecialSession()
+        public ActionResult SpecialSessionStatic()
         {
             return View();
         }
@@ -148,6 +150,7 @@ namespace INDIACom.Controllers
         {
             return View();
         }
+
         public ActionResult AddAuthor()
         {
             return View();
@@ -156,6 +159,7 @@ namespace INDIACom.Controllers
         {
             return View();
         }
+
 
 
 
