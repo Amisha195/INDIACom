@@ -1,0 +1,207 @@
+
+@model INDIACom.Models.MembersDocumentsModel
+
+@{
+    Layout = "~/Views/Shared/Layoutweb.cshtml";
+}
+
+<link href="~/Content/style/style.css" rel="stylesheet" />
+<style>
+    .table thead {
+        background-color: #70A4DC;
+        color: white;
+    }
+
+    .table tbody tr:nth-child(odd) {
+        background-color: white;
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: lightgrey;
+    }
+
+    .warning {
+        color: red;
+        font-weight: bold;
+    }
+
+    .required {
+        color: red;
+        font-weight: bold;
+        margin-left: 5px;
+    }
+
+    .error {
+        color: red;
+        font-size: small;
+        display: none;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+</style>
+
+<div class="content-section col-md-10">
+    <h1 class="generalHead" style="text-align: center; color: blue;">Registration Category Verification</h1>
+
+    <p class="generalTxt"><strong>The Payable Registration Fee will be calculated based on the parameters listed below:</strong></p>
+
+    <p class="generalTxt">
+        Please <a href="@Url.Action("EditProfile", "Member")" style="color: blue; text-decoration: underline;">edit your profile</a> if any of the information listed below is incorrect.
+    </p>
+    <p class="generalTxt">
+        Also, verify the correctness of your Name and Organization in your profile page, as this information will be used to generate your certificates.
+    </p>
+
+    <p class="generalTxt" style="color: red; font-weight: bold;">
+        Kindly ensure that you edit your profile before submitting documents for verification, as profile editing will be disabled after you submit these documents.
+    </p>
+
+    <form id="frmVerificationDocuments" method="post" enctype="multipart/form-data">
+        <table border="1" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>S.No.</th>
+                    <th>Parameter Name</th>
+                    <th>Value (as per our records)</th>
+                    <th>Required Documents <span class="warning">(Only PDF format, Max 5MB)</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1.</td>
+                    <td>Member Category <span class="required">*</span></td>
+                    <td>Student</td>
+                    <td>
+                        Please upload your Organizational ID Card / letter from Head of Organization <br>
+                        <input type="file" id="fileMemCat" name="fileMemCat" accept=".pdf" required>
+                        <div class="error" id="fileMemCatError">Please upload a valid PDF file.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                    <td>Are you a Member of IEEE / CSI / IET / IETE / IE(I) / ISTE <span class="required">*</span></td>
+                    <td>No</td>
+                    <td>
+                        <strong>In case you are a member</strong><br>
+                        Please upload a proof of Membership <br>
+                        <input type="file" id="fileProfBody" name="fileProfBody" accept=".pdf" required>
+                        <div class="error" id="fileProfBodyError">Only PDF files are allowed.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                    <td>Payment Date (Early Bird/Regular/On Spot)</td>
+                    <td>On Spot (Payment deadline: 31<sup>st</sup> Jan, 2024)</td>
+                    <td>--NA--</td>
+                </tr>
+                <tr>
+                    <td>4.</td>
+                    <td>Nationality (Applicable Currency)</td>
+                    <td>Indian (INR)</td>
+                    <td>--NA--</td>
+                </tr>
+                <tr>
+                    <td>5.</td>
+                    <td>Other Documents</td>
+                    <td>--NA--</td>
+                    <td>
+                        <input type="file" id="fileOtherDocs" name="fileOtherDocs" accept=".pdf">
+                        <div class="error" id="fileOtherDocsError">Only PDF files are allowed.</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <input type="hidden" name="EventIDVal" id="EventIDVal" value="INDIACom25">
+        <input type="hidden" name="ProfBodyVal" id="ProfBodyVal" value="N">
+        <input type="hidden" name="NationalityVal" id="NationalityVal" value="I">
+
+        <div style="text-align: center; margin-top: 20px;">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function ()
+    {
+        $("#frmVerificationDocuments").submit(function (e)
+        {
+            e.preventDefault();
+            let isValid = true;
+
+            function validateFile(input, errorId, required = false)
+            {
+                let file = input.files[0];
+                let errorDiv = $("#" + errorId);
+
+                if (required && !file)
+                {
+                    errorDiv.text("This field is required.").show();
+                    isValid = false;
+                    return;
+                }
+
+                if (file)
+                {
+                    let fileName = file.name.toLowerCase();
+                    let fileSize = file.size / 1024 / 1024;
+                    if (!fileName.endsWith(".pdf"))
+                    {
+                        errorDiv.text("Only PDF files are allowed.").show();
+                        input.value = "";
+                        isValid = false;
+                    }
+                    else if (fileSize > 5)
+                    {
+                        errorDiv.text("File size should be less than 5MB.").show();
+                        input.value = "";
+                        isValid = false;
+                    }
+                    else
+                    {
+                        errorDiv.hide();
+                    }
+                }
+                else
+                {
+                    errorDiv.hide();
+                }
+            }
+
+            validateFile(document.getElementById("fileMemCat"), "fileMemCatError", true);
+            validateFile(document.getElementById("fileProfBody"), "fileProfBodyError", true);
+            validateFile(document.getElementById("fileOtherDocs"), "fileOtherDocsError");
+
+            if (!isValid) return;
+
+            let formData = new FormData(this);
+            $(".btn-primary").prop("disabled", true);
+            $.ajax({
+                url: '@Url.Action("UploadVerificationDocuments", "CategoryVerification")',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    Swal.fire({ title: 'Uploading...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+                },
+                success: function (response) {
+                    Swal.fire({ icon: response.success ? 'success' : 'error', title: response.success ? 'Success!' : 'Error!', text: response.message });
+                    if (response.success) { $("#frmVerificationDocuments")[0].reset(); $(".error").hide(); }
+                    $(".btn-primary").prop("disabled", false);
+                },
+                error: function () {
+                    Swal.fire({ icon: 'error', title: 'Oops...', text: 'Something went wrong. Please try again.' });
+                    $(".btn-primary").prop("disabled", false);
+                }
+            });
+        });
+    });
+</script>

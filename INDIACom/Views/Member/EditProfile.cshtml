@@ -1,334 +1,323 @@
 @model INDIACom.Models.MemberModel
 @{
-    Layout = null;
+
+    Layout = "~/Views/Shared/Layoutweb.cshtml";
     var empty = Enumerable.Empty<SelectListItem>();
 }
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<div class="content-section col-md">
+    <h1 style="color: blue;">Edit Profile</h1>
+    <p>Fields marked with <span style="color: red;">*</span> are required.</p>
 
 
-<h1 style="color: blue;">Edit Profile</h1>
-<p>Fields marked with <span style="color: red;">*</span> are required.</p>
+    @if (ViewBag.Message != null)
+    {
+        <p style="color: green;"><b>@ViewBag.Message</b></p>
+    }
+    @using (Html.BeginForm("EditProfile", "Member", FormMethod.Post, new { @class = "", enctype = "multipart/form-data", id = "__AjaxAntiForgeryForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <!-- Display Validation Errors -->
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<table>
+    @Html.HiddenFor(model => model.MemberID, new { id = "MemberID" })
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>Salutation</td>
+        <td>
+            @Html.DropDownListFor(m => m.Salutation, new List<SelectListItem> {
+                new SelectListItem { Text = "Please Select a Salutation", Value = "" },
+                new SelectListItem { Text = "Ms.", Value = "Ms." },
+                new SelectListItem { Text = "Mrs.", Value = "Mrs." },
+                new SelectListItem { Text = "Mr.", Value = "Mr." }
+            }, new { @class = "form-control", required = "required", name = "Salutation" })
+            <div class="text-danger" id="SalutationError"></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>Name</td>
+        <td>
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", size = "50" })
+            <div class="text-danger" id="NameError"></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>Address</td>
+        <td>
+            @Html.TextBoxFor(model => model.Address, new { @class = "form-control", size = "50" })
+            <div class="error" id="AddressError" style="margin-bottom: 15px;"></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>Country</td>
+        <td>
+            @Html.DropDownListFor(m => m.CountryID, empty, "--Select Country--")
+            <div class="text-danger" id="CountryError"></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>State</td>
+        <td>
+            @Html.DropDownListFor(m => m.StateID, empty, "--Select State--")
+            <div class="text-danger" id="StateError"></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>City</td>
+        <td>
+            @Html.DropDownListFor(m => m.CityID, empty, "--Select City--")
+            <div class="text-danger" id="CityError"></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>Pincode</td>
+        <td>
+            @Html.TextBoxFor(model => model.Pincode, new { @class = "form-control", size = "50" })
+            <div class="error" id="PincodeError" style="margin-bottom: 15px;"></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>E-Mail</td>
+        <td>
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", size = "50" })
+            <div class="error" id="EmailError" style="margin-bottom: 15px;"></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="256" align="right"><span style="color: red">* </span>Mobile No.</td>
+        <td>
+            @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", size = "50" })
+            <div class="error" id="MobileError" style="margin-bottom: 15px;"></div>
+        </td>
+    </tr>
+    <tr>
+        <td width="256" align="right"><span style="color: red">* </span>Biodata (.pdf Only)</td>
+        <td><input type="file" id="file" name="file" class="form-control" accept=".pdf" required /></td>
+    </tr>
+    <tr>
+        <td width="256" align="right"><span class="asterix" style="color: red">* </span>Interested Event</td>
+        <td> @Html.DropDownListFor(m => m.EventID, empty, "--Select Event--")</td>
+    </tr>
+
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>CSI Membership No.</td>
+        <td>
+            @Html.TextBoxFor(model => model.CSI_No, new { @class = "form-control", size = "50" })
+            <div class="error" id="CSI_Error" style="margin-bottom: 15px;"></div>
+        </td>
+
+    </tr>
+
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>IEEE/ISTE/IETE/IITP/IMP Membership No.</td>
+        <td>
+            @Html.TextBoxFor(model => model.IEEE_No, new { @class = "form-control", size = "50" })
+            <div class="error" id="IEEE_Error" style="margin-bottom: 15px;"></div>
+        </td>
+
+    </tr>
+    <tr>
+        <td width="256" align="right" valign="top"><span style="color: red">* </span>Organisation</td>
+        <td>
+            @Html.DropDownListFor(m => m.OrgID, empty, "--Select Org--")
+        </td>
+    </tr>
+    <tr>
+        <td width="256" align="right" valign="top">
+            <span style="color: red">* </span> Category
+        </td>
+        <td>
+            @Html.DropDownListFor(m => m.Category, new List<SelectListItem> {
+                new SelectListItem { Text = "[Select Category]", Value = "" },
+                new SelectListItem { Text = "Research Scholar", Value = "Research Scholar" },
+                new SelectListItem { Text = "Full-Time Student", Value = "Full-Time Student" },
+                new SelectListItem { Text = "Faculty", Value = "Faculty" },
+                new SelectListItem { Text = "Industrial Representative", Value = "Industrial Representative" }
+            }, new { @class = "form-control", required = "required", name = "Category" })
+            <div class="text-danger" id="SalutationError"></div>
+        </td>
+    </tr>
 
 
-@if (ViewBag.Message != null)
-{
-    <p style="color: green;"><b>@ViewBag.Message</b></p>
-}
-@using (Html.BeginForm("EditProfile", "Member", FormMethod.Post, new { @class = "", enctype = "multipart/form-data", id = "__AjaxAntiForgeryForm" }))
-{
-    @Html.AntiForgeryToken()
+</table>
 
-    <!-- Display Validation Errors -->
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div id="OrgDetails" class="hidden" style="display: none">
+            <table class="form"
+                   border="0"
+                   width="760"
+                   id="table4"
+                   cellpadding="5">
+                <tbody>
+                    <tr>
+                        <td colspan="2" class="content">
+                            <b>Organisation Details</b><span class="microfont">
+                                <br />
+                                Fields marked with an asterisk
+                                <span class="asterix"> *</span> are required.<br />
+                                Note: Various certificates acknowledging your
+                                contributions would be generated based on our records
+                                submitted by you. In future, when registering for an
+                                event, please do take time out and update your profile
+                                to avoid unnecessary inconvenience.
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <b>
+                                Why am I being asked to fill up organisational
+                                details?
+                            </b><br />
+                            Filling up the form, would allow us to track other members
+                            from your organisation. Members from registered
+                            organisation may get group discounts and other benefits.
+                            Also it would help us enhance our communication with your
+                            organisation.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="256" align="right" valign="top">
+                            <span class="asterix">* </span>Organisation Name
+                        </td>
+                        <td width="478">
+                            @Html.TextBoxFor(model => model.OrgName, new { @class = "form-control", size = "50" })
+                            <div class="error" id="OrgNameError">
+                                (Please type the organisation's name.)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="256" align="right" valign="top">
+                            <span class="asterix">* </span>Organisation Short Name
+                        </td>
+                        <td width="478">
+                            @Html.TextBoxFor(model => model.OrgShortName, new { @class = "form-control", size = "50" })
+                            <div class="error" id="OrgShortNameError">
+                                (Please type the organisation's short name.)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="256" align="right" valign="top">
+                            <span class="asterix">* </span>Address
+                        </td>
+                        <td width="478">
+                            @Html.TextAreaFor(model => model.OrgAddress, new { @class = "form-control", rows = "4", cols = "30" })
 
-    <table>
-        <tr>
-            <td width="256" align="right" valign="top"><span style="color: red">* </span>Salutation</td>
-            <td>
-                @Html.DropDownListFor(m => m.Salutation, new List<SelectListItem> {
-                    new SelectListItem { Text = "Please Select a Salutation", Value = "" },
-                    new SelectListItem { Text = "Ms.", Value = "Ms." },
-                    new SelectListItem { Text = "Mrs.", Value = "Mrs." },
-                    new SelectListItem { Text = "Mr.", Value = "Mr." }
-                }, new { @class = "form-control", required = "required", name = "Salutation" })
-                <div class="text-danger" id="SalutationError"></div>
-            </td>
-        </tr>
-
-        <tr>
-            <td width="256" align="right" valign="top"><span style="color: red">* </span>Name</td>
-            <td>
-                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", size = "50" })
-                <div class="text-danger" id="NameError"></div>
-            </td>
-        </tr>
-
-        <tr>
-            <td width="256" align="right" valign="top"><span style="color: red">* </span>Address</td>
-            <td>
-                @Html.TextBoxFor(model => model.Address, new { @class = "form-control", size = "50" })
-                <div class="error" id="AddressError" style="margin-bottom: 15px;"></div>
-            </td>
-        </tr>
-
-        <tr>
-            <td width="256" align="right" valign="top"><span style="color: red">* </span>Country</td>
-            <td>
-                @Html.DropDownListFor(m => m.CountryID, empty, "--Select Country--")
-                <div class="text-danger" id="CountryError"></div>
-            </td>
-        </tr>
-
-        <tr>
-            <td width="256" align="right" valign="top"><span style="color: red">* </span>State</td>
-            <td>
-                @Html.DropDownListFor(m => m.StateID, empty, "--Select State--")
-                <div class="text-danger" id="StateError"></div>
-            </td>
-        </tr>
-
-        <tr>
-            <td width="256" align="right" valign="top"><span style="color: red">* </span>City</td>
-            <td>
-                @Html.DropDownListFor(m => m.CityID, empty, "--Select City--")
-                <div class="text-danger" id="CityError"></div>
-            </td>
-        </tr>
-
-        <tr>
-            <td width="256" align="right" valign="top"><span style="color: red">* </span>Pincode</td>
-            <td>
-                @Html.TextBoxFor(model => model.Pincode, new { @class = "form-control", size = "50" })
-                <div class="error" id="PincodeError" style="margin-bottom: 15px;"></div>
-            </td>
-        </tr>
-
-        <tr>
-            <td width="256" align="right" valign="top"><span style="color: red">* </span>E-Mail</td>
-            <td>
-                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", size = "50" })
-                <div class="error" id="EmailError" style="margin-bottom: 15px;"></div>
-            </td>
-        </tr>
-
-        <tr>
-            <td width="256" align="right"><span style="color: red">* </span>Mobile No.</td>
-            <td>
-                @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", size = "50" })
-                <div class="error" id="MobileError" style="margin-bottom: 15px;"></div>
-            </td>
-        </tr>
-        <tr>
-            <td width="256" align="right"><span style="color: red">* </span>Biodata (.pdf Only)</td>
-            <td><input type="file" id="file" name="file" class="form-control" accept=".pdf" required /></td>
-        </tr>
-        <tr>
-            <td width="256" align="right"><span class="asterix" style="color: red">* </span>Interested Event</td>
-            <td> @Html.DropDownListFor(m => m.EventID, empty, "--Select Event--")</td>
-        </tr>
-
-        <tr>
-            <td width="256" align="right" valign="top"><span style="color: red">* </span>CSI Membership No.</td>
-            <td>
-                @Html.TextBoxFor(model => model.CSI_No, new { @class = "form-control", size = "50" })
-                <div class="error" id="CSI_Error" style="margin-bottom: 15px;"></div>
-            </td>
-
-        </tr>
-
-        <tr>
-            <td width="256" align="right" valign="top"><span style="color: red">* </span>IEEE/ISTE/IETE/IITP/IMP Membership No.</td>
-            <td>
-                @Html.TextBoxFor(model => model.IEEE_No, new { @class = "form-control", size = "50" })
-                <div class="error" id="IEEE_Error" style="margin-bottom: 15px;"></div>
-            </td>
-
-        </tr>
-        <tr>
-            <td width="256" align="right" valign="top"><span style="color: red">* </span>Organisation</td>
-            <td>
-                @Html.DropDownListFor(m => m.OrgID, empty, "--Select Org--")
-            </td>
-        </tr>
-        <tr>
-            <td width="256" align="right" valign="top">
-                <span style="color: red">* </span> Category
-            </td>
-            <td>
-                @Html.DropDownListFor(m => m.Category, new List<SelectListItem> {
-                    new SelectListItem { Text = "[Select Category]", Value = "" },
-                    new SelectListItem { Text = "Research Scholar", Value = "Research Scholar" },
-                    new SelectListItem { Text = "Full-Time Student", Value = "Full-Time Student" },
-                    new SelectListItem { Text = "Faculty", Value = "Faculty" },
-                    new SelectListItem { Text = "Industrial Representative", Value = "Industrial Representative" }
-                }, new { @class = "form-control", required = "required", name = "Category" })
-                <div class="text-danger" id="SalutationError"></div>
-            </td>
-        </tr>
-
-        <tr>
-            <td width="256" align="right"><span class="asterix" style="color: red">* </span>Password</td>
-            <td>
-                @Html.PasswordFor(model => model.Password, new { @class = "form-control", size = "50" })
-                @*<div>@Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })</div>*@
-            </td>
-        </tr>
-
-        <tr>
-            <td width="256" align="right" valign="top"><span style="color: red">* </span>Confirm Password</td>
-            <td>
-                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", size = "50" })
-                <div class="error" id="PasswordError" style="margin-bottom: 15px;"></div>
-            </td>
-        </tr>
-    </table>
-
-    <div id="OrgDetails" class="hidden" style="display: none">
-        <table class="form"
-               border="0"
-               width="760"
-               id="table4"
-               cellpadding="5">
-            <tbody>
-                <tr>
-                    <td colspan="2" class="content">
-                        <b>Organisation Details</b><span class="microfont">
+                            <div class="error" id="OrgAddressError">
+                                (Please type the organisation's address.)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="256" align="right" valign="top">
+                            <span class="asterix">* </span>Name of HOD / Contact
+                            Person
+                        </td>
+                        <td width="478">
+                            @Html.TextBoxFor(model => model.OrgContactPerson, new { @class = "form-control", size = "50" })
+                            <div class="error" id="OrgContactNameError">
+                                (Please type the name of the person to whom we can
+                                contact for further reference. The name can contain only
+                                alphabets, spaces and ".")
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="256" align="right" valign="top">
+                            <span class="asterix">* </span>E-Mail
+                        </td>
+                        <td width="478">
+                            @Html.TextBoxFor(model => model.OrgEmail, new { @class = "form-control", size = "50" })
+                            <div class="error" id="OrgEmailError">
+                                (Please type the organisation's e-mail address.)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="256" align="right" valign="top">&nbsp;</td>
+                        <td>
+                            <span class="microfont">Country Code - State Code - Phone Number</span>
                             <br />
-                            Fields marked with an asterisk
-                            <span class="asterix"> *</span> are required.<br />
-                            Note: Various certificates acknowledging your
-                            contributions would be generated based on our records
-                            submitted by you. In future, when registering for an
-                            event, please do take time out and update your profile
-                            to avoid unnecessary inconvenience.
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <b>
-                            Why am I being asked to fill up organisational
-                            details?
-                        </b><br />
-                        Filling up the form, would allow us to track other members
-                        from your organisation. Members from registered
-                        organisation may get group discounts and other benefits.
-                        Also it would help us enhance our communication with your
-                        organisation.
-                    </td>
-                </tr>
-                <tr>
-                    <td width="256" align="right" valign="top">
-                        <span class="asterix">* </span>Organisation Name
-                    </td>
-                    <td width="478">
-                        @Html.TextBoxFor(model => model.OrgName, new { @class = "form-control", size = "50" })
-                        <div class="error" id="OrgNameError">
-                            (Please type the organisation's name.)
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="256" align="right" valign="top">
-                        <span class="asterix">* </span>Organisation Short Name
-                    </td>
-                    <td width="478">
-                        @Html.TextBoxFor(model => model.OrgShortName, new { @class = "form-control", size = "50" })
-                        <div class="error" id="OrgShortNameError">
-                            (Please type the organisation's short name.)
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="256" align="right" valign="top">
-                        <span class="asterix">* </span>Address
-                    </td>
-                    <td width="478">
-                        @Html.TextAreaFor(model => model.OrgAddress, new { @class = "form-control", rows = "4", cols = "30" })
+                            <span class="microfont">
+                                (India 91)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - (Delhi
+                                11)
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="256" align="right" valign="top">
+                            <span class="asterix">* </span>Phone
+                        </td>
+                        <td width="478">
+                            <input name="txtOrgPhone"
+                                   id="txtOrgPhone"
+                                   type="hidden" />
+                            <input type="text"
+                                   name="txtOrgPhone1"
+                                   size="5"
+                                   style="text-align: right" />
+                            -
+                            <input type="text"
+                                   name="txtOrgPhone2"
+                                   size="5"
+                                   style="text-align: right" />
+                            -
+                            <input type="text"
+                                   name="txtOrgPhone3"
+                                   size="10"
+                                   style="text-align: right" />&nbsp; <span id="spOrgPhone">( - - )</span>
+                            <div class="error" id="OrgPhoneError">
+                                (Please type the organisation's phone number. The phone
+                                number can contain only numerals.)
+                            </div>
+                        </td>
+                    </tr>
 
-                        <div class="error" id="OrgAddressError">
-                            (Please type the organisation's address.)
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="256" align="right" valign="top">
-                        <span class="asterix">* </span>Name of HOD / Contact
-                        Person
-                    </td>
-                    <td width="478">
-                        @Html.TextBoxFor(model => model.OrgContactPerson, new { @class = "form-control", size = "50" })
-                        <div class="error" id="OrgContactNameError">
-                            (Please type the name of the person to whom we can
-                            contact for further reference. The name can contain only
-                            alphabets, spaces and ".")
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="256" align="right" valign="top">
-                        <span class="asterix">* </span>E-Mail
-                    </td>
-                    <td width="478">
-                        @Html.TextBoxFor(model => model.OrgEmail, new { @class = "form-control", size = "50" })
-                        <div class="error" id="OrgEmailError">
-                            (Please type the organisation's e-mail address.)
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="256" align="right" valign="top">&nbsp;</td>
-                    <td>
-                        <span class="microfont">Country Code - State Code - Phone Number</span>
-                        <br />
-                        <span class="microfont">
-                            (India 91)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - (Delhi
-                            11)
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="256" align="right" valign="top">
-                        <span class="asterix">* </span>Phone
-                    </td>
-                    <td width="478">
-                        <input name="txtOrgPhone"
-                               id="txtOrgPhone"
-                               type="hidden" />
-                        <input type="text"
-                               name="txtOrgPhone1"
-                               size="5"
-                               style="text-align: right" />
-                        -
-                        <input type="text"
-                               name="txtOrgPhone2"
-                               size="5"
-                               style="text-align: right" />
-                        -
-                        <input type="text"
-                               name="txtOrgPhone3"
-                               size="10"
-                               style="text-align: right" />&nbsp; <span id="spOrgPhone">( - - )</span>
-                        <div class="error" id="OrgPhoneError">
-                            (Please type the organisation's phone number. The phone
-                            number can contain only numerals.)
-                        </div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td width="256" align="right">&nbsp;</td>
-                    <td width="478">&nbsp;</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+                    <tr>
+                        <td width="256" align="right">&nbsp;</td>
+                        <td width="478">&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
 
-}
-<button type="button" id="submitBtn">Submit</button>
-<input type="reset" value="Reset">
+    }
+    <button type="button" id="submitBtn">Submit</button>
+    <input type="reset" value="Reset">
 
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
 
 
-<script src="~/Scripts/jquery-3.7.0.min.js"></script>
-<script src="~/Content/assets/js/jquery.min.js"></script>
-<script src="~/Scripts/common.js"></script>
-<script src="~/Content/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
-<script src="~/Content/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
-<script src="~/Content/assets/js/app.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+    <script src="~/Content/assets/js/jquery.min.js"></script>
+    <script src="~/Scripts/common.js"></script>
+    <script src="~/Content/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/Content/assets/js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
+
     var form = $('#__AjaxAntiForgeryForm');
     var token = $('input[name="__RequestVerificationToken"]', form).val();
 
@@ -470,22 +459,10 @@
         var OrgAddress = $("#OrgAddress").val();
         var OrgPerson = $("#OrgContactPerson").val();
 
-        console.log("OrganizationName", OrganisationName);
-        console.log("OrgName", OrgName);
-        console.log("OrgShortName", OrgShortName);
-        console.log("OrgPhone", OrgPhone);
-        console.log("OrgEmail", OrgEmail);
-        console.log("address", OrgAddress);
-        console.log("person", OrgPerson);
-
-
 
         var formData = new FormData();
         var fileInput = $("#file")[0].files[0];
-        /*if (!fileInput) {
-            Swal.fire("Error", "Please select a file.", "error");
-            return;
-        }*/
+       
 
         formData.append("__RequestVerificationToken", token);
         formData.append("Salutation", $("#Salutation").val());
@@ -503,8 +480,7 @@
         formData.append("CSI_No", $("#CSI_No").val());
         formData.append("IEEE_No", $("#IEEE_No").val());
         formData.append("Category", $("#Category").val());
-        formData.append("Password", $("#Password").val());
-        formData.append("ConfirmPassword", $("#ConfirmPassword").val());
+
         formData.append("EventID", $("#EventID").val());
         formData.append("Event", $("#EventID option:selected").text());
         formData.append("file", $("#file")[0].files[0]);
@@ -516,15 +492,16 @@
         formData.append("OrgAddress", OrgAddress);
         formData.append("OrgContactPerson", OrgPerson);
         formData.append("OrgPhone", OrgPhone);
+        formData.append("MemberID", $("#MemberID").val());
 
-        formData.forEach((value, key) => {
-            console.log(key + ": " + value);
-        });
+       
 
         $("#submitBtn").prop("disabled", true); // Disable button to prevent double submission
 
         $.ajax({
-            url: "@Url.Action("EditProfile", "Member")",
+
+            url: "@Url.Action("UpdateProfile", "Member")",
+
             type: "POST",
             data: formData,
 
@@ -561,5 +538,7 @@
             }
         });
     });
-</script>
 
+    </script>
+
+</div>

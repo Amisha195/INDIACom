@@ -58,7 +58,7 @@ namespace INDIACom.Controllers
         {
             return View();
         }
-        public ActionResult SubmitPapers()
+        public ActionResult SubmitPaper()
         {
             return View();
         }
@@ -109,7 +109,7 @@ namespace INDIACom.Controllers
             return View();
         }
         
-        public ActionResult SpecialSession()
+        public ActionResult SpecialSessionStatic()
         {
             return View();
         }
@@ -144,6 +144,9 @@ namespace INDIACom.Controllers
             return View();
         }
 
-
+        public ActionResult SubmitRevisedPaper()
+        {
+            return View();
+        }
     }
 }
