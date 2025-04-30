@@ -23,8 +23,8 @@ namespace INDIACom.Controllers
         [HttpGet]
         public ActionResult SubmitEvent()
         {
-
-            if (Session["user"] == null)
+            var user = Session["user"] as MemberModel;
+            if (Session["user"] == null || user.UserTypeId != 1)
             {
                 return RedirectToAction("Login", "Account");
             }

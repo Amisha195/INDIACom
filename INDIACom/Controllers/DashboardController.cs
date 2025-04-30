@@ -16,10 +16,27 @@ namespace INDIACom.Controllers
         [HttpGet]
         public ActionResult UserDashboard()
         {
+            var user = Session["user"] as MemberModel;
+            if (Session["user"] == null || user.UserTypeId != 3)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             return View();
         }
 
         public ActionResult AdminDashboard() 
+        {
+            var user = Session["user"] as MemberModel;
+            if (Session["user"] == null || user.UserTypeId != 1 )
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+                 return View();
+            
+        }
+
+        public ActionResult dashboard()
         {
             return View();
         }
