@@ -50,7 +50,7 @@ public class PaperSubmissionControllercs : Controller
 
     public ActionResult SubmitPapers(FormCollection form, HttpPostedFileBase PaperFile, HttpPostedFileBase PlagiarismReport)
     {
-        int eventId, tackId, sessionId, memberId, correspondenceId;
+        int eventId, trackId, sessionId, memberId, correspondenceId;
         int.TryParse(form["Event_Id"], out eventId);
         int.TryParse(form["Track_Id"], out trackId);
         int.TryParse(form["Session_Id"], out sessionId);

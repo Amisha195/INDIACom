@@ -26,12 +26,7 @@
     <tr>
         <td width="256" align="right" valign="top"><span style="color: red">* </span>Salutation</td>
         <td>
-            @Html.DropDownListFor(m => m.Salutation, new List<SelectListItem> {
-                new SelectListItem { Text = "Please Select a Salutation", Value = "" },
-                new SelectListItem { Text = "Ms.", Value = "Ms." },
-                new SelectListItem { Text = "Mrs.", Value = "Mrs." },
-                new SelectListItem { Text = "Mr.", Value = "Mr." }
-            }, new { @class = "form-control", required = "required", name = "Salutation" })
+            @Html.DropDownListFor(m => m.Salutation, empty, "--select--")
             <div class="text-danger" id="SalutationError"></div>
         </td>
     </tr>
@@ -136,13 +131,7 @@
             <span style="color: red">* </span> Category
         </td>
         <td>
-            @Html.DropDownListFor(m => m.Category, new List<SelectListItem> {
-                new SelectListItem { Text = "[Select Category]", Value = "" },
-                new SelectListItem { Text = "Research Scholar", Value = "Research Scholar" },
-                new SelectListItem { Text = "Full-Time Student", Value = "Full-Time Student" },
-                new SelectListItem { Text = "Faculty", Value = "Faculty" },
-                new SelectListItem { Text = "Industrial Representative", Value = "Industrial Representative" }
-            }, new { @class = "form-control", required = "required", name = "Category" })
+            @Html.DropDownListFor(m => m.Category, empty, "--empty--")
             <div class="text-danger" id="SalutationError"></div>
         </td>
     </tr>
@@ -340,6 +329,8 @@
         loadEvent();
         loadCountries();
         loadOrg();
+        loadSal();
+        loadCat();
 
         $("#CountryID").change(function () {
             var selectedCountry = $(this).val();
@@ -403,6 +394,25 @@
 
 
     });
+    function loadSal(obj) {
+$.post('@Url.Action("getSal", "dropdown")', obj, function (data, status) {
+    if (status == "success") {
+        populateDropdown("Salutation", data);
+    } else {
+        console.log("No data");
+    }
+  });
+}
+
+function loadCat(obj) {
+$.post('@Url.Action("getCat", "dropdown")', obj, function (data, status) {
+    if (status == "success") {
+        populateDropdown("Category", data);
+    } else {
+        console.log("No data");
+    }
+    });
+}
 
     function loadEvent(obj) {
         $.post('@Url.Action("getEvent", "dropdown")', obj, function (data, status) {
@@ -462,7 +472,7 @@
 
         var formData = new FormData();
         var fileInput = $("#file")[0].files[0];
-       
+
 
         formData.append("__RequestVerificationToken", token);
         formData.append("Salutation", $("#Salutation").val());
@@ -494,7 +504,7 @@
         formData.append("OrgPhone", OrgPhone);
         formData.append("MemberID", $("#MemberID").val());
 
-       
+
 
         $("#submitBtn").prop("disabled", true); // Disable button to prevent double submission
 

@@ -7,19 +7,94 @@
 }
 <link href="~/Content/css/style.css" rel="stylesheet" />
 <div class="content-section col md">
-    {
-    <p>You are logged in <p>
 
-    <a href="@Url.Action("EditProfile", "Member")">Edit Profile</a>
 
-    <br>
-    <a href="@Url.Action("DocumentVerification", "CategoryVerification")">Document Verification</a>
+    <p class="generalTxt">
+        <br>Dear @Model.Name,<br><br>
+        Welcome to BVICAM.<br><br>
+    </p>
 
-    <br>
-    <a href="@Url.Action("Logout", "Account")" class="btn btn-warning" onclick="return confirm('Are you sure you want to logout?');">
-        Logout
-    </a>
+    <p class="generalTxt">
+        1. <a class="guidelines" href="@Url.Action("SpecialSession2", "SpecialSession")"><strong>Click here</strong></a>
+        <strong><span style="color:red"> if you wish to organize / convene a Special Session.</span></strong>
+    </p>
 
-    }
+    <p class="generalTxt">
+        2. <a class="guidelines" href="joinTPCTeam.asp">Click here</a> to join TPC.
+    </p>
+
+    <p class="generalTxt">
+        3. <a href="@Url.Action("SubmitPapers", "PaperSubmission")"><strong>Click here</strong></a>
+        <strong><span style="color:red"> to submit a new paper.</span></strong>
+    </p>
+
+    <p class="generalTxt">
+        4. <a class="guidelines" href="facilities/login.aspx">
+            <strong>
+                Click here
+                <span style="color:black;">
+                    for free access of
+                    <span style="color:red;font-weight:bold"> Springer</span>
+                    <span style="color:blue;font-weight:bold">Nature</span> BJIT Papers
+                </span>
+            </strong>
+        </a>.
+    </p>
+
+    <p class="generalTxt">
+        You may access any of the following links to carry out the action desired by you.
+    </p>
+
+    <p class="generalTxt">5. Operations related to submitted papers</p>
+    <p class="generalTxt">&nbsp;&nbsp;&nbsp;&nbsp;a. <a class="guidelines" href="paperSubmissions.asp">View Status of Submitted Papers</a></p>
+    <p class="generalTxt">&nbsp;&nbsp;&nbsp;&nbsp;b. <a class="guidelines" href="paperSubmissions.asp">Submit a Revised Paper.</a></p>
+    <p class="generalTxt">&nbsp;&nbsp;&nbsp;&nbsp;c. <a class="guidelines" href="paperSubmissions.asp">Change Title of a Submitted Paper.</a></p>
+    <p class="generalTxt">&nbsp;&nbsp;&nbsp;&nbsp;d. <a class="guidelines" href="paperSubmissions.asp">Add Author to a Submitted Paper.</a></p>
+    <p class="generalTxt">
+        &nbsp;&nbsp;&nbsp;&nbsp;e. <a class="guidelines" href="paperSubmissions.asp">
+            Submit Copyright Transfer Form, Certificate of Originality or Presentation.
+        </a>
+    </p>
+
+    <p class="generalTxt">
+        6. <a class="guidelines" href="@Url.Action("DocumentVerification", "CategoryVerification")">
+            Submit your <strong>Documents for Verification of Category of Registration</strong>.
+        </a>
+    </p>
+
+    <p class="generalTxt">
+        7. <a class="guidelines" href="https://bvicam.ac.in/indiacom/makeOnlinePayment.asp">
+            <strong>View Payable Amount</strong>
+        </a>, so that payment can be verified and confirmed.
+    </p>
+
+    <p class="generalTxt">
+        8. <a class="guidelines" href="makeOnlinePayment.asp">
+            <strong>Upload Payment Details</strong> and generate Payment ID
+        </a>, so that payment can be verified and confirmed.
+    </p>
+
+    <p class="generalTxt">
+        9. <a class="guidelines" href="facilities/papers/login.aspx">
+            <strong>Click here<span style="color:red;"> to proof read your paper.</span></strong>
+        </a>
+    </p>
+
+    <p class="generalTxt">
+        10. <a class="guidelines" href="@Url.Action("SubmitFeedback", "Feedback")">Submit your Feedback</a>.
+    </p>
+    <p class="generalTxt">
+        11. <a class="guidelines" href="@Url.Action("EditProfile", "Member")">Edit Your Profile</a>.
+    </p>
+    <hr>
+
+
+
+    
+        <a href="@Url.Action("Logout", "Account")" class="btn btn-danger" onclick="return confirm('Are you sure you want to logout?');">
+            Logout
+        </a>
+
+
 </div>
 
