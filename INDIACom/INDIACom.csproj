@@ -132,6 +132,7 @@
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PaperAdminController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Global.asax.cs">
@@ -144,6 +145,7 @@
     <Compile Include="Models\MemberDocumentModel.cs" />
     <Compile Include="Models\MemberModel.cs" />
     <Compile Include="Models\MembersModel.cs" />
+    <Compile Include="Models\SubmitPaperAdminModel.cs" />
     <Compile Include="Models\UserInfoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\css\UserInfo.css" />
@@ -162,6 +164,7 @@
     <Content Include="Views\PaperSubmission\papersubmission\SubmitPapers.cshtml" />
     <Content Include="Views\UserInfo\UserInfo.cshtml" />
     <Content Include="Views\UserInfo\UserDetails.cshtml" />
+    <Content Include="Views\PaperAdmin\SubmitPaperAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />

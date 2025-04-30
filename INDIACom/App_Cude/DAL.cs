@@ -850,6 +850,57 @@ namespace INDIACom.App_Cude
 
         #endregion
 
+       
+        #region PaperAdmin
+        //FETCH ALL PAPER SUBMISSIONS
+        public List<PaperModel> GetAllPapers()
+        {
+            List<PaperModel> papers = new List<PaperModel>();
+
+            try
+            {
+                OpenConnection();
+                SqlCommand cmd = new SqlCommand("Proc_GetAllPapers", con)  // Replace with your stored procedure for fetching papers
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    PaperModel p = new PaperModel
+                    {
+                        PaperId = dr["PaperId"] != DBNull.Value ? Convert.ToInt64(dr["PaperId"]) : 0,
+                        Title = dr["Title"]?.ToString() ?? string.Empty,
+                        DateOfSubmission = dr["DateOfSubmission"] != DBNull.Value ? Convert.ToDateTime(dr["DateOfSubmission"]) : DateTime.MinValue,
+                        EventName = dr["EventName"]?.ToString() ?? string.Empty,
+                        TrackName = dr["TrackName"]?.ToString() ?? string.Empty,
+                        SessionName = dr["SessionName"]?.ToString() ?? string.Empty,
+                        CorrespondanceId = dr["CorrespondanceId"] != DBNull.Value ? Convert.ToInt32(dr["CorrespondanceId"]) : (int?)null,
+                        Status = dr["Status"]?.ToString() ?? string.Empty,
+                        PlagiarismPath = dr["PlagiarismPath"]?.ToString() ?? string.Empty
+                    };
+
+                    papers.Add(p);
+                }
+
+                dr.Close();
+            }
+            catch (SqlException ex)
+            {
+                // Log exception (could use a logging library)
+                throw new Exception("Database operation failed: " + ex.Message, ex);
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return papers;
+        }
+        #endregion
+
     }
 }
 

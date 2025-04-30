@@ -1,0 +1,59 @@
+@model List<INDIACom.Models.PaperModel>
+@{
+    ViewBag.Title = "Paper Submission - Admin View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Submitted Papers</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>S No</th>
+            <th>Event</th>
+            <th>Track</th>
+            <th>Paper ID</th>
+            <th>Contact Author ID</th>
+            <th>Date</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Download Turnitin</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            int sno = 1;
+            foreach (var paper in Model)
+            {
+                <tr>
+                    <td>@sno</td>
+                    <td>@paper.EventName</td>
+                    <td>@paper.TrackName</td>
+                    <td>@paper.PaperId</td>
+                    <td>@paper.CorrespondanceId</td>
+                    <td>@paper.DateOfSubmission.ToString("g")</td>
+                    <td><a href="#">@paper.Title</a></td>
+                    <td>@paper.Status</td>
+                    <td style="color: red;">
+                        @if (!string.IsNullOrEmpty(paper.PlagiarismPath))
+                        {
+                            <a href="@paper.PlagiarismPath" target="_blank">Download</a>
+                        }
+                        else
+                        {
+                            <span>Report not Available</span>
+                        }
+                    </td>
+                </tr>
+                sno++;
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="9">No papers submitted.</td>
+            </tr>
+        }
+    </tbody>
+</table>
