@@ -440,12 +440,7 @@ namespace INDIACom.App_Cude
 
 
         public long GetMemberID(string email)
-<<<<<<< HEAD
 
-
-
-=======
->>>>>>> origin/main
         {
             long memberID = 0;
             OpenConnection();
@@ -460,11 +455,8 @@ namespace INDIACom.App_Cude
                 cmd.CommandText = "Proc_GetMemberID";
                 cmd.Parameters.AddWithValue("@Email", email);
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> origin/main
                 cmd.ExecuteNonQuery();
                 transaction.Commit();
                 object result = cmd.ExecuteScalar();

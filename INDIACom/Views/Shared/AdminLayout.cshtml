@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Admin Dashboard</title>
+    <link href="~/Content/css/admin-dashboard.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin Dashboard</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="@Url.Action("AdminDashboard", "Dashboard")"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#"><i class="fas fa-users"></i> Users</a></li>
+            <li><a href="@Url.Action("SubmitEvent", "Event")"><i class="fa-regular fa-calendar"></i> Event Creation</a></li>
+            <li><a href="#"><i class="fa-solid fa-calendar-check"></i>Requested Session </a></li>
+            <li><a href="#"><i class="fa-regular fa-newspaper"></i>News Creation </a></li>
+            <li><a href="#"><i class="fa-solid fa-file-circle-check
+"></i>Verify Document </a></li>
+            <li><a href="#"><i class="fa-solid fa-file-upload"></i>Submitted Papers</a></li>
+            <li><a href="#"><i class="fa-solid fa-download"></i>Downloads </a></li>
+            <li><a href="#"><i class="fa-regular fa-comments"></i>Feedback </a></li>
+            <li><a href="#"><i class="fas fa-cog"></i>Settings</a></li>
+            <li><a href="@Url.Action("Logout", "Account")" onclick="return confirm('Are you sure you want to logout?');"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="top-navbar">
+            <div class="search-box">
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="user-info">
+                <img src="https://via.placeholder.com/40" alt="User">
+                <span>Admin</span>
+            </div>
+        </div>
+
+        <div class="dashboard-cards">
+            <div class="card card-purple">
+                <h3>9526</h3>
+                <p>Total Orders</p>
+            </div>
+            <div class="card card-green">
+                <h3>$8323</h3>
+                <p>Total Revenue</p>
+            </div>
+            <div class="card card-red">
+                <h3>6200</h3>
+                <p>Visitors</p>
+            </div>
+            <div class="card card-dark">
+                <h3>5630</h3>
+                <p>Messages</p>
+            </div>
+        </div>
+
+        <div class="main-body">
+            @RenderBody()
+        </div>
+    </div>
+
+</body>
+</html>

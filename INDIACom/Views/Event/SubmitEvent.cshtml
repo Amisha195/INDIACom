@@ -1,20 +1,21 @@
 ﻿@model INDIACom.Models.EventModel
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
+
 
 @*@using (Html.BeginForm("SubmitEvent", "Event", FormMethod.Post, new { @class = "", enctype = "multipart/form-data", id = "eventForm" }))*@
 
 
-    <h1 style="color: blue;">Submit Event</h1>
-    <p>Fields marked with <span style="color: red;">*</span> are required.</p>
+<h1 style="color: blue;">Submit Event</h1>
+<p>Fields marked with <span style="color: red;">*</span> are required.</p>
 
-    @if (ViewBag.Message != null)
-    {
-        <p style="color: green;"><b>@ViewBag.Message</b></p>
-    }
+@if (ViewBag.Message != null)
+{
+    <p style="color: green;"><b>@ViewBag.Message</b></p>
+}
 
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 <form id="eventForm">
     <label><span style="color: red;">*</span> Event ID:</label>
     @Html.TextBoxFor(m => m.Event_Id, new { @class = "form-control", required = "required", name = "Event_Id" })
@@ -22,11 +23,11 @@
 
 
     <label><span style="color: red;">*</span> Event Name:</label>
-    @Html.TextBoxFor(m => m.Event_Name, new { @class = "form-control", required = "required" , name = "Event_Name" })
+    @Html.TextBoxFor(m => m.Event_Name, new { @class = "form-control", required = "required", name = "Event_Name" })
     <br />
 
     <label>Event Creation:</label>
-    @Html.TextBoxFor(m => m.Event_Creation_date, new { @class = "form-control",type="date", name = "Event_Creation_Date" })
+    @Html.TextBoxFor(m => m.Event_Creation_date, new { @class = "form-control", type = "date", name = "Event_Creation_Date" })
     <br />
 
     <label>Event Opening</label>
@@ -46,7 +47,7 @@
     <br />
 
     <button type="button" id="submitBtn">Submit</button>
-    <input type="reset" value="Reset">
+  
 </form>
 
 
