@@ -8,11 +8,12 @@ using System.IO;
 using INDIACom.App_Cude;
 using System.Drawing.Printing;
 
-public class PaperSubmissionControllercs : Controller
+public class PaperSubmissionController : Controller
 {
     private readonly DAL paperDAL = new DAL();
 
     [HttpGet]
+    
     public ActionResult SubmitPapers()
     {
         // Check if user is logged in
@@ -28,7 +29,7 @@ public class PaperSubmissionControllercs : Controller
         // Logged in — show paper submission form
         return View(); // Views/PaperSubmission/SubmitPapers.cshtml
     }
-    //for verify button
+   
     [HttpGet]
 
     public JsonResult VerifyMemberID(string memberId)
@@ -56,27 +57,6 @@ public class PaperSubmissionControllercs : Controller
 
 
 
-    // For verify button
-    [HttpGet]
-    public JsonResult VerifyMemberID(string memberId)
-    {
-        if (string.IsNullOrWhiteSpace(memberId))
-        {
-            return Json(new { success = false, message = "Member ID is required." }, JsonRequestBehavior.AllowGet);
-        }
-
-        string message;
-        string name = paperDAL.VerifyMemberByID(memberId, out message);
-
-        if (!string.IsNullOrEmpty(name))
-        {
-            return Json(new { success = true, name = name, message = message }, JsonRequestBehavior.AllowGet);
-        }
-        else
-        {
-            return Json(new { success = false, message = message }, JsonRequestBehavior.AllowGet);
-        }
-    }
 
 
     //ends here 
@@ -87,8 +67,7 @@ public class PaperSubmissionControllercs : Controller
     [HttpPost]
 
 
-    [HttpPost]
-  
+
     public ActionResult SubmitPapers(FormCollection form, HttpPostedFileBase PaperFile, HttpPostedFileBase PlagiarismReport)
     {
         int TryParseInt(string input, string fieldName)
@@ -104,9 +83,7 @@ public class PaperSubmissionControllercs : Controller
                 return 0;
             }
         }
-
-    public ActionResult SubmitPapers(FormCollection form, HttpPostedFileBase PaperFile, HttpPostedFileBase PlagiarismReport)
-    {
+   
         int eventId, trackId, sessionId, memberId, correspondenceId;
         int.TryParse(form["Event_Id"], out eventId);
         int.TryParse(form["Track_Id"], out trackId);
@@ -130,52 +107,65 @@ public class PaperSubmissionControllercs : Controller
             Correspondence_Id = TryParseInt(form["CorrespondingAuthorID"], "Correspondence_Id")
         };
 
-        List<string> coAuthorIds = new List<string>();
+        // === Validate Co-Authors (Before Paper is Saved) ===
+        List<string> validCoAuthorIds = new List<string>();
+        HashSet<string> seenIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-        // Check if each co-author ID is valid
-        for (int i = 0; i < 8; i++)
-
-            Event_Id = eventId,
-            Track_Id = trackId,
-            Session_Id = sessionId,
-            Event_Name = form["Event_Name"],
-            Track_Name = form["Track_Name"],
-            Session_Name = form["Session_Name"],
-            Member_Id = memberId,  // First author as main
-            Correspondence_Id = correspondenceId,
-            Co_Authors_Id = form["co_authors_id"]
-        };
-        //for co_authors
-
-        List<string> coAuthorIds = new List<string>();
-        for (int i = 0; i < 8; i++) // Assuming max 8 co-authors
-
+        for (int i = 0; i < 8; i++) // You allow up to 8 co-authors
         {
-            string authorId = form[$"Authors[{i}].MemberID"];
-            if (!string.IsNullOrEmpty(authorId))
+            string rawId = form[$"Authors[{i}].MemberID"];
+
+            if (string.IsNullOrWhiteSpace(rawId))
+                continue;
+
+            string trimmedId = rawId.Trim().ToUpperInvariant();
+
+            // Skip if already seen (duplicate)
+            if (!seenIds.Add(trimmedId))
             {
-
-                string message = "";
-                string memberName = paperDAL.VerifyMemberByID(authorId, out message);  // Using your existing method to verify MemberID
-
-                if (string.IsNullOrEmpty(memberName))  // If memberName is empty, the member is not found
-                {
-                    ModelState.AddModelError($"Authors[{i}].MemberID", message);  // Show the appropriate message
-                }
-                else
-                {
-                    coAuthorIds.Add(authorId);  // If valid, add to coAuthors list
-                }
-
-                coAuthorIds.Add(authorId);
-
+                ModelState.AddModelError($"Authors[{i}].MemberID", $"Duplicate co-author ID: {trimmedId}");
+                continue;
             }
+
+            // Check member validity in DB
+            string message;
+            string memberName = paperDAL.VerifyMemberByID(trimmedId, out message);
+
+            if (string.IsNullOrEmpty(memberName))
+            {
+                ModelState.AddModelError($"Authors[{i}].MemberID", $"Invalid Member ID: {trimmedId}. {message}");
+                continue;
+            }
+
+            // ✅ Valid member
+            validCoAuthorIds.Add(trimmedId);
         }
-        model.Co_Authors_Id = string.Join(",", coAuthorIds);
+
+        // Final check before continuing
+        if (!ModelState.IsValid)
+        {
+            return Json(new
+            {
+                success = false,
+                message = "Submission failed due to invalid or duplicate co-author(s).",
+                errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList()
+            });
+        }
+
+        // Save only valid co-authors
+        model.Co_Authors_Id = string.Join(",", validCoAuthorIds);
+
 
 
         var allowedPaperExtensions = new[] { ".doc", ".docx" };
         var allowedPlagiarismExtensions = new[] { ".pdf" };
+
+        // Ensure model values are set (fallback to Session if needed)
+        if (model.Member_Id == 0 && Session["MemberId"] != null)
+            model.Member_Id = Convert.ToInt32(Session["MemberId"]);
+
+        if (model.Event_Id == 0 && Session["EventId"] != null)
+            model.Event_Id = Convert.ToInt32(Session["EventId"]);
 
         // === Paper Upload ===
         if (PaperFile != null && PaperFile.ContentLength > 0)
@@ -198,7 +188,7 @@ public class PaperSubmissionControllercs : Controller
                 PaperFile.SaveAs(paperPath);
                 model.PaperPath = "/Application/Papers/" + newFileName;
 
-                // Save file path to the database
+                // Save to DB
                 paperDAL.SaveFilePath(new MemberDocumentModel
                 {
                     UserID = model.Member_Id,
@@ -220,7 +210,8 @@ public class PaperSubmissionControllercs : Controller
             else
             {
                 string directoryPath = Server.MapPath("~/Application/PlagiarismPolicies/");
-                if (!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
+                if (!Directory.Exists(directoryPath))
+                    Directory.CreateDirectory(directoryPath);
 
                 string documentType = "PlagiarismReport";
                 string timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
@@ -229,7 +220,7 @@ public class PaperSubmissionControllercs : Controller
                 PlagiarismReport.SaveAs(policyPath);
                 model.PlagiarismPath = "/Application/PlagiarismPolicies/" + newFileName;
 
-                // Save file path to the database
+                // Save to DB
                 paperDAL.SaveFilePath(new MemberDocumentModel
                 {
                     UserID = model.Member_Id,
@@ -240,53 +231,8 @@ public class PaperSubmissionControllercs : Controller
             }
         }
 
-        // 🔥 Submit the paper and get the PaperId
 
 
-        if (PaperFile != null && PaperFile.ContentLength > 0)
-        {
-            string directoryPath = Server.MapPath("~/Application/Papers/");
-
-            // Ensure the directory exists
-            if (!Directory.Exists(directoryPath))
-            {
-                Directory.CreateDirectory(directoryPath);
-            }
-
-            // Create a unique filename using timestamp
-            string uniqueFileName = Path.GetFileNameWithoutExtension(PaperFile.FileName) +
-                                    "_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") +
-                                    Path.GetExtension(PaperFile.FileName);
-
-            string paperPath = Path.Combine(directoryPath, uniqueFileName);
-            PaperFile.SaveAs(paperPath);
-
-            model.PaperPath = "/Application/Papers/" + uniqueFileName;
-        }
-
-        // For Plagiarism Report
-        if (PlagiarismReport != null && PlagiarismReport.ContentLength > 0)
-        {
-            string directoryPath = Server.MapPath("~/Application/PlagiarismPolicies/");
-
-            // Ensure the directory exists
-            if (!Directory.Exists(directoryPath))
-            {
-                Directory.CreateDirectory(directoryPath);
-            }
-
-            // Create a unique filename using timestamp
-            string uniquePolicyName = Path.GetFileNameWithoutExtension(PlagiarismReport.FileName) +
-                                      "_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") +
-                                      Path.GetExtension(PlagiarismReport.FileName);
-
-            string policyPath = Path.Combine(directoryPath, uniquePolicyName);
-            PlagiarismReport.SaveAs(policyPath);
-
-            model.PlagiarismPath = "/Application/PlagiarismPolicies/" + uniquePolicyName;
-        }
-
-        DAL paperDAL = new DAL();
 
         string result = paperDAL.SubmitPapers(model);
 
@@ -306,13 +252,13 @@ public class PaperSubmissionControllercs : Controller
             );
 
             // ✅ Save Co-authors
-            foreach (var coAuthorId in coAuthorIds)
+            foreach (var coAuthorId in  validCoAuthorIds)
             {
                 paperDAL.SaveCoAuthor(new CoAuthorModel
                 {
-                    PaperId = paperId,
+                    PaperId = model.PaperId,
                     MemberId = coAuthorId,
-                    IsCorresponding = coAuthorId == model.Correspondence_Id.ToString()
+                    IsCorresponding = (coAuthorId == model.Correspondence_Id.ToString())
                 });
             }
 
@@ -323,6 +269,7 @@ public class PaperSubmissionControllercs : Controller
         {
             return Json(new { success = false, message = "Submission failed: " + result });
         }
+
 
     }
 }

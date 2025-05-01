@@ -10,7 +10,7 @@ namespace INDIACom.Controllers
         public ActionResult SubmitPaperAdmin()
         {
             DAL dal = new DAL();
-            List<PaperModel> papers = dal.GetAllPapers();
+            List<PaperDetailsModel> papers = dal.GetAllPapers();
             return View(papers); // Goes to Views/Admin/SubmitPaperAdmin.cshtml
         }
     }

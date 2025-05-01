@@ -161,232 +161,6 @@ namespace INDIACom.App_Cude
         #endregion
 
 
-        #region PaperSubmission
-
-
-        public string SubmitPapers(PaperSubmissionModel model)
-        {
-            string message = "";
-            OpenConnection();
-            SqlCommand cmd = new SqlCommand();
-            SqlTransaction transaction = con.BeginTransaction();
-
-            try
-            {
-                cmd.Connection = con;
-                cmd.Transaction = transaction;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "Proc_InsertPaperSubmission";
-
-                cmd.Parameters.AddWithValue("@Title", model.Title);
-                cmd.Parameters.AddWithValue("@DateOfSubmission", model.DateOfSubmission);
-                cmd.Parameters.AddWithValue("@EventId", model.Event_Id);
-                cmd.Parameters.AddWithValue("@TrackId", model.Track_Id);
-                cmd.Parameters.AddWithValue("@SessionId", model.Session_Id);
-                cmd.Parameters.AddWithValue("@EventName", model.Event_Name);
-                cmd.Parameters.AddWithValue("@TrackName", model.Track_Name);
-                cmd.Parameters.AddWithValue("@SessionName", model.Session_Name);
-                cmd.Parameters.AddWithValue("@MemberId", model.Member_Id);
-                cmd.Parameters.AddWithValue("@PaperPath", model.PaperPath ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@PlagiarismPath", model.PlagiarismPath ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@CorrespondanceId", model.Correspondence_Id);
-                cmd.Parameters.AddWithValue("@CoAuthorsId", model.Co_Authors_Id ?? (object)DBNull.Value);
-
-                cmd.ExecuteNonQuery();
-                transaction.Commit();
-                message = "Success";
-            }
-            catch (Exception ex)
-            {
-                transaction.Rollback();
-                message = "Error: " + ex.Message;
-            }
-            finally
-            {
-                DisposeConnection();
-            }
-          return message;
-        }
-
-
-
-      
-
-        
-        public string SubmitPapers(PaperSubmissionModel model)
-        {
-            string message = "";
-            OpenConnection();
-            SqlTransaction transaction = con.BeginTransaction();
-
-            try
-            {
-                // Insert paper into the Paper table (no Co-Authors here)
-                SqlCommand cmd = new SqlCommand("Proc_InsertPaperSubmission", con, transaction)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                cmd.Parameters.AddWithValue("@Title", model.Title);
-                cmd.Parameters.AddWithValue("@DateOfSubmission", model.DateOfSubmission);
-                cmd.Parameters.AddWithValue("@EventId", model.Event_Id);
-                cmd.Parameters.AddWithValue("@TrackId", model.Track_Id);
-                cmd.Parameters.AddWithValue("@SessionId", model.Session_Id);
-                cmd.Parameters.AddWithValue("@EventName", model.Event_Name);
-                cmd.Parameters.AddWithValue("@TrackName", model.Track_Name);
-                cmd.Parameters.AddWithValue("@SessionName", model.Session_Name);
-                cmd.Parameters.AddWithValue("@MemberId", model.Member_Id);
-                cmd.Parameters.AddWithValue("@PaperPath", string.IsNullOrEmpty(model.PaperPath) ? (object)DBNull.Value : model.PaperPath);
-                cmd.Parameters.AddWithValue("@PlagiarismPath", string.IsNullOrEmpty(model.PlagiarismPath) ? (object)DBNull.Value : model.PlagiarismPath);
-                cmd.Parameters.AddWithValue("@CorrespondanceId", model.Correspondence_Id);
-
-                // Get PaperID from SCOPE_IDENTITY() in SP
-                object result = cmd.ExecuteScalar();
-                if (result == null || result == DBNull.Value)
-                    throw new Exception("Paper insertion failed.");
-
-                int paperId = Convert.ToInt32(result);
-                model.PaperId = paperId; // Save for later use
-
-               
-
-                // Insert Co-Authors separately after the Paper is inserted into Paper table
-                if (!string.IsNullOrEmpty(model.Co_Authors_Id))
-                {
-                    string[] coAuthors = model.Co_Authors_Id.Split(',');
-
-                    foreach (string authorId in coAuthors)
-                    {
-                        if (!string.IsNullOrEmpty(authorId))
-                        {
-                            SqlCommand coAuthorCmd = new SqlCommand("Proc_InsertCoAuthor", con, transaction)
-                            {
-                                CommandType = CommandType.StoredProcedure
-                            };
-                            coAuthorCmd.Parameters.AddWithValue("@paper_id", paperId);
-                            coAuthorCmd.Parameters.AddWithValue("@member_id", authorId);
-                            coAuthorCmd.Parameters.AddWithValue("@is_corresponding", authorId == model.Correspondence_Id.ToString() ? 1 : 0);
-
-                            coAuthorCmd.ExecuteNonQuery();
-                        }
-                    }
-                }
-
-                transaction.Commit();
-                message = "Success";
-            }
-            catch (Exception ex)
-            {
-                transaction.Rollback();
-                message = "Error: " + ex.Message;
-            }
-            finally
-            {
-                DisposeConnection();
-            }
-
-            return message;
-        }
-       
-
-
-        #endregion
-        #region Coauthors
-
-        public string SaveCoAuthor(CoAuthorModel coAuthor)
-        {
-            string message = "";
-            try
-            {
-                OpenConnection();
-                SqlCommand cmd = new SqlCommand("Proc_InsertCoAuthor", con); // Name of your stored procedure
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@PaperId", coAuthor.PaperId);
-                cmd.Parameters.AddWithValue("@MemberId", coAuthor.MemberId);
-                cmd.Parameters.AddWithValue("@IsCorresponding", coAuthor.IsCorresponding ? 1 : 0);
-
-                cmd.ExecuteNonQuery();
-                message = "Success";
-            }
-            catch (Exception ex)
-            {
-                message = "Error: " + ex.Message;
-            }
-            finally
-            {
-                DisposeConnection();
-            }
-
-            return message;
-
-           
-        }
-
-
-        #endregion
-        //for verificationbutton
-
-        #region Verifybutton
-        public string VerifyMemberByID(string memberId, out string message)
-        {
-            string memberName = "";
-            message = "";
-
-            try
-            {
-                OpenConnection();
-                SqlCommand cmd = new SqlCommand();
-                SqlTransaction transaction = con.BeginTransaction();
-
-                cmd.Connection = con;
-                cmd.Transaction = transaction;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "Proc_CheckCredentials";
-
-                cmd.Parameters.AddWithValue("@UserID", memberId);
-
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    memberName = reader["Name"].ToString();
-                    message = "Member found.";
-                }
-                else
-                {
-                    message = "Member not found.";
-                }
-
-                reader.Close();
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                message = "Error: " + ex.Message;
-            }
-            finally
-            {
-                DisposeConnection();
-            }
-
-            return memberName;
-
-        }
-
-
-        #endregion
-
-
-        #region PaperVersion
-        public string SubmitPaperVersion(int paperId, int eventId, DateTime dateOfSubmission, string path, string complianceReportPath)
-        {
-            string message = "";
-
-            try
-            {
-                OpenConnection();
-
                 using (SqlCommand cmd = new SqlCommand("Proc_InsertPaperVersion", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -505,7 +279,7 @@ namespace INDIACom.App_Cude
             }
 
             return message;
-        }
+        } 
 
 
 
@@ -518,6 +292,7 @@ namespace INDIACom.App_Cude
 
       #region SpecialSession 
 
+        #region SpecialSession 
         public string InsertSession(SpecialSessionModel ss)
         {
             string message = "";
@@ -594,6 +369,7 @@ namespace INDIACom.App_Cude
 
 
         #endregion
+
 
         #region User
         public string InsertUserDetails(MembersModel model)
@@ -799,6 +575,7 @@ namespace INDIACom.App_Cude
 
         #endregion
 
+
         #region Organisation
         public string AddOrganisation(MembersModel model)
         {
@@ -875,6 +652,7 @@ namespace INDIACom.App_Cude
         }
 
         #endregion
+
 
         #region Category Verification
 
@@ -964,6 +742,369 @@ namespace INDIACom.App_Cude
         }
 
         #endregion
+
+
+        #region PaperSubmission
+
+        public string SubmitPapers(PaperSubmissionModel model)
+        {
+            string message = "";
+            OpenConnection();
+            SqlTransaction transaction = con.BeginTransaction();
+
+            try
+            {
+                // Insert paper into the Paper table (no Co-Authors here)
+                SqlCommand cmd = new SqlCommand("Proc_InsertPaperSubmission", con, transaction)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                cmd.Parameters.AddWithValue("@Title", model.Title);
+                cmd.Parameters.AddWithValue("@DateOfSubmission", model.DateOfSubmission);
+                cmd.Parameters.AddWithValue("@EventId", model.Event_Id);
+                cmd.Parameters.AddWithValue("@TrackId", model.Track_Id);
+                cmd.Parameters.AddWithValue("@SessionId", model.Session_Id);
+                cmd.Parameters.AddWithValue("@EventName", model.Event_Name);
+                cmd.Parameters.AddWithValue("@TrackName", model.Track_Name);
+                cmd.Parameters.AddWithValue("@SessionName", model.Session_Name);
+                cmd.Parameters.AddWithValue("@MemberId", model.Member_Id);
+                cmd.Parameters.AddWithValue("@PaperPath", string.IsNullOrEmpty(model.PaperPath) ? (object)DBNull.Value : model.PaperPath);
+                cmd.Parameters.AddWithValue("@PlagiarismPath", string.IsNullOrEmpty(model.PlagiarismPath) ? (object)DBNull.Value : model.PlagiarismPath);
+                cmd.Parameters.AddWithValue("@CorrespondanceId", model.Correspondence_Id);
+
+                // Get PaperID from SCOPE_IDENTITY() in SP
+                object result = cmd.ExecuteScalar();
+                if (result == null || result == DBNull.Value)
+                    throw new Exception("Paper insertion failed.");
+
+                int paperId = Convert.ToInt32(result);
+                model.PaperId = paperId; // Save for later use
+
+
+
+                // Insert Co-Authors separately after the Paper is inserted into Paper table
+                if (!string.IsNullOrEmpty(model.Co_Authors_Id))
+                {
+                    string[] coAuthors = model.Co_Authors_Id.Split(',');
+
+                    foreach (string authorId in coAuthors)
+                    {
+                        if (!string.IsNullOrEmpty(authorId))
+                        {
+                            SqlCommand coAuthorCmd = new SqlCommand("Proc_InsertCoAuthor", con, transaction)
+                            {
+                                CommandType = CommandType.StoredProcedure
+                            };
+                            coAuthorCmd.Parameters.AddWithValue("@paper_id", paperId);
+                            coAuthorCmd.Parameters.AddWithValue("@member_id", authorId);
+                            coAuthorCmd.Parameters.AddWithValue("@is_corresponding", authorId == model.Correspondence_Id.ToString() ? 1 : 0);
+
+                            coAuthorCmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                transaction.Commit();
+                message = "Success";
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                message = "Error: " + ex.Message;
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return message;
+        }
+
+
+
+        #endregion
+
+
+        #region Coauthors
+
+        public string SaveCoAuthor(CoAuthorModel coAuthor)
+        {
+            string message = "";
+            try
+            {
+                OpenConnection();
+                SqlCommand cmd = new SqlCommand("Proc_InsertCoAuthor", con); // Name of your stored procedure
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@PaperId", coAuthor.PaperId);
+                cmd.Parameters.AddWithValue("@MemberId", coAuthor.MemberId);
+                cmd.Parameters.AddWithValue("@IsCorresponding", coAuthor.IsCorresponding ? 1 : 0);
+
+                cmd.ExecuteNonQuery();
+                message = "Success";
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message;
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return message;
+
+
+        }
+
+
+        #endregion
+
+
+        #region PaperVersion
+        public string SubmitPaperVersion(int paperId, int eventId, DateTime dateOfSubmission, string path, string complianceReportPath)
+        {
+            string message = "";
+
+            try
+            {
+                OpenConnection();
+
+                using (SqlCommand cmd = new SqlCommand("Proc_InsertPaperVersion", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@PaperID", paperId);
+                    cmd.Parameters.AddWithValue("@EventID", eventId);
+                    cmd.Parameters.AddWithValue("@DateOfSubmission", dateOfSubmission);
+                    cmd.Parameters.AddWithValue("@Path", path);
+                    cmd.Parameters.AddWithValue("@ComplianceReportPath", string.IsNullOrEmpty(complianceReportPath) ? (object)DBNull.Value : complianceReportPath);
+
+                    cmd.ExecuteNonQuery();
+                    message = "Success: Paper version submitted.";
+                }
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message;
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return message;
+        }
+
+
+        #endregion
+
+      
+        #region Verifybutton
+        public string VerifyMemberByID(string memberId, out string message)
+        {
+            string memberName = "";
+            message = "";
+
+            try
+            {
+                OpenConnection();
+                SqlCommand cmd = new SqlCommand();
+                SqlTransaction transaction = con.BeginTransaction();
+
+                cmd.Connection = con;
+                cmd.Transaction = transaction;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "Proc_CheckCredentials";
+
+                cmd.Parameters.AddWithValue("@UserID", memberId);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    memberName = reader["Name"].ToString();
+                    message = "Member found.";
+                }
+                else
+                {
+                    message = "Member not found.";
+                }
+
+                reader.Close();
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message;
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return memberName;
+        }
+
+        #endregion
+
+
+        #region UserDetailsAdmin
+       
+        public List<UserInfoModel> GetAllMembers()
+        {
+            List<UserInfoModel> members = new List<UserInfoModel>();
+
+            try
+            {
+                OpenConnection();
+                SqlCommand cmd = new SqlCommand("Proc_GetAllMembers", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    UserInfoModel m = new UserInfoModel
+                    {
+                        MemberId = Convert.ToInt64(dr["member_id"]),
+                        Salutation = dr["Salutation"]?.ToString(),
+                        Name = dr["Name"]?.ToString(),
+                        Email = dr["Email"]?.ToString(),
+                        Password = dr["Password"]?.ToString(),
+                        Category = dr["Category"]?.ToString(),
+                        Address = dr["Address"]?.ToString(),
+                        Country = dr["Country"]?.ToString(),
+                        CountryID = dr["CountryID"]?.ToString(),
+                        State = dr["State"]?.ToString(),
+                        City = dr["City"]?.ToString(),
+                        Pincode = dr["Pincode"]?.ToString(),
+                        Mobile = dr["Mobile"]?.ToString(),
+                        Organisation = dr["Organisation"]?.ToString(),
+                        BioDataPath = dr["Bio_data_path"]?.ToString()
+                    };
+
+                    members.Add(m);
+                }
+
+                dr.Close();
+            }
+            catch (SqlException ex)
+            {
+                // Log exception (could use a logging library)
+                throw new Exception("Database operation failed: " + ex.Message, ex);
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return members;
+        }
+
+
+        public UserInfoModel FetchUserById(long memberId)
+        {
+            UserInfoModel user = null;
+
+            try
+            {
+                OpenConnection();
+
+                SqlCommand cmd = new SqlCommand("Proc_GetUserById", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@MemberId", memberId);
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        user = new UserInfoModel
+                        {
+                            MemberId = Convert.ToInt64(dr["member_id"]),
+                            Salutation = dr["Salutation"]?.ToString(),
+                            Name = dr["Name"]?.ToString(),
+                            Email = dr["Email"]?.ToString(),
+                            Password = dr["Password"]?.ToString(),
+                            Category = dr["Category"]?.ToString(),
+                            Address = dr["Address"]?.ToString(),
+                            Country = dr["Country"]?.ToString(),
+                            CountryID = dr["CountryID"]?.ToString(),
+                            State = dr["State"]?.ToString(),
+                            City = dr["City"]?.ToString(),
+                            Pincode = dr["Pincode"]?.ToString(),
+                            Mobile = dr["Mobile"]?.ToString(),
+                            Organisation = dr["Organisation"]?.ToString(),
+                            BioDataPath = dr["Bio_data_path"]?.ToString()
+                        };
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Database operation failed: " + ex.Message, ex);
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return user;
+        }
+
+        #endregion
+
+
+        #region PaperAdmin
+        //FETCH ALL PAPER SUBMISSIONS
+        public List<PaperDetailsModel> GetAllPapers()
+        {
+            List<PaperDetailsModel> papers = new List<PaperDetailsModel>();
+
+            try
+            {
+                OpenConnection();
+                SqlCommand cmd = new SqlCommand("Proc_GetAllPapers", con)  // Replace with your stored procedure for fetching papers
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    PaperDetailsModel p = new PaperDetailsModel
+                    {
+                        PaperId = dr["PaperId"] != DBNull.Value ? Convert.ToInt64(dr["PaperId"]) : 0,
+                        Title = dr["Title"]?.ToString() ?? string.Empty,
+                        DateOfSubmission = dr["DateOfSubmission"] != DBNull.Value ? Convert.ToDateTime(dr["DateOfSubmission"]) : DateTime.MinValue,
+                        EventName = dr["EventName"]?.ToString() ?? string.Empty,
+                        TrackName = dr["TrackName"]?.ToString() ?? string.Empty,
+                        SessionName = dr["SessionName"]?.ToString() ?? string.Empty,
+                        CorrespondanceId = dr["CorrespondanceId"] != DBNull.Value ? Convert.ToInt32(dr["CorrespondanceId"]) : (int?)null,
+                        Status = dr["Status"]?.ToString() ?? string.Empty,
+                        PlagiarismPath = dr["PlagiarismPath"]?.ToString() ?? string.Empty
+                    };
+
+                    papers.Add(p);
+                }
+
+                dr.Close();
+            }
+            catch (SqlException ex)
+            {
+                // Log exception (could use a logging library)
+                throw new Exception("Database operation failed: " + ex.Message, ex);
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return papers;
+        }
+        #endregion
+
 
     }
 }
