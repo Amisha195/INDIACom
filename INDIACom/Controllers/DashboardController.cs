@@ -17,27 +17,26 @@ namespace INDIACom.Controllers
         [HttpGet]
         public ActionResult UserDashboard()
         {
-            if (Session["user"] == null)
+            var user = Session["user"] as MemberModel;
+            DataTable dt = dal.GetUserById(user.MemberID);
+            if (Session["user"] == null || user.UserTypeId != 3)
             {
                 return RedirectToAction("Login", "Account");
             }
-            var user = Session["user"] as MemberModel;
-            DataTable dt = dal.GetUserById(user.MemberID);
-            if (dt != null && dt.Rows.Count > 0)
+           else if (dt != null && dt.Rows.Count > 0)
             {
                 MemberModel model = new MemberModel
                 {
                     Name = dt.Rows[0]["Name"].ToString()
                 };
-
-
-
                 return View(model);
             }
-            return RedirectToAction("Login", "Account");
+           else 
+            return View();
+
         }
 
-        public ActionResult AdminDashboard() 
+        public ActionResult dashboard()
         {
             var user = Session["user"] as MemberModel;
             if (Session["user"] == null || user.UserTypeId != 1 )

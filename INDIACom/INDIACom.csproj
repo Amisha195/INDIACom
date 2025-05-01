@@ -264,16 +264,10 @@
     <Compile Include="Controllers\PaperAdminController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
-    <Compile Include="Controllers\PaperSubmissionControllercs.cs" />
-
-    <Compile Include="Controllers\PaperVersionController.cs" />
-
     <Compile Include="Controllers\SpecialSessionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CoAuthorModel.cs" />
-    <Compile Include="Models\DropdownModel.cs" />
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\FeedbackModel.cs" />
     <Compile Include="Models\LoginUserModel.cs" />
@@ -281,16 +275,7 @@
     <Compile Include="Models\MemberModel.cs" />
     <Compile Include="Models\MembersDocumentsModel.cs" />
     <Compile Include="Models\MembersModel.cs" />
-    <Compile Include="Models\PaperDetailsModel.cs" />
-    <Compile Include="Models\PaperSubmissionModel.cs" />
-
     <Compile Include="Models\RetrieveModel.cs" />
-    <Compile Include="Models\SessionModel.cs" />
-    <Compile Include="Models\SpecialSessionModel.cs" />
-
-
-    <Compile Include="Models\RetrieveModel.cs" />
-    <Compile Include="Models\RevisedPaperModel.cs" />
     <Compile Include="Models\SessionModel.cs" />
     <Compile Include="Models\SpecialSessionModel.cs" />
     <Compile Include="Models\TrackModel.cs" />
@@ -503,11 +488,17 @@
     <Content Include="Content\backend\plugins\vectormap\jquery-jvectormap-world-mill-en.js" />
     <Content Include="Content\backend\plugins\vectormap\jvectormap.custom.js" />
     <Content Include="Content\css\admin-dashboard.css" />
-
-
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\css\UserInfo.css" />
-
+    <Compile Include="Controllers\PaperSubmissionController.cs" />
+    <Compile Include="Controllers\PaperVersionController.cs" />
+    <Compile Include="Models\PaperSubmissionModel.cs" />
+    <Compile Include="Models\RevisedPaperModel.cs" />
+    <Compile Include="Models\CoAuthorModel.cs" />
+    <Compile Include="Controllers\UserInfoController.cs" />
+    <Compile Include="Models\UserInfoModel.cs" />
+    <Compile Include="Models\PaperDetailsModel.cs" />
+    <Compile Include="Controllers\PaperAdminController.cs" />
     <Content Include="Views\Home\Event.cshtml" />
     <Content Include="Views\Home\Sessions.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -527,9 +518,6 @@
     <Content Include="Views\Feedback\SubmitFeedback.cshtml" />
     <Content Include="Views\Member\EditProfile.cshtml" />
     <Content Include="Views\Member\Register.cshtml" />
-    <Content Include="Views\PaperSubmission\papersubmission\SubmitPapers.cshtml" />
-    <Content Include="Views\UserInfo\UserInfo.cshtml" />
-    <Content Include="Views\UserInfo\UserDetails.cshtml" />
     <Content Include="Views\PaperAdmin\SubmitPaperAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -647,10 +635,14 @@
     <Content Include="Views\Home\SubmitRevisedPaper.cshtml" />
     <Content Include="Views\Shared\AdminLayout.cshtml" />
     <Content Include="Views\Dashboard\dashboard.cshtml" />
+    <Content Include="Views\PaperSubmission\NotLoggedIn.cshtml" />
+    <Content Include="Views\UserInfo\UserDetails.cshtml" />
+    <Content Include="Views\UserInfo\UserInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Dropdown\" />
+    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

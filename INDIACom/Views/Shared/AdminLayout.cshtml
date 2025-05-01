@@ -14,13 +14,13 @@
         </div>
         <ul class="sidebar-menu">
             <li><a href="@Url.Action("AdminDashboard", "Dashboard")"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="#"><i class="fas fa-users"></i> Users</a></li>
+            <li><a href="@Url.Action("UserInfo", "UserInfo")"><i class="fas fa-users"></i> Users</a></li>
             <li><a href="@Url.Action("SubmitEvent", "Event")"><i class="fa-regular fa-calendar"></i> Event Creation</a></li>
             <li><a href="#"><i class="fa-solid fa-calendar-check"></i>Requested Session </a></li>
             <li><a href="#"><i class="fa-regular fa-newspaper"></i>News Creation </a></li>
-            <li><a href="#"><i class="fa-solid fa-file-circle-check
-"></i>Verify Document </a></li>
-            <li><a href="#"><i class="fa-solid fa-file-upload"></i>Submitted Papers</a></li>
+            <li><a href="#"><i class="fa-solid fa-file-circle-check"></i>Verify Document </a></li>
+            <li><a href="@Url.Action("SubmitPaperAdmin","PaperAdmin")"><i class="fa-solid fa-file-upload"></i>Submitted Papers</a></li>
+            <li><a href="#"><i class="fa-solid fa-calendar-check"></i>Requested Session </a></li>
             <li><a href="#"><i class="fa-solid fa-download"></i>Downloads </a></li>
             <li><a href="#"><i class="fa-regular fa-comments"></i>Feedback </a></li>
             <li><a href="#"><i class="fas fa-cog"></i>Settings</a></li>
