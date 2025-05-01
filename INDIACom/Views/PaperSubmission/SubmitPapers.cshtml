@@ -1,11 +1,15 @@
+
 ﻿﻿@model INDIACom.Models.PaperSubmissionModel
+
 
 <link href="~/Content/css/style.css" rel="stylesheet" />
 @{
     Layout = "~/Views/Shared/Layoutweb.cshtml";
 }
 
+
 <div class="content-section col-md">
+
     <h1>Submit Paper</h1>
     <p class="microfont">Fields marked with an asterisk <span class="asterix">*</span> are required.</p>
 
@@ -91,18 +95,31 @@
                             <th>AuthorNo</th>
                             <th>Member ID</th>
                             @*<th>Corresponding Author</th>*@
-                        </tr>
+      
 
-                        @*new code*@
+                        @{
+                            string loggedInID = ViewBag.LoggedInMemberID?.ToString();
+                        }
+
                         @for (int i = 0; i < 8; i++)
                         {
                             <tr>
-                                <td># @(i+1)</td>
+                                <td># @(i + 1)</td>
                                 <td>
-                                    <input type="text" name="Authors[@i].MemberID" id="AuthorID_@i" class="form-control" oninput="updateCoAuthorsID()" />
+                                    <input type="text"
+                                           name="Authors[@i].MemberID"
+                                           id="AuthorID_@i"
+                                           class="form-control"
+                                           oninput="updateCoAuthorsID()"
+                                           value="@(i == 0 ? loggedInID : "")" />
                                 </td>
                                 <td>
-                                    <input type="radio" name="CorrespondingAuthor" value="@i" onclick="setCorrespondingID(@i)" @(i == 0 ? "checked" : "") />
+                                    <input type="radio"
+                                           name="CorrespondingAuthor"
+                                           value="@i"
+                                           onclick="setCorrespondingID(@i)"
+                                           @(i == 0 ? "checked" : "") />
+
                                 </td>
                             </tr>
                         }
@@ -110,6 +127,7 @@
 
 
                     </table>
+
 
                     <p><b>Correspondence Author ID:</b></p>
                     <input type="text" id="CorrespondenceID" name="CorrespondingAuthorID" class="form-control" readonly />
@@ -121,16 +139,39 @@
                 </td>
             </tr>
 
+         
             <tr>
                 <td></td>
                 <td>
-                    <input type="checkbox" name="NotInTurnitin" required /> I hereby affirm that this manuscript is not added in  turnitin repository or of any other plagiarism detection software.<br />
-                    <input type="checkbox" name="NotPublished" required /> I hereby affirm that this manuscript has not been submitted or accepted for publication anywhere except this INDIACom. Further, I know that after review, if the paper is Accepted in INDIACom, I will not be permitted to to Withdraw my paper. I hereby affirm my consent to Transfer the copyright of my Paper to INDIACom and authorize the INDIACom authorities to add my paper in the Turnitin repository of INDIACom, after its Acceptance.
-                    <br>
+                    <input type="checkbox" name="NotInTurnitin" id="NotInTurnitin" required />
+                    I hereby affirm that this manuscript is not added in Turnitin repository or of any other plagiarism detection software.<br />
+
+                    <input type="checkbox" name="NotPublished" id="NotPublished" required />
+                    I hereby affirm that this manuscript has not been submitted or accepted for publication anywhere except this INDIACom. Further, I know that after review, if the paper is Accepted in INDIACom, I will not be permitted to Withdraw my paper. I hereby affirm my consent to Transfer the copyright of my Paper to INDIACom and authorize the INDIACom authorities to add my paper in the Turnitin repository of INDIACom, after its Acceptance.
+                    <br /><br />
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" style="text-align:justify; font-size:10px;">
+                    <span><b><u><i>NOTE:</i></u></b></span>
+                    <ol>
+                        <li>Kindly carefully read and check both the checkboxes to successfully submit your paper.</li>
+                        <li>
+                            Kindly ensure that as the corresponding author you shall be solely responsible for the unethical acts like plagiarism/multiple publications of whole/part of your manuscript. In this case, you are even likely to be debarred from further submissions in INDIACom as well as IEEE for the period up to five years.
+                        </li>
+                    </ol>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>
                     <button type="submit" id="SubmitButton" class="btn btn-primary">Submit Paper</button>
                     <input type="reset" value="Reset" class="btn btn-secondary" />
                 </td>
             </tr>
+
         </table>
         <input type="hidden" id="hiddenEventName" name="Event_Name" />
         <input type="hidden" id="hiddenTrackName" name="Track_Name" />
@@ -144,23 +185,276 @@
 
 
 
+         
+        </table>
+        <input type="hidden" id="hiddenEventName" name="Event_Name" />
+        <input type="hidden" id="hiddenTrackName" name="Track_Name" />
+        <input type="hidden" id="hiddenSessionName" name="Session_Name" />
+        <input type="hidden" id="CoAuthorsID" name="CoAuthorsID" />
+
 
     <script>
- //for co-authors
+ 
+    function updateCoAuthorsID() {
+        let coAuthors = Array.from(document.querySelectorAll("[id^=AuthorID_]")) // Select all author inputs dynamically
+            .map(input => input.value.trim()) // Get values and trim spaces
+            .filter(value => value !== "");  // Remove empty values
 
-    //function updateCoAuthorsID() {
-    //    let coAuthors = [];
+        document.getElementById("CoAuthorsID").value = coAuthors.join(","); // Store as comma-separated string
+    }
+ function populateDropdown(dropdownId, data) {
+     var dropdown = $("#" + dropdownId);
+     dropdown.empty(); // Clear previous options
 
-    //    for (let i = 0; i < 8; i++) {
-    //        let authorInput = document.getElementById(`AuthorID_${i}`);
-    //        if (authorInput && authorInput.value.trim() !== "") {
-    //            coAuthors.push(authorInput.value.trim()); // Collect non-empty values
-    //        }
-    //    }
+     /*dropdown.append('<option value="">-- Select --</option>'); // Add default option*/
 
-    //    // Store as a comma-separated string in the hidden input
-    //    document.getElementById("CoAuthorsID").value = coAuthors.join(",");
-    //}
+     $.each(data, function (index, item) {
+         dropdown.append('<option value="' + item.Value + '">' + item.Text + '</option>');
+     });
+        }
+
+        //validation function
+        function validateForm() {
+            let isValid = true;
+
+            // Validate dropdowns
+            if ($("#Event_Id").val() === "") {
+                $("#EventError").show();
+                isValid = false;
+            } else {
+                $("#EventError").hide();
+            }
+
+            if ($("#Track_Id").val() === "") {
+                $("#TrackError").show();
+                isValid = false;
+            } else {
+                $("#TrackError").hide();
+            }
+
+            if ($("#Session_Id").val() === "") {
+                $("#SessionError").show();
+                isValid = false;
+            } else {
+                $("#SessionError").hide();
+            }
+
+            // Validate title
+            if ($("#Title").val().trim() === "") {
+                $("#TitleError").show();
+                isValid = false;
+            } else {
+                $("#TitleError").hide();
+            }
+
+            // Validate paper file
+            if (!$("#PaperFile")[0].files.length) {
+                $("#PaperError").show();
+                isValid = false;
+            } else {
+                $("#PaperError").hide();
+            }
+
+            // Validate at least one author
+            const authorFilled = $("[id^='AuthorID_']").filter(function () {
+                return $(this).val().trim() !== "";
+            }).length > 0;
+
+            if (!authorFilled) {
+                $("#AuthorError").show();
+                isValid = false;
+            } else {
+                $("#AuthorError").hide();
+            }
+
+            return isValid;
+        }
+
+        //ends here 
+
+    $(document).ready(function () {
+     // var Emp_Name = '@ViewBag.empName';
+     // $('#Emp_Name').val(Emp_Name);
+
+     loadEvent();
+        loadSession();
+        loadTrack();
+        // Log selected value when an event is selected
+        // Update hidden input when Event is selected
+        $("#Event_Id").change(function () {
+            var selectedText = $("#Event_Id option:selected").text();
+            $("#hiddenEventName").val(selectedText);
+        });
+
+        // Update hidden input when Track is selected
+        $("#Track_Id").change(function () {
+            var selectedText = $("#Track_Id option:selected").text();
+            $("#hiddenTrackName").val(selectedText);
+        });
+
+        // Update hidden input when Session is selected
+        $("#Session_Id").change(function () {
+            var selectedText = $("#Session_Id option:selected").text();
+            $("#hiddenSessionName").val(selectedText);
+        });
+        $("#SubmitButton").off("click").on("click", function (e) {
+            e.preventDefault();
+            // AJAX call here
+            if (!validateForm()) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Missing Required Fields",
+                    text: "Please fill all required fields before submitting the form."
+                });
+                return;
+            }
+
+
+
+            var formData = new FormData($("#PaperSubmissionForm")[0]);
+
+            //$("#SubmitButton").click(function () {
+                var notInTurnitinChecked = $("#NotInTurnitin").prop("checked");
+                var notPublishedChecked = $("#NotPublished").prop("checked");
+
+                if (!notInTurnitinChecked || !notPublishedChecked) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Consent Required",
+                        text: "You must confirm both declarations before submitting your paper."
+                    });
+                    return;
+                }
+
+                var formData = new FormData();
+
+                // Basic Paper Details
+                formData.append("Event_Id", $("#Event_Id").val());
+                formData.append("Event_Name", $("#Event_Id option:selected").text());
+
+                formData.append("Track_Id", $("#Track_Id").val());
+                formData.append("Track_Name", $("#Track_Id option:selected").text());
+
+                formData.append("Session_Id", $("#Session_Id").val());
+                formData.append("Session_Name", $("#Session_Id option:selected").text());
+
+                formData.append("Title", $("#Title").val());
+
+                // File Uploads
+                var paperFile = $("#PaperFile")[0].files[0];
+                if (paperFile) {
+                    formData.append("PaperFile", paperFile);
+                }
+
+                var plagiarismFile = $("#PlagiarismReport")[0].files[0];
+                if (plagiarismFile) {
+                    formData.append("PlagiarismReport", plagiarismFile);
+                }
+                console.log("file: ", paperFile);
+                // Author Information
+                for (let i = 0; i < 8; i++) {
+                    let authorID = $(`#AuthorID_${i}`).val();
+                    if (authorID) {
+                        formData.append(`Authors[${i}].MemberID`, authorID);
+                    }
+                }
+
+                let correspondingIndex = $("input[name='CorrespondingAuthor']:checked").val();
+                let correspondingID = $(`#AuthorID_${correspondingIndex}`).val();
+                formData.append("CorrespondingAuthorID", correspondingID);
+
+                // Checkbox confirmations
+                formData.append("NotInTurnitin", $("#NotInTurnitin").is(":checked"));
+                formData.append("NotPublished", $("#NotPublished").is(":checked"));
+
+                // Co-authors combined ID field
+                let coAuthors = $("[id^='AuthorID_']")
+                    .map((_, el) => $(el).val().trim())
+                    .get()
+                    .filter(Boolean)
+                    .join(",");
+                formData.append("CoAuthorsID", coAuthors);
+
+                $("#SubmitButton").prop("disabled", true);
+
+                $.ajax({
+                    url: "/PaperSubmission/SubmitPapers",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Success",
+                                text: response.message || "Paper submitted successfully!"
+                            }).then(() => {
+                                $("#PaperSubmissionForm")[0].reset();
+                                $("#SubmitButton").prop("disabled", false);
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.message || "Submission failed."
+                            });
+                            $("#SubmitButton").prop("disabled", false);
+                        }
+                    },
+                    error: function (xhr) {
+                        console.error("AJAX error:", xhr.responseText);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Something went wrong: " + xhr.responseText
+                        });
+                        $("#SubmitButton").prop("disabled", false);
+                    }
+                });
+            });
+
+        });
+    
+
+ function loadEvent(obj) {
+     $.post('@Url.Action("getEvent", "dropdown")', obj, function (data, status) {
+    if (status == "success") {
+    populateDropdown("Event_Id", data);
+    } else {
+    console.log("No data");
+    }
+    });
+ }
+    function loadSession(obj) {
+    $.post('@Url.Action("getSession", "dropdown")', obj, function (data, status) {
+   if (status == "success") {
+   populateDropdown("Session_Id", data);
+   } else {
+   console.log("No data");
+   }
+   });
+    }
+
+        function loadTrack(obj) {
+            $.post('@Url.Action("getTrack", "dropdown")', obj, function (data, status) {
+                if (status == "success") {
+                    populateDropdown("Track_Id", data);
+                } else {
+                    console.log("No data");
+                }
+            });
+
+    }
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
+    <script>
+
     function updateCoAuthorsID() {
         let coAuthors = Array.from(document.querySelectorAll("[id^=AuthorID_]")) // Select all author inputs dynamically
             .map(input => input.value.trim()) // Get values and trim spaces
@@ -273,6 +567,7 @@
                     console.log("No data");
                 }
             });
+
     }
 
     function setCorrespondingID(index) {

@@ -39,6 +39,18 @@ namespace INDIACom.Controllers
 
         public ActionResult AdminDashboard() 
         {
+            var user = Session["user"] as MemberModel;
+            if (Session["user"] == null || user.UserTypeId != 1 )
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+                 return View();
+            
+        }
+
+        public ActionResult dashboard()
+        {
             return View();
         }
     }

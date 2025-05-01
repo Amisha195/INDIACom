@@ -1,10 +1,169 @@
-@model INDIACom.Models.FeedbackModel
+@*@model INDIACom.Models.FeedbackModel
 
+
+    @{
+        Layout = "~/Views/Shared/Layoutweb.cshtml";
+    }
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Submit Feedback</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="~/Content/css/style.css" rel="stylesheet" />
+        <link href="~/Content/css/all.min.css" rel="stylesheet" />
+        <link href="~/Content/css/slick.css" rel="stylesheet" />
+
+    </head>
+    <body>
+        <div class="content-section col-md">
+
+            <h1 style="color: blue;">Submit Feedback</h1>
+            <p>Fields marked with <span style="color: red;">*</span> are required.</p>
+
+            @if (ViewBag.Message != null)
+            {
+                <p style="color: green;"><b>@ViewBag.Message</b></p>
+            }
+
+            <form id="feedbackForm">
+                <label><span style="color: red;">*</span> Name:</label>
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "required", name = "Name" })
+
+                <label><span style="color: red;">*</span> Email:</label>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", required = "required", type = "email", name = "Email" })
+
+                <label>Mobile No.:</label>
+                @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", name = "Mobile" })
+
+                <label>Organization:</label>
+                @Html.TextBoxFor(m => m.Organization, new { @class = "form-control", name = "Organization" })
+
+                <label>Conference Information:</label>
+                @Html.DropDownListFor(m => m.ConferenceInfo, new List<SelectListItem> {
+                    new SelectListItem { Text = "Excellent", Value = "Excellent" },
+                    new SelectListItem { Text = "Very Good", Value = "Very Good" },
+                    new SelectListItem { Text = "Good", Value = "Good" },
+                    new SelectListItem { Text = "Average", Value = "Average" },
+                    new SelectListItem { Text = "Poor", Value = "Poor" }
+                }, new { @class = "form-control", required = "required", name = "ConferenceInfo" })
+
+                <label>Paper Submission Process:</label>
+                @Html.DropDownListFor(m => m.PaperSubmission, new List<SelectListItem> {
+                    new SelectListItem { Text = "Excellent", Value = "Excellent" },
+                    new SelectListItem { Text = "Very Good", Value = "Very Good" },
+                    new SelectListItem { Text = "Good", Value = "Good" },
+                    new SelectListItem { Text = "Average", Value = "Average" },
+                    new SelectListItem { Text = "Poor", Value = "Poor" }
+                }, new { @class = "form-control", required = "required", name = "PaperSubmission" })
+
+                <label>Registration Procedure:</label>
+                @Html.DropDownListFor(m => m.Registration, new List<SelectListItem> {
+                    new SelectListItem { Text = "Excellent", Value = "Excellent" },
+                    new SelectListItem { Text = "Very Good", Value = "Very Good" },
+                    new SelectListItem { Text = "Good", Value = "Good" },
+                    new SelectListItem { Text = "Average", Value = "Average" },
+                    new SelectListItem { Text = "Poor", Value = "Poor" }
+                }, new { @class = "form-control", required = "required", name = "Registration" })
+
+                <label>Conference Organization:</label>
+                @Html.DropDownListFor(m => m.ConferenceOrg, new List<SelectListItem> {
+                    new SelectListItem { Text = "Excellent", Value = "Excellent" },
+                    new SelectListItem { Text = "Very Good", Value = "Very Good" },
+                    new SelectListItem { Text = "Good", Value = "Good" },
+                    new SelectListItem { Text = "Average", Value = "Average" },
+                    new SelectListItem { Text = "Poor", Value = "Poor" }
+                }, new { @class = "form-control", required = "required", name = "ConferenceOrg" })
+
+                <label>Conference Proceedings:</label>
+                @Html.DropDownListFor(m => m.Proceedings, new List<SelectListItem> {
+                    new SelectListItem { Text = "Excellent", Value = "Excellent" },
+                    new SelectListItem { Text = "Very Good", Value = "Very Good" },
+                    new SelectListItem { Text = "Good", Value = "Good" },
+                    new SelectListItem { Text = "Average", Value = "Average" },
+                    new SelectListItem { Text = "Poor", Value = "Poor" }
+                }, new { @class = "form-control", required = "required", name = "Proceedings" })
+
+                <label>Suggestions / Special Comments:</label>
+                @Html.TextAreaFor(m => m.Comments, new { @class = "form-control", name = "Comments" })
+
+                <br />
+                <button type="button" id="submitBtn">Submit</button>
+                <input type="reset" value="Reset">
+            </form>
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="~/Scripts/bootstrap.min.js"></script>
+            <script src="~/Scripts/js/common.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+            <script>
+
+
+                $(document).ready(function () {
+
+
+
+                    $("#submitBtn").click(function () {
+
+
+                        var formData = $("#feedbackForm").serialize(); // Collect form data
+
+                        $("#submitBtn").prop("disabled", true); // Disable button to prevent double submission
+
+                        $.ajax({
+                            url: "/Feedback/SubmitFeedback",
+                            type: "POST",
+                            data: formData,
+                            success: function (response) {
+                                if (response.success) {
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: "Success",
+                                        text: "Feedback submitted successfully!"
+                                    }).then(() => {
+                                        location.reload(); // Reloads after success
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: "Error",
+                                        text: response.message || "Submission failed."
+                                    });
+                                    $("#submitBtn").prop("disabled", false); // Re-enable if failed
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.error("AJAX Error:", xhr.responseText);
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error",
+                                    text: "Something went wrong! " + xhr.responseText
+                                });
+                                $("#submitBtn").prop("disabled", false);
+                            }
+                        });
+                    });
+
+                });
+
+
+
+
+            </script>
+
+    </body>
+    </div>
+    </html>*@
+@model INDIACom.Models.FeedbackModel
 
 @{
     Layout = "~/Views/Shared/Layoutweb.cshtml";
 }
 <link href="~/Content/css/style.css" rel="stylesheet" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +174,6 @@
     <link href="~/Content/css/style.css" rel="stylesheet" />
     <link href="~/Content/css/all.min.css" rel="stylesheet" />
     <link href="~/Content/css/slick.css" rel="stylesheet" />
-   
 </head>
 <body>
     <div class="content-section col-md">
@@ -30,16 +188,16 @@
 
         <form id="feedbackForm">
             <label><span style="color: red;">*</span> Name:</label>
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "required", name = "Name" })
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @readonly = "readonly" })
 
             <label><span style="color: red;">*</span> Email:</label>
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", required = "required", type = "email", name = "Email" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly", type = "email" })
 
             <label>Mobile No.:</label>
-            @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", name = "Mobile" })
+            @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", @readonly = "readonly" })
 
             <label>Organization:</label>
-            @Html.TextBoxFor(m => m.Organization, new { @class = "form-control", name = "Organization" })
+            @Html.TextBoxFor(m => m.Organization, new { @class = "form-control", @readonly = "readonly" })
 
             <label>Conference Information:</label>
             @Html.DropDownListFor(m => m.ConferenceInfo, new List<SelectListItem> {
@@ -48,7 +206,7 @@
                 new SelectListItem { Text = "Good", Value = "Good" },
                 new SelectListItem { Text = "Average", Value = "Average" },
                 new SelectListItem { Text = "Poor", Value = "Poor" }
-            }, new { @class = "form-control", required = "required", name = "ConferenceInfo" })
+            }, new { @class = "form-control", required = "required" })
 
             <label>Paper Submission Process:</label>
             @Html.DropDownListFor(m => m.PaperSubmission, new List<SelectListItem> {
@@ -57,7 +215,7 @@
                 new SelectListItem { Text = "Good", Value = "Good" },
                 new SelectListItem { Text = "Average", Value = "Average" },
                 new SelectListItem { Text = "Poor", Value = "Poor" }
-            }, new { @class = "form-control", required = "required", name = "PaperSubmission" })
+            }, new { @class = "form-control", required = "required" })
 
             <label>Registration Procedure:</label>
             @Html.DropDownListFor(m => m.Registration, new List<SelectListItem> {
@@ -66,7 +224,7 @@
                 new SelectListItem { Text = "Good", Value = "Good" },
                 new SelectListItem { Text = "Average", Value = "Average" },
                 new SelectListItem { Text = "Poor", Value = "Poor" }
-            }, new { @class = "form-control", required = "required", name = "Registration" })
+            }, new { @class = "form-control", required = "required" })
 
             <label>Conference Organization:</label>
             @Html.DropDownListFor(m => m.ConferenceOrg, new List<SelectListItem> {
@@ -75,7 +233,7 @@
                 new SelectListItem { Text = "Good", Value = "Good" },
                 new SelectListItem { Text = "Average", Value = "Average" },
                 new SelectListItem { Text = "Poor", Value = "Poor" }
-            }, new { @class = "form-control", required = "required", name = "ConferenceOrg" })
+            }, new { @class = "form-control", required = "required" })
 
             <label>Conference Proceedings:</label>
             @Html.DropDownListFor(m => m.Proceedings, new List<SelectListItem> {
@@ -84,14 +242,14 @@
                 new SelectListItem { Text = "Good", Value = "Good" },
                 new SelectListItem { Text = "Average", Value = "Average" },
                 new SelectListItem { Text = "Poor", Value = "Poor" }
-            }, new { @class = "form-control", required = "required", name = "Proceedings" })
+            }, new { @class = "form-control", required = "required" })
 
             <label>Suggestions / Special Comments:</label>
-            @Html.TextAreaFor(m => m.Comments, new { @class = "form-control", name = "Comments" })
+            @Html.TextAreaFor(m => m.Comments, new { @class = "form-control" })
 
             <br />
-            <button type="button" id="submitBtn">Submit</button>
-            <input type="reset" value="Reset">
+            <button type="button" id="submitBtn" class="btn btn-primary">Submit</button>
+            <input type="reset" value="Reset" class="btn btn-secondary">
         </form>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -100,18 +258,11 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
         <script>
-
-
             $(document).ready(function () {
-
-
-
                 $("#submitBtn").click(function () {
+                    var formData = $("#feedbackForm").serialize();
 
-
-                    var formData = $("#feedbackForm").serialize(); // Collect form data
-
-                    $("#submitBtn").prop("disabled", true); // Disable button to prevent double submission
+                    $("#submitBtn").prop("disabled", true);
 
                     $.ajax({
                         url: "/Feedback/SubmitFeedback",
@@ -122,9 +273,9 @@
                                 Swal.fire({
                                     icon: "success",
                                     title: "Success",
-                                    text: "Feedback submitted successfully!"
+                                    text: response.message
                                 }).then(() => {
-                                    location.reload(); // Reloads after success
+                                    location.reload();
                                 });
                             } else {
                                 Swal.fire({
@@ -132,11 +283,10 @@
                                     title: "Error",
                                     text: response.message || "Submission failed."
                                 });
-                                $("#submitBtn").prop("disabled", false); // Re-enable if failed
+                                $("#submitBtn").prop("disabled", false);
                             }
                         },
                         error: function (xhr, status, error) {
-                            console.error("AJAX Error:", xhr.responseText);
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
@@ -146,14 +296,8 @@
                         }
                     });
                 });
-
             });
-
-         
-
-
         </script>
-
+    </div>
 </body>
-</div>
 </html>

@@ -361,7 +361,11 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
 /INDIACom/UploadedFiles
+
+
+/INDIACom/Application/PlagiarismPolicies
 /INDIACom/Application/Papers
 /INDIACom/Application/PlagiarismPolicies
 /INDIACom/Web.config

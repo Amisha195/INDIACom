@@ -36,7 +36,6 @@ namespace INDIACom.Controllers
 
                 };
 
-            
 
                 return View(model);
 
@@ -94,7 +93,9 @@ namespace INDIACom.Controllers
                     MemberID = long.Parse(dt.Rows[0]["member_id"].ToString()),
                     Biodata = dt.Rows[0]["Bio_data_path"] == DBNull.Value ? null : dt.Rows[0]["Bio_data_path"].ToString()
                 };
+
                 if (model.Biodata == null) {
+
                     return RedirectToAction("SpecialSession2", "SpecialSession");
                 }
 
@@ -105,7 +106,7 @@ namespace INDIACom.Controllers
 
         }
 
-     
+
 
 
 
@@ -126,7 +127,7 @@ namespace INDIACom.Controllers
                     return Json(new { success = false, message = "Validation failed.", errors });
 
                 }
-               
+
 
                 string result = dal.InsertSession(ss);
                 if (result == "Success")
