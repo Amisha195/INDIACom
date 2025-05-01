@@ -45,7 +45,7 @@ namespace INDIACom.Controllers
                string Name = model.Name;
                 long Mobile = model.Mobile;
                  
-            if(model.OrganisationName == null)
+            if(model.OrganisationName == null || model.OrganisationName == "O thers")
             {
                 string org = AddOrganisation(model);
 

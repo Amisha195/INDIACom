@@ -1,0 +1,88 @@
+@model List<INDIACom.Models.SpecialSessionModel>
+
+@{
+    ViewBag.Title = "User Information - Admin";
+    Layout = "~/Views/Shared/Layoutweb.cshtml"; // Include if you're using layout
+}
+
+<!-- Link the external CSS file -->
+@*<link href="~/Content/UserInfo.csss" rel="stylesheet" type="text/css" />*@
+@*<link href="@Url.Content("~/Content/css/UserInfo.css")" rel="stylesheet" type="text/css" />*@
+
+
+<h2 class="page-title"> User Information  </h2>
+
+<div class="table-container">
+    <table class="user-info-table">
+        <thead>
+            <tr>
+                <th>ReqNo</th>
+                <th>MemberID</th>
+                <th>SSName</th>
+                <th>Mobile</th>
+                <th>Email</th>
+                <th>Organization</th>
+                <th>Topic</th>
+                <th>Request Date</th>
+                <th>Decision Date</th>
+                <th>Request Status</th>
+                <th>Paper Count</th>
+                <th>TrackID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var session in Model)
+            {
+                <tr>
+                    <td>@session.ReqNo</td>
+                    <td>@session.MemberID</td>
+                    <td>@session.SSName</td>
+                    <td>@session.Mobile</td>
+                    <td>@session.Email</td>
+                    <td>@session.Organization</td>
+                    <td>@session.Topic</td>
+                    <td>@session.Request_Date.ToShortDateString()</td>
+                    <td>
+                        @(session.Decision_Date.HasValue
+                            ? session.Decision_Date.Value.ToShortDateString()
+                            : "")
+                    </td>
+                    <td>@session.Request_Status</td>
+                    <td>@session.PaperCount</td>
+                    <td>@session.TrackID</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    int totalPages = (int)Math.Ceiling((double)ViewBag.TotalUsers / ViewBag.PageSize);
+    int currentPage = ViewBag.CurrentPage;
+}
+
+<div class="pagination-container">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @if (currentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("UserInfo", new { page = currentPage - 1 })">Previous</a>
+                </li>
+            }
+
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("UserInfo", new { page = i })">@i</a>
+                </li>
+            }
+
+            @if (currentPage < totalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("UserInfo", new { page = currentPage + 1 })">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>

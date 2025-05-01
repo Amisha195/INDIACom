@@ -28,7 +28,12 @@ namespace INDIACom.Controllers
             {
                 SpecialSessionModel model = new SpecialSessionModel
                 {
-                    MemberID = user.MemberID // 👈 Pass the MemberID to the view model
+                    MemberID = long.Parse(dt.Rows[0]["member_id"].ToString()),
+                    SSName = dt.Rows[0]["Name"].ToString(),
+                    Email = dt.Rows[0]["Email"].ToString(),
+                    Mobile = dt.Rows[0]["Mobile"].ToString(),
+                    Organization = dt.Rows[0]["Organisation"].ToString()
+
                 };
 
             
@@ -39,11 +44,6 @@ namespace INDIACom.Controllers
             return RedirectToAction("Login", "Account");
 
         }
-
-
-
-
-
         [HttpGet]
         public ActionResult SpecialSession2()
         {
@@ -68,9 +68,6 @@ namespace INDIACom.Controllers
             return RedirectToAction("Login", "Account");
 
         }
-
-
-
         [HttpGet]
         public ActionResult SpecialSessionStatic()
         {
@@ -99,13 +96,47 @@ namespace INDIACom.Controllers
             return RedirectToAction("Login", "Account");
 
         }
+        public ActionResult SpecialSessionDisplay()
+        {
+            // DataTable sessions = dal.GetAllSpecialSessions();
+            //return View(sessions);
+            List<SpecialSessionModel> sessions = new List<SpecialSessionModel>();
 
-     
+            try
+            {
+                DataTable dt = dal.GetAllSpecialSessions();
+                if (dt != null)
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        SpecialSessionModel Sess = new SpecialSessionModel
+                        {
+                            ReqNo = long.Parse(row["ReqNo"].ToString()),
+                            MemberID = long.Parse(row["MemberID"].ToString()),
+                            SSName = row["SSName"].ToString(),
+                            Email = row["Email"].ToString(),
+                            Mobile = row["Mobile"].ToString(),
+                            Organization = row["Organization"].ToString()
 
 
+                        };
+                        sessions.Add(Sess);
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (implementation depends on your logging setup)
+                // For now, you can return an error view or handle accordingly
+                // Optionally log error or display user-friendly message
+                ViewBag.Error = "Error fetching member data: " + ex.Message;
 
+              //  return View("Error", new HandleErrorInfo(ex, "SpecialSession", "Index"));
+            }
 
-
+            return View(sessions);
+        }
 
         [HttpPost]
         public JsonResult SpecialSession(SpecialSessionModel ss)
