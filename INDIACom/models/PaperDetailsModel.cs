@@ -5,7 +5,7 @@ using System.Web;
 
 namespace INDIACom.Models
 {
-     public class PaperDetailsModel
+    public class PaperDetailsModel
     {
         public long PaperId { get; set; }
         public string Title { get; set; }

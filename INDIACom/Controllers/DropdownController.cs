@@ -21,6 +21,26 @@ namespace INDIACom.Controllers
             return Json(list, 0);
 
         }
+        [HttpPost]
+        public JsonResult getSession(string type = "")
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            // Call the stored procedure to fetch session data
+            CommonMethod.bindDropDownHnGrid("Proc_Common", list, "SESSION", "", "", "", "", type);
+
+            return Json(list, 0);
+        }
+        [HttpPost]
+        public JsonResult getTrack(string type = "")
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            // Call the stored procedure to fetch session data
+            CommonMethod.bindDropDownHnGrid("Proc_Common", list, "TRACK", "", "", "", "", type);
+
+            return Json(list, 0);
+        }
 
 
         [HttpPost]
@@ -43,6 +63,7 @@ namespace INDIACom.Controllers
 
             return Json(list, 0);
         }
+
 
 
 

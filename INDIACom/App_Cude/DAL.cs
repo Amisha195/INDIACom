@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using INDIACom.Models;
 using System.Reflection;
+using System.Web.UI.WebControls;
 
 namespace INDIACom.App_Cude
 {
@@ -160,6 +161,85 @@ namespace INDIACom.App_Cude
         #endregion
 
 
+                using (SqlCommand cmd = new SqlCommand("Proc_InsertPaperVersion", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@PaperID", paperId);
+                    cmd.Parameters.AddWithValue("@EventID", eventId);
+                    cmd.Parameters.AddWithValue("@DateOfSubmission", dateOfSubmission);
+                    cmd.Parameters.AddWithValue("@Path", path);
+                    cmd.Parameters.AddWithValue("@ComplianceReportPath", string.IsNullOrEmpty(complianceReportPath) ? (object)DBNull.Value : complianceReportPath);
+
+                    cmd.ExecuteNonQuery();
+                    message = "Success: Paper version submitted.";
+                }
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message;
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return message;
+        }
+
+
+        #endregion
+
+        //for verificationbutton
+
+        #region Verifybutton
+        public string VerifyMemberByID(string memberId, out string message)
+        {
+            string memberName = "";
+            message = "";
+
+            try
+            {
+                OpenConnection();
+                SqlCommand cmd = new SqlCommand();
+                SqlTransaction transaction = con.BeginTransaction();
+
+                cmd.Connection = con;
+                cmd.Transaction = transaction;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "Proc_CheckCredentials";
+
+                cmd.Parameters.AddWithValue("@UserID", memberId);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    memberName = reader["Name"].ToString();
+                    message = "Member found.";
+                }
+                else
+                {
+                    message = "Member not found.";
+                }
+
+                reader.Close();
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message;
+            }
+            finally
+            {
+                DisposeConnection();
+            }
+
+            return memberName;
+        }
+
+        #endregion
+
+
         #region Event
 
         public string InsertEvent(EventModel model)
@@ -205,6 +285,12 @@ namespace INDIACom.App_Cude
 
         #endregion
 
+
+
+
+
+
+      #region SpecialSession 
 
         #region SpecialSession 
         public string InsertSession(SpecialSessionModel ss)

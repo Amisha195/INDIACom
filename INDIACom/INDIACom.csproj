@@ -503,8 +503,14 @@
     <Content Include="Views\Dashboard\AdminDashboard.cshtml" />
     <Content Include="Views\Dashboard\UserDashboard.cshtml" />
     <Content Include="Views\Event\SubmitEvent.cshtml" />
+
+    <Content Include="Views\Home\AddAuthor.cshtml" />
+    <Content Include="Views\PaperSubmission\MySubmittedPapers.cshtml" />
+    <None Include="Views\Home\SpecialSession.cshtml" />
+
     <Content Include="Views\Account\retrievePassword.cshtml" />
     <Content Include="Views\Account\retrieveMID.cshtml" />
+
     <Content Include="Views\Home\Track.cshtml" />
     <Content Include="Views\PaperSubmission\SubmitPapers.cshtml" />
     <Content Include="Views\Feedback\SubmitFeedback.cshtml" />
@@ -609,7 +615,7 @@
     <Content Include="Views\Home\IndiacomProceedings.cshtml" />
     <Content Include="Views\Home\GuidelinestoSubmitPaper.cshtml" />
     <Content Include="Views\Home\PlagiarismPolicy.cshtml" />
-    <Content Include="Views\Home\SubmitPaper.cshtml" />
+    <Content Include="Views\PaperSubmission\NotLoggedIn.cshtml" />
     <Content Include="Views\Home\TechnicalCommittee.cshtml" />
     <Content Include="Views\Home\EditorialBoard.cshtml" />
     <Content Include="Views\Home\AdvisoryCommittee.cshtml" />
